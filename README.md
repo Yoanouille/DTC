@@ -1,3 +1,3 @@
-# Domino Trax Carcassonne
+# Domino/Trax/Carcassonne
 
 Debut
