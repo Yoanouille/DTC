@@ -10,6 +10,9 @@
 // https://stackoverflow.com/questions/30263303/stdarray-vs-array-performance
 #include <array>
 
+// For basic tests through printing
+#include <ostream>
+
 class DomPiece : protected Piece
 {
 private:
@@ -19,5 +22,7 @@ public:
     DomPiece();
     int connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
+
+    friend std::ostream &operator<<(std::ostream &out, const DomPiece &p);
 };
 #endif

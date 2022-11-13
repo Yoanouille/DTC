@@ -1,6 +1,7 @@
 #Fichiers compilés
 *.o
 main
+test
 
 #Répertoire généré par VSC
 .vscode/

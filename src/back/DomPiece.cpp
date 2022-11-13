@@ -1,4 +1,5 @@
 #include "back/DomPiece.hpp"
+using namespace std;
 
 /**
  * Constructor
@@ -35,7 +36,7 @@ int DomPiece::connectable(Piece &p, int pDir)
  * @param p A reference to a Piece
  * @param pDir The side of p on which we connect the current Piece.
  *
- * @return the maximum value
+ * @return The earnable value
  */
 int DomPiece::getEarnedValue(Piece &p, int pDir)
 {
@@ -47,4 +48,21 @@ int DomPiece::getEarnedValue(Piece &p, int pDir)
   for (size_t i = 0; i < 3; i++)
     sum += ((DomPiece &)p).tab[pDir][i];
   return sum;
+}
+
+/**
+ * Printing function
+ */
+ostream &operator<<(ostream &out, const DomPiece &p)
+{
+  for (size_t i = 0; i < 4; i++)
+  {
+    out << "---- Direction " << i << " ----" << endl;
+    out << "[";
+    for (size_t j = 0; j < 2; j++)
+      out << p.tab[i][j] << ", ";
+
+    out << p.tab[i][2] << "]" << endl;
+  }
+  return out;
 }

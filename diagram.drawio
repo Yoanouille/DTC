@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="CHH4d5N20Bv_VqgItJtU" name="Page-1">
-        <mxGraphModel dx="550" dy="478" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1358" dy="478" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -28,7 +28,7 @@
                 <mxCell id="3RVoRIsLSyqrtPsKRKoU-8" value="+ rotate() : void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3RVoRIsLSyqrtPsKRKoU-5" vertex="1">
                     <mxGeometry y="86" width="185" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="MjsJlT0-aBO1oH4Jwxmf-13" value="+ connectable(Piece&amp;, int) : bool " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3RVoRIsLSyqrtPsKRKoU-5" vertex="1">
+                <mxCell id="MjsJlT0-aBO1oH4Jwxmf-13" value="+ connectable(Piece&amp;, int) : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3RVoRIsLSyqrtPsKRKoU-5" vertex="1">
                     <mxGeometry y="112" width="185" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="MjsJlT0-aBO1oH4Jwxmf-28" value="+ getEarnedValue(Piece&amp;) : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3RVoRIsLSyqrtPsKRKoU-5" vertex="1">
