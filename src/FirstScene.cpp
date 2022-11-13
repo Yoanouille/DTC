@@ -3,7 +3,7 @@
 using namespace sf;
 using namespace std;
 
-FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{} 
+FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, app{true}, frame{0}
 {
     init();
 }
@@ -25,7 +25,8 @@ void FirstScene::init()
         texts[i].setFont(font); 
         texts[i].setString(options[i]); 
         texts[i].setCharacterSize(75);
-        texts[i].setOutlineColor(sf::Color::White);
+        Color c{255, 255, 255, 0};
+        texts[i].setFillColor(c);
         FloatRect r = texts[i].getGlobalBounds();
         texts[i].setOrigin(0.5 * r.width , 0.5 * r.height);
         texts[i].setPosition(menu.get_width() / 2, (i + 1) * menu.get_height() / (options.size() + 1));
@@ -35,6 +36,7 @@ void FirstScene::init()
 
 void FirstScene::loop_event()
 {
+    
     Event event;
     while (menu.pollEvent(event))
     {
@@ -45,13 +47,14 @@ void FirstScene::loop_event()
         mouse_coord = menu.mapPixelToCoords(pos_mouse);
 
 
-        if(Mouse::isButtonPressed(Mouse::Left))
+        if(!app && !disp && Mouse::isButtonPressed(Mouse::Left))
             for(size_t i = 0; i < texts.size(); i++)
             {
                 if(texts[i].getGlobalBounds().contains(mouse_coord))
                 {
                     //Changer de scene vers la bonne
                     cout << "Changement de Scene" << endl;
+                    disp = true;
                 }
             }
 
@@ -81,8 +84,44 @@ void FirstScene::loop_event()
 
 void FirstScene::render()
 {
+    frame++;
+    frame %= 60;
+    if(app && frame % 2 == 0) display();
+    if(disp && frame % 2 == 0) {
+        dispose();
+        if(!disp)
+        {
+            //DIRE DE CHANGER DE SCENE
+            menu.setScene(2);
+        }
+    }
     for(Text &t : texts)
     {
         menu.draw(t);
+    }
+}
+
+void FirstScene::dispose()
+{
+    if(!disp) return;
+    for(Text &t : texts)
+    {
+        Color c = t.getFillColor();
+        c.a -= 1;
+        t.setFillColor(c);
+        if(c.a < 1) {
+            disp = false;
+        }
+    }
+}
+
+void FirstScene::display()
+{
+    for(Text &t : texts)
+    {
+        Color c = t.getFillColor();
+        c.a += 1;
+        t.setFillColor(c);
+        if(c.a > 254) app = false; 
     }
 }

@@ -14,6 +14,7 @@ class Menu : public sf::RenderWindow
 
 
         Scene *sc;
+        Scene *old_sc;
 
         sf::Texture image;
         sf::Sprite bg;
@@ -30,6 +31,8 @@ class Menu : public sf::RenderWindow
 
         int get_height() const;
         int get_width() const;
+
+        void setScene(int i);
 
 };
 

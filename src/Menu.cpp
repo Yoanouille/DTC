@@ -1,9 +1,10 @@
 #include "Menu.hpp"
 #include "FirstScene.hpp"
+#include "MainScene.hpp"
 
 using namespace sf;
 
-Menu::Menu() : width{1280}, height{720}, sc{nullptr}, image{}, bg{}
+Menu::Menu() : width{1280}, height{720}, sc{nullptr}, old_sc{nullptr},image{}, bg{}
 {
     init();
 }
@@ -11,6 +12,7 @@ Menu::Menu() : width{1280}, height{720}, sc{nullptr}, image{}, bg{}
 Menu::~Menu()
 {
     if(sc != nullptr) delete sc;
+    if(old_sc != nullptr) delete old_sc;
 }
 
 void Menu::init()
@@ -23,6 +25,7 @@ void Menu::init()
     bg.setScale(0.33, 0.33);
 
     sc = new FirstScene(*this);
+    //sc = new MainScene(*this);
 
 }
 
@@ -58,4 +61,25 @@ int Menu::get_height() const
 int Menu::get_width() const
 {
     return width;
+}
+
+void Menu::setScene(int i)
+{
+    switch (i)
+    {
+    case 1:
+        if(old_sc != nullptr) delete old_sc;
+        old_sc = sc;
+        sc = new FirstScene(*this);
+        break;
+    
+    case 2:
+        if(old_sc != nullptr) delete old_sc;
+        old_sc = sc;
+        sc = new MainScene(*this);
+        break;
+    
+    default:
+        break;
+    }
 }

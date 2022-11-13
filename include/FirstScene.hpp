@@ -20,6 +20,11 @@ class FirstScene : public Scene
         sf::Vector2i pos_mouse;
         sf::Vector2f mouse_coord;
 
+        bool disp;
+        bool app;
+
+        int frame;
+
         void init();
 
     public:
@@ -27,6 +32,9 @@ class FirstScene : public Scene
         virtual ~FirstScene();
         void loop_event();
         void render();
+
+        void dispose();
+        void display();
 
 };
 

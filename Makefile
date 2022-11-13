@@ -3,7 +3,7 @@ INCL=-Iinclude
 SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 OBJ_DIR=@mkdir obj/ -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o
+OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o
 TARGET=main
 
 all: $(TARGET)
@@ -19,7 +19,7 @@ obj/Main.o: src/Main.cpp include/Menu.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/Menu.o: src/Menu.cpp include/Menu.hpp include/Scene.hpp include/FirstScene.hpp
+obj/Menu.o: src/Menu.cpp include/Menu.hpp include/Scene.hpp include/FirstScene.hpp include/MainScene.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -28,6 +28,10 @@ obj/Scene.o: src/Scene.cpp include/Scene.hpp
 	$(CCO)
 
 obj/FirstScene.o: src/FirstScene.cpp include/FirstScene.hpp include/Scene.hpp include/Menu.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/MainScene.o: src/MainScene.cpp include/MainScene.hpp include/Scene.hpp include/Menu.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
