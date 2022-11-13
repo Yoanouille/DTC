@@ -13,6 +13,7 @@ MainScene::~MainScene()
 
 }
 
+
 void MainScene::init()
 {
     scoreBoard.setSize(Vector2f(menu.get_width() / 5, menu.get_height()));
@@ -43,22 +44,11 @@ void MainScene::loop_event()
 
         if(event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
         {
-            cout << event.mouseWheelScroll.delta << endl;
+            //cout << event.mouseWheelScroll.delta << endl;
             int d = event.mouseWheelScroll.delta;
             if(d != -1 && d != 1) break;
-            if(scl <= 40 && d == -1) break; 
+            //if(scl <= 40 && d == -1) break; 
             scl += event.mouseWheelScroll.delta;
-            for(int i = 0; i < pos.size(); i++)
-            {
-                if(d == 1 && pos[i].x > 0) pos[i].x = (int) (pos[i].x + scl) / scl;
-                else if(d == 1 && pos[i].x < 0) pos[i].x = (int) (pos[i].x - scl) / scl;
-                else pos[i].x = (int) (pos[i].x) / scl;
-                pos[i].x *= scl;
-                if(d == 1 && pos[i].y > 0) pos[i].y = (int) (pos[i].y + scl) / scl;
-                else if(d == 1 && pos[i].y < 0) pos[i].y = (int) (pos[i].y - scl) / scl;
-                else if(d == -1) pos[i].y = (int) pos[i].y / scl;
-                pos[i].y *= scl;
-            }
         }
 
     }
@@ -94,7 +84,11 @@ void MainScene::loop_event()
 
         if(Mouse::isButtonPressed(Mouse::Left))
         {
-            pos.push_back(rect.getPosition() - board.getPosition() - off);
+            Vector2f v = rect.getPosition() - board.getPosition() - off;
+            v.x = (int) v.x / scl;
+            v.y = (int) v.y / scl;
+
+            pos.push_back(v);
         }
 
 
@@ -148,7 +142,7 @@ void MainScene::render()
         RectangleShape r{};
 
         Vector2f v = pos[i];
-        setup_rect(r, v.x, v.y);
+        setup_rect(r, v.x * scl, v.y * scl);
 
         if(board.getGlobalBounds().intersects(r.getGlobalBounds()))
         {
