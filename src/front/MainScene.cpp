@@ -8,7 +8,10 @@ MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180
     init();
 }
 
-MainScene::~MainScene() {}
+MainScene::~MainScene()
+{
+
+}
 
 void MainScene::init()
 {
@@ -38,117 +41,115 @@ void MainScene::loop_event()
         pos_mouse = Mouse::getPosition(menu);
         mouse_coord = menu.mapPixelToCoords(pos_mouse);
 
-        if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+        if(event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
         {
-            // cout << event.mouseWheelScroll.delta << endl;
             int d = event.mouseWheelScroll.delta;
-            if (d != -1 && d != 1)
-                break;
-            // if(scl <= 40 && d == -1) break;
+            if(d != -1 && d != 1) break;
             scl += event.mouseWheelScroll.delta;
         }
+
     }
 
-    if (!app && !disp && Mouse::isButtonPressed(Mouse::Right))
+    if(!app && !disp && Mouse::isButtonPressed(Mouse::Right))
     {
-        if (right_pressed)
+        if(right_pressed)
         {
             Vector2f dv = mouse_coord - old_pos;
             off += dv;
-        }
-        else
-            right_pressed = true;
+        } else right_pressed = true;
         old_pos = mouse_coord;
-    }
-    else
-    {
+    } else {
         right_pressed = false;
     }
 
-    if (board.getGlobalBounds().contains(mouse_coord))
+    if(board.getGlobalBounds().contains(mouse_coord))
     {
-        Vector2f m = mouse_coord - board.getPosition() - off;
-        if (m.x < 0)
-            m.x -= scl;
+        Vector2f m = mouse_coord - board.getPosition() - off; 
+        if(m.x < 0) m.x -= scl;
         int x = m.x / scl;
         x *= scl;
-        if (m.y < 0)
-            m.y -= scl;
+        if(m.y < 0) m.y -= scl;
         int y = m.y / scl;
         y *= scl;
-
+        
+      
         setup_rect(rect, x, y);
 
         Color c{0, 0, 255, 100};
 
         rect.setFillColor(c);
 
-        if (Mouse::isButtonPressed(Mouse::Left))
+        if(Mouse::isButtonPressed(Mouse::Left))
         {
             Vector2f v = rect.getPosition() - board.getPosition() - off;
-            v.x = (int)v.x / scl;
-            v.y = (int)v.y / scl;
-
+            if(rect.getPosition().x <= board.getPosition().x + 0.1) v.x = (int) v.x / scl - 1;
+            else v.x = (int) v.x / scl;
+            if(rect.getPosition().y <= board.getPosition().y + 0.1) v.y = (int) v.y / scl - 1;
+            else v.y = (int) v.y / scl;
             pos.push_back(v);
+
         }
-    }
-    else
+
+
+    } else 
     {
         rect.setFillColor(Color::Transparent);
     }
 }
 
-void MainScene::setup_rect(RectangleShape &r, float x, float y)
-{
+void MainScene::setup_rect(RectangleShape &r, float  x, float y)
+{  
     int sclX = scl;
     int sclY = scl;
-    if (x < -off.x)
+    if(x < -off.x) 
     {
         sclX = x + off.x + scl;
         x = -off.x;
     }
-    if (y < -off.y)
+    if(y < -off.y)
     {
         sclY = y + off.y + scl;
         y = -off.y;
     }
-    if (x + scl > board.getGlobalBounds().width - off.x)
-        sclX = -x + board.getGlobalBounds().width - off.x;
-    if (y + scl > board.getGlobalBounds().height - off.y)
-        sclY = -y + board.getGlobalBounds().height - off.y;
+    if(x + scl > board.getGlobalBounds().width - off.x) sclX = - x + board.getGlobalBounds().width - off.x;
+    if(y + scl > board.getGlobalBounds().height - off.y) sclY = - y + board.getGlobalBounds().height - off.y;
 
     r.setSize(Vector2f(sclX, sclY));
 
+
     r.setPosition(Vector2f(x, y) + board.getPosition() + off);
+
+
 }
+
 
 void MainScene::render()
 {
-    if (app)
-        display();
-    if (disp)
+    if(app) display();
+    if(disp)
     {
         dispose();
-        if (!disp)
-        {
-            // CHANGEMENT DE SCENE
+        if(!disp) {
+            //CHANGEMENT DE SCENE
         }
     }
     menu.draw(scoreBoard);
     menu.draw(board);
     menu.draw(rect);
-    for (size_t i = 0; i < pos.size(); i++)
+    for(size_t i = 0; i < pos.size(); i++)
     {
         RectangleShape r{};
 
         Vector2f v = pos[i];
         setup_rect(r, v.x * scl, v.y * scl);
+        if(r.getSize().x < 0 || r.getSize().y < 0) continue; 
 
-        if (board.getGlobalBounds().intersects(r.getGlobalBounds()))
+        if(r.getGlobalBounds().intersects(board.getGlobalBounds()))
         {
-            r.setFillColor(Color::Green);
+            r.setFillColor(Color::Green); 
             menu.draw(r);
         }
+
     }
 }
 
@@ -158,24 +159,22 @@ void MainScene::display()
     bool f2 = false;
 
     Vector2f pos_s = scoreBoard.getPosition();
-    if (pos_s.x > (menu.get_width() * 4.0) / 5)
+    if(pos_s.x > (menu.get_width() * 4.0) / 5)
     {
         pos_s.x -= menu.get_width() / (5.0 * 420);
         scoreBoard.setPosition(pos_s);
-    }
-    else
-        f1 = true;
+    } else f1 = true;
 
     pos_s = board.getPosition();
-    if (pos_s.y > (menu.get_height() / 36))
+    if(pos_s.y > (menu.get_height() / 36))
     {
         pos_s.y -= menu.get_height() / (36.0 * 30);
         board.setPosition(pos_s);
-    }
-    else
-        f2 = true;
-    if (f1 && f2)
-        app = false;
+    } else f2 = true;
+    if(f1 && f2) app = false;
 }
 
-void MainScene::dispose() {}
+void MainScene::dispose()
+{
+
+}
