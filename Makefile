@@ -9,6 +9,7 @@ OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/P
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o
 
 TARGET=main
+TTARGET=test
 
 all: $(TARGET)
 	./$(TARGET)
@@ -51,14 +52,17 @@ obj/DomPiece.o: src/back/DomPiece.cpp include/back/DomPiece.hpp include/back/Pie
 
 #==== Clean rule =====#
 clean:
-	rm -rf obj/ $(TARGET) $()
+	rm -rf obj/ $(TARGET) test
 
 #==== Tests ====# 
-test : testobj
-	./test 
+t: $(TTARGET)
+	./$(TTARGET)
 
-testobj : $(TEST_OBJ)
-	$(CC) -o test $(TEST_OBJ)
+memtest: test $(TEST_OBJ)
+	valgrind ./$(TTARGET)
+
+test: $(TEST_OBJ)
+	$(CC) -o $(TTARGET) $(TEST_OBJ)
 
 obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp
 	$(OBJ_DIR)
