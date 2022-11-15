@@ -16,6 +16,8 @@ protected:
     int color;
 
 public:
+    virtual ~Piece();
+
     void rotate();
     virtual int connectable(Piece &p, int pDir) = 0;
     virtual int getEarnedValue(Piece &p, int pDir) = 0;

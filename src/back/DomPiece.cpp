@@ -15,6 +15,9 @@ DomPiece::DomPiece() : tab{}
       tab[i][j] = rand() % 5;
 }
 
+/** Destructor */
+DomPiece::~DomPiece() {}
+
 /**
  * Find the direction on which the current Piece can be connected to a given one.
  * @param p A reference to a Piece.

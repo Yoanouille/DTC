@@ -1,5 +1,9 @@
 #include "back/DomPiece.hpp"
+#include "back/TraxPiece.hpp"
+#include "back/Sack.hpp"
+
 #include <iostream>
+#include <string>
 using namespace std;
 
 /**
@@ -35,10 +39,58 @@ void testDomPiece()
 }
 
 /**
+ * Test function for TraxPiece
+ *
+ * It just verifies that the two types of pieces are correctly generated.
+ */
+void testTraxPiece()
+{
+    TraxPiece t1{};
+
+    cout << "==== Trax Recto ====" << endl;
+    cout << t1 << endl;
+
+    cout << "==== Trax Verso ====" << endl;
+    t1.flip();
+    cout << t1 << endl;
+}
+
+/**
+ * Test function dor Sack
+ *
+ * Generates a Sack for each game.
+ * Checklist :
+ * - All the Pieces are correctly generated ?
+ * - draw function works ?
+ * - Memory test ?
+ */
+void testSack()
+{
+    // TODO
+}
+
+/**
  * Main function for tests.
  */
 int main()
 {
-    testDomPiece();
+    string request{};
+    while (request.size() == 0 || request != "quit")
+    {
+        cout << "Enter a test" << endl;
+        cin >> request;
+
+        if (request == "quit")
+            return EXIT_SUCCESS;
+        else if (request == "dom")
+            testDomPiece();
+        else if (request == "trax")
+            testTraxPiece();
+        else
+            cout << "Unknown Test. Please try again" << endl;
+
+        cout << endl;
+    }
+
     return EXIT_SUCCESS;
 }
