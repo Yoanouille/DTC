@@ -8,8 +8,8 @@
 // https://stackoverflow.com/questions/30263303/stdarray-vs-array-performance
 #include <array>
 
-// For basic tests through printing
-#include <ostream>
+// For building string to print
+#include <string>
 
 #include "Piece.hpp"
 
@@ -24,7 +24,6 @@ public:
     virtual ~DomPiece();
     int connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
-
-    friend std::ostream &operator<<(std::ostream &out, const DomPiece &p);
+    std::string toString() const override;
 };
 #endif

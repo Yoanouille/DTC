@@ -1,5 +1,6 @@
 #include "back/DomPiece.hpp"
 using namespace std;
+#include <iostream>
 
 /**
  * Constructor
@@ -54,18 +55,27 @@ int DomPiece::getEarnedValue(Piece &p, int pDir)
 }
 
 /**
- * Printing function
+ * Create a String for printing.
+ * It will generate the following string
+ * ---- DomPiece ----
+ *  a b c
+ * d     g
+ * e     h
+ * f     i
+ *  j k l
  */
-ostream &operator<<(ostream &out, const DomPiece &p)
+string DomPiece::toString() const
 {
-  for (size_t i = 0; i < 4; i++)
-  {
-    out << "---- Direction " << i << " ----" << endl;
-    out << "[";
-    for (size_t j = 0; j < 2; j++)
-      out << p.tab[i][j] << ", ";
+  string s{"---- DomPiece ----\n "};
+  for (size_t j = 0; j < 3; j++)
+    s += to_string(tab[0][j]) + " ";
+  s += "\n";
 
-    out << p.tab[i][2] << "]" << endl;
-  }
-  return out;
+  for (size_t j = 0; j < 3; j++)
+    s += to_string(tab[1][2 - j]) + "     " + to_string(tab[3][j]) + "\n";
+  s += " ";
+  for (size_t j = 0; j < 3; j++)
+    s += to_string(tab[2][j]) + " ";
+
+  return s;
 }

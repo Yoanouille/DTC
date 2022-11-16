@@ -2,6 +2,7 @@
 #define TRAXPIECE_H
 
 #include <ostream>
+#include <string>
 
 #include "Piece.hpp"
 
@@ -18,10 +19,9 @@ public:
 
     int connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
+    std::string toString() const override;
 
     void flip();
-
-    friend std::ostream &operator<<(std::ostream &out, const TraxPiece &p);
 };
 
 #endif

@@ -37,22 +37,21 @@ void TraxPiece::flip()
 }
 
 /**
- * Printing function
+ * toString method
+ * create the following string
+ * ---- Trax : Recto/Verso ----
+ *  a
+ * b c
+ *  d
  */
-ostream &operator<<(ostream &out, const TraxPiece &p)
+string TraxPiece::toString() const
 {
-
-    if (p.isRecto)
-        out << "Recto" << endl;
+    string s{""};
+    if (isRecto)
+        s += "---- Trax : Recto ----\n ";
     else
-        out << "Verso" << endl;
+        s += "---- Trax : Verso ----\n ";
 
-    out << "[ ";
-    for (bool b : p.tab)
-    {
-        out << b << " ";
-    }
-    out << "]";
-
-    return out;
+    s += to_string(tab[0]) + "\n" + to_string(tab[1]) + " " + to_string(tab[3]) + "\n " + to_string(tab[2]);
+    return s;
 }

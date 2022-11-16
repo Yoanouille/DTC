@@ -47,10 +47,10 @@ void testTraxPiece()
 {
     TraxPiece t1{};
 
-    cout << "==== Trax Recto ====" << endl;
+    // Test recto
     cout << t1 << endl;
 
-    cout << "==== Trax Verso ====" << endl;
+    // Test verso
     t1.flip();
     cout << t1 << endl;
 }
@@ -80,9 +80,7 @@ int main()
         cout << "Enter a test" << endl;
         cin >> request;
 
-        if (request == "quit")
-            return EXIT_SUCCESS;
-        else if (request == "dom")
+        if (request == "dom")
             testDomPiece();
         else if (request == "trax")
             testTraxPiece();
