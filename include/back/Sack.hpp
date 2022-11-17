@@ -16,7 +16,7 @@ private:
     int size;
     std::vector<Piece *> sack;
 
-    // Used in Trax and Carcassonne that use specific pieces.
+    // Used in Carcassonne that uses specific piece.
     void shuffle();
 
     // Initializes the Sacks depending on the gamemode.

@@ -21,6 +21,7 @@ Sack::Sack(int s, int gamemode) : index{0}, size{s}, sack{}
         break;
     case 2:
         initCarcassonne();
+        shuffle();
         break;
     default:
         throw UnknownGamemodeException();
@@ -63,6 +64,11 @@ void Sack::initTrax()
 }
 
 void Sack::initCarcassonne()
+{
+    // TODO
+}
+
+void Sack::shuffle()
 {
     // TODO
 }

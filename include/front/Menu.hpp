@@ -1,5 +1,5 @@
-#ifndef MENU_HPP
-#define MENU_HPP
+#ifndef MENU_H
+#define MENU_H
 
 #include <SFML/Graphics.hpp>
 #include "Scene.hpp"

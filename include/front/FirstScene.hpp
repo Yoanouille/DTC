@@ -1,54 +1,53 @@
-#ifndef FIRSTSCENE_HPP
-#define FIRSTSCENE_HPP
+#ifndef FIRSTSCENE_H
+#define FIRSTSCENE_H
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "Menu.hpp"
 #include "Scene.hpp"
 
+#include <iostream>
 
 class FirstScene : public Scene
 {
-    private:
+private:
+    // Current window (needed to draw and to change scene)
+    Menu &menu;
 
-        //current window (needed to draw and to change scene)
-        Menu &menu;
+    // Font of the text
+    sf::Font font;
 
-        //Font of the text
-        sf::Font font;
+    // Vector of string that store all the texts.
+    std::vector<std::string> options;
 
-        //vector of string that store the string of the texts
-        std::vector<std::string> options;
+    // Vector of texts
+    std::vector<sf::Text> texts;
 
-        //vector of texts
-        std::vector<sf::Text> texts;
+    // Position of the mouse on the screen
+    sf::Vector2i pos_mouse;
 
-        //position of the mouse on the screen
-        sf::Vector2i pos_mouse;
+    // Coordinates of the mouse in the window
+    sf::Vector2f mouse_coord;
 
-        //coordonne of the mouse in the window
-        sf::Vector2f mouse_coord;
+    // if disappearing
+    bool disp;
 
-        //if disappearing
-        bool disp;
+    // if appearing
+    bool app;
 
-        //if appearing
-        bool app;
+    // count frame % 60
+    int frame;
 
-        //count frame % 60
-        int frame;
+    void init();
 
-        void init();
+public:
+    FirstScene(Menu &m);
+    virtual ~FirstScene();
+    void loop_event();
+    void render();
 
-    public:
-        FirstScene(Menu &m);
-        virtual ~FirstScene();
-        void loop_event();
-        void render();
-
-        void dispose();
-        void display();
-
+    void dispose();
+    void display();
 };
 
 #endif

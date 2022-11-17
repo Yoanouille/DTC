@@ -70,6 +70,8 @@ void testTraxPiece()
  * - Unknown Gamemode ?
  * - draw function works ?
  * - Memory test ?
+ *
+ * - For Carcassonne : shuffle works ?
  */
 void testSack()
 {

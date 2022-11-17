@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+// Useless ??
 enum class Direction
 {
     UP = 0,
@@ -11,6 +12,7 @@ enum class Direction
     RIGHT = 3
 };
 
+// Abstract class
 class Piece
 {
 protected:
