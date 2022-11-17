@@ -4,10 +4,6 @@
 // For rand() method
 #include <cstdlib>
 
-// Seems better than usual array
-// https://stackoverflow.com/questions/30263303/stdarray-vs-array-performance
-#include <array>
-
 // For building string to print
 #include <string>
 
@@ -17,7 +13,7 @@ class DomPiece : public Piece
 {
 private:
     // DomPieces have constant length : 4 sides with 3 values on each side.
-    std::array<std::array<int, 3>, 4> tab;
+    int tab[4][3];
 
 public:
     DomPiece();
