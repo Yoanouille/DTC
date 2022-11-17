@@ -20,7 +20,7 @@ protected:
 public:
     virtual ~Piece();
 
-    void rotate();
+    void rotate(bool clockwise);
     virtual int connectable(Piece &p, int pDir) = 0;
     virtual int getEarnedValue(Piece &p, int pDir) = 0;
     virtual std::string toString() const = 0;

@@ -1,6 +1,5 @@
 #include "back/DomPiece.hpp"
 using namespace std;
-#include <iostream>
 
 /**
  * Constructor
@@ -13,7 +12,7 @@ DomPiece::DomPiece() : tab{}
 {
   for (size_t i = 0; i < 4; i++)
     for (size_t j = 0; j < 3; j++)
-      tab[i][j] = rand() % 5;
+      tab[i][j] = rand() % 2;
 }
 
 /** Destructor */
@@ -29,8 +28,14 @@ DomPiece::~DomPiece() {}
 int DomPiece::connectable(Piece &p, int pDir)
 {
   for (int dir = 0; dir < 4; dir++)
-    if (tab[dir] == ((DomPiece &)p).tab[pDir])
+  {
+    bool found = true;
+    for (int j = 0; j < 3; j++)
+      if (tab[dir][2 - j] != ((DomPiece &)p).tab[pDir][j])
+        found = false;
+    if (found)
       return dir;
+  }
   return -1;
 }
 
@@ -75,7 +80,7 @@ string DomPiece::toString() const
     s += to_string(tab[1][2 - j]) + "     " + to_string(tab[3][j]) + "\n";
   s += " ";
   for (size_t j = 0; j < 3; j++)
-    s += to_string(tab[2][j]) + " ";
+    s += to_string(tab[2][2 - j]) + " ";
 
   return s;
 }

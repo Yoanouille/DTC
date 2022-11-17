@@ -21,11 +21,17 @@ int Piece::getColor() const
 }
 
 /**
- * Rotate the Piece
+ * Rotate the Piece following a direction
+ * that is clockwise or counterclockwise
+ *
+ * @param clockwise A boolean equals to true if the rotation is in clockwise direction.
  */
-void Piece::rotate()
+void Piece::rotate(bool clockwise)
 {
-    direction = (direction + 1) % 4;
+    if (clockwise)
+        direction = (direction + 3) % 4;
+    else
+        direction = (direction + 1) % 4;
 }
 
 /**
