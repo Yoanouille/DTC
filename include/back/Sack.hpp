@@ -30,7 +30,7 @@ public:
 
     Piece *draw();
 
-    friend std::ostream &operator<<(std::ostream &out, const Sack s);
+    friend std::ostream &operator<<(std::ostream &out, const Sack &s);
 };
 
 // Exception used in Sack's constructor

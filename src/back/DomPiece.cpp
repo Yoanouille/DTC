@@ -71,7 +71,7 @@ int DomPiece::getEarnedValue(Piece &p, int pDir)
  */
 string DomPiece::toString() const
 {
-  string s{"---- DomPiece ----\n "};
+  string s{" "};
   for (size_t j = 0; j < 3; j++)
     s += to_string(tab[0][j]) + " ";
   s += "\n";

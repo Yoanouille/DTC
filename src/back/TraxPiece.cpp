@@ -46,12 +46,7 @@ void TraxPiece::flip()
  */
 string TraxPiece::toString() const
 {
-    string s{""};
-    if (isRecto)
-        s += "---- Trax : Recto ----\n ";
-    else
-        s += "---- Trax : Verso ----\n ";
-
+    string s{" "};
     s += to_string(tab[0]) + "\n" + to_string(tab[1]) + " " + to_string(tab[3]) + "\n " + to_string(tab[2]);
     return s;
 }

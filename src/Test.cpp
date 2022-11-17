@@ -41,17 +41,23 @@ void testDomPiece()
 /**
  * Test function for TraxPiece
  *
- * It just verifies that the two types of pieces are correctly generated.
+ * It just verifies that the two types of pieces are correctly generated and flip works.
  */
 void testTraxPiece()
 {
     TraxPiece t1{};
 
     // Test recto
+    cout << "==== Recto ==== " << endl;
     cout << t1 << endl;
 
     // Test verso
     t1.flip();
+    cout << "==== Verso ====" << endl;
+    cout << t1 << endl;
+
+    t1.flip();
+    cout << "==== Recto again ====" << endl;
     cout << t1 << endl;
 }
 
@@ -61,12 +67,35 @@ void testTraxPiece()
  * Generates a Sack for each game.
  * Checklist :
  * - All the Pieces are correctly generated ?
+ * - Unknown Gamemode ?
  * - draw function works ?
  * - Memory test ?
  */
 void testSack()
 {
-    // TODO
+    Sack domSack{5, 0};
+    Sack traxSack{5, 1};
+
+    cout << "---- DomPieces ----" << endl;
+    cout << domSack << endl;
+    cout << "---- TraxPieces ----" << endl;
+    cout << traxSack << endl;
+
+    cout << "==== Unknwown Gamemode Test" << endl;
+    try
+    {
+        Sack unknown{5, 3};
+        cout << " Failure" << endl;
+    }
+    catch (UnknownGamemodeException &e)
+    {
+        cout << " Success" << endl;
+    }
+
+    cout << "==== Draw Test ====" << endl;
+    cout << *(domSack.draw()) << endl;
+    cout << "---- DomSack after draw ----" << endl;
+    cout << domSack << endl;
 }
 
 /**
@@ -84,7 +113,9 @@ int main()
             testDomPiece();
         else if (request == "trax")
             testTraxPiece();
-        else
+        else if (request == "sack")
+            testSack();
+        else if (request != "quit")
             cout << "Unknown Test. Please try again" << endl;
 
         cout << endl;

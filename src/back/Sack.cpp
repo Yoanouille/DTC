@@ -83,9 +83,14 @@ Piece *Sack::draw()
 /**
  * Printing function
  */
-ostream &operator<<(ostream &out, const Sack s)
+ostream &operator<<(ostream &out, const Sack &s)
 {
-    // TODO
+    out << "==== Sack : " << s.size << " ====" << endl;
+    out << "## Pointed index : " << s.index << endl;
+    for (Piece *p : s.sack)
+        out << *p << endl;
+    out << endl;
+
     return out;
 }
 
