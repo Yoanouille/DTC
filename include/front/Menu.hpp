@@ -6,19 +6,26 @@
 #include <iostream>
 #include <string>
 
+//Class that represents the window
 class Menu : public sf::RenderWindow
 {
     private:
+
+        //Dimension
         int width;
         int height;
 
 
+        //current Scene
         Scene *sc;
+        //old current Scene
         Scene *old_sc;
 
+        //image, currently store the background
         sf::Texture image;
-        sf::Sprite bg;
 
+        //Sprite of the background, need image
+        sf::Sprite bg;
 
         void init();
         void loop_event();
@@ -27,6 +34,8 @@ class Menu : public sf::RenderWindow
     public:
         Menu();
         virtual ~Menu();
+
+        //launch the event loop and the render loop
         void run_menu();
 
         int get_height() const;

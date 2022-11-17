@@ -3,22 +3,34 @@
 using namespace sf;
 using namespace std;
 
+/**
+ * Constructor
+ * Initialize some variables, call init()
+*/
 MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, app{true}
 {
     init();
 }
 
+/**
+ * Destructor
+*/
 MainScene::~MainScene()
 {
 
 }
 
+/**
+ * initialize the scene
+*/
 void MainScene::init()
 {
+    //setup the scoreboard
     scoreBoard.setSize(Vector2f(menu.get_width() / 5, menu.get_height()));
     scoreBoard.setPosition(Vector2f((menu.get_width() * 6.0) / 5, 0));
     scoreBoard.setFillColor(Color::White);
 
+    //setup the board
     double dx = (menu.get_width() - scoreBoard.getSize().x);
     board.setSize(Vector2f(dx * 15.0 / 16, menu.get_height() * 17 / 18));
     board.setPosition(Vector2f(menu.get_width() / 32.0, menu.get_height() * 38.0 / 36));
@@ -30,6 +42,9 @@ void MainScene::init()
     board.setFillColor(c);
 }
 
+/**
+ * Manage the event
+*/
 void MainScene::loop_event()
 {
     Event event;
@@ -41,7 +56,8 @@ void MainScene::loop_event()
         pos_mouse = Mouse::getPosition(menu);
         mouse_coord = menu.mapPixelToCoords(pos_mouse);
 
-        if(event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+        //Zooming with the mousewheel
+        if(!app && !disp && event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
         {
             int d = event.mouseWheelScroll.delta;
             if(d != -1 && d != 1) break;
@@ -50,6 +66,7 @@ void MainScene::loop_event()
 
     }
 
+    //Right click -> offset
     if(!app && !disp && Mouse::isButtonPressed(Mouse::Right))
     {
         if(right_pressed)
@@ -62,6 +79,7 @@ void MainScene::loop_event()
         right_pressed = false;
     }
 
+    //Just position of the mouse -> draw the blue rect
     if(board.getGlobalBounds().contains(mouse_coord))
     {
         Vector2f m = mouse_coord - board.getPosition() - off; 
@@ -79,6 +97,7 @@ void MainScene::loop_event()
 
         rect.setFillColor(c);
 
+        //if click -> add coord to the vector pos
         if(Mouse::isButtonPressed(Mouse::Left))
         {
             Vector2f v = rect.getPosition() - board.getPosition() - off;
@@ -97,6 +116,12 @@ void MainScene::loop_event()
     }
 }
 
+/**
+ * Change the rectangle to a new that is correctly calculated to render like the grid
+ * @param r a rectangle which is going to change
+ * @param x coord x of the mouse in the board
+ * @param y coord y of the mouse in the board
+*/
 void MainScene::setup_rect(RectangleShape &r, float  x, float y)
 {  
     int sclX = scl;
@@ -123,9 +148,14 @@ void MainScene::setup_rect(RectangleShape &r, float  x, float y)
 }
 
 
+/**
+ * Render the scene
+*/
 void MainScene::render()
 {
+    //appearing
     if(app) display();
+    //disappearing and change scene after
     if(disp)
     {
         dispose();
@@ -133,9 +163,12 @@ void MainScene::render()
             //CHANGEMENT DE SCENE
         }
     }
+    //draw scoreboard, board, the current rect of the mouse
     menu.draw(scoreBoard);
     menu.draw(board);
     menu.draw(rect);
+
+    //draw green rect in the vector pos
     for(size_t i = 0; i < pos.size(); i++)
     {
         RectangleShape r{};
@@ -153,6 +186,9 @@ void MainScene::render()
     }
 }
 
+/**
+ * When the scene is appearing
+*/
 void MainScene::display()
 {
     bool f1 = false;
@@ -161,19 +197,22 @@ void MainScene::display()
     Vector2f pos_s = scoreBoard.getPosition();
     if(pos_s.x > (menu.get_width() * 4.0) / 5)
     {
-        pos_s.x -= menu.get_width() / (5.0 * 420);
+        pos_s.x -= menu.get_width() / (5.0 * 420); //420 manage the speed
         scoreBoard.setPosition(pos_s);
     } else f1 = true;
 
     pos_s = board.getPosition();
     if(pos_s.y > (menu.get_height() / 36))
     {
-        pos_s.y -= menu.get_height() / (36.0 * 30);
+        pos_s.y -= menu.get_height() / (36.0 * 30); // 30 manage the speed
         board.setPosition(pos_s);
     } else f2 = true;
     if(f1 && f2) app = false;
 }
 
+/**
+ * When the scene is disappearing
+*/
 void MainScene::dispose()
 {
 
