@@ -1,6 +1,7 @@
 #include "back/DomPiece.hpp"
 #include "back/TraxPiece.hpp"
 #include "back/Sack.hpp"
+#include "back/VecZ.hpp"
 
 #include <iostream>
 #include <string>
@@ -100,6 +101,45 @@ void testSack()
     cout << domSack << endl;
 }
 
+void testVecZ()
+{
+    VecZ<int> v;
+    // v.insert(0, 35);
+    // v.insert(-1, 2);
+    // v.insert(-2, 3);
+    // v.insert(-3, 5);
+    // v.insert(1, 4);
+    // v.insert(8, 24);
+    // v.insert(10, 24);
+    // v.insert(15, 24);
+    // v.insert(13, 24);
+    // v.insert(21, 24);
+    // v.insert(22, 24);
+    // v.insert(-6, 7);
+    // v.insert(-50, 800);
+    // v.print();
+    v[0] = 5;
+    v[-1] = 8;
+    v[-800] = 20;
+    v[50] = 10;
+    //v.print();
+
+    VecZ<VecZ<int>> v2D;
+    for(int i = -10; i <= 10; i++)
+    {
+        for(int j = -10; j <= 10; j++)
+        {
+            v2D[i][j] = 10 * i + j;
+        }
+    }
+    for(int i = v2D.index_min; i <= v2D.index_max; i++)
+    {
+        v2D[i].print();
+    }
+
+
+}
+
 /**
  * Main function for tests.
  */
@@ -117,6 +157,8 @@ int main()
             testTraxPiece();
         else if (request == "sack")
             testSack();
+        else if(request == "vecz")
+            testVecZ();
         else if (request != "quit")
             cout << "Unknown Test. Please try again" << endl;
 

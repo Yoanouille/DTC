@@ -4,9 +4,9 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o
+OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o
 
-TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o
+TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/VecZ.o
 
 TARGET=main
 TTARGET=test
@@ -58,6 +58,10 @@ obj/Sack.o : src/back/Sack.cpp include/back/Sack.hpp include/back/Piece.hpp incl
 	$(OBJ_DIR)
 	$(CCO)
 
+obj/VecZ.o:	src/back/VecZ.cpp include/back/VecZ.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
 #==== Clean rule =====#
 clean:
 	rm -rf obj/ $(TARGET) test
@@ -69,6 +73,6 @@ memtest: test $(TEST_OBJ)
 test: $(TEST_OBJ)
 	$(CC) -o $(TTARGET) $(TEST_OBJ)
 
-obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp
+obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp include/back/VecZ.hpp
 	$(OBJ_DIR)
 	$(CCO)
