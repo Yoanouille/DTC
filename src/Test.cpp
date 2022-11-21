@@ -101,6 +101,11 @@ void testSack()
     cout << domSack << endl;
 }
 
+/**
+ * Function Test for VecZ
+ * First test with a simple vector
+ * Second test with a double vector
+*/
 void testVecZ()
 {
     cout << "==== VecZ Test ====" << endl;
