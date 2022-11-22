@@ -85,9 +85,13 @@ void MainScene::loop_event()
         Vector2f m = mouse_coord - board.getPosition() - off; 
         if(m.x < 0) m.x -= scl;
         int x = m.x / scl;
-        x *= scl;
         if(m.y < 0) m.y -= scl;
         int y = m.y / scl;
+
+        int x0 = x;
+        int y0 = y;
+
+        x *= scl;
         y *= scl;
         
       
@@ -100,11 +104,12 @@ void MainScene::loop_event()
         //if click -> add coord to the vector pos
         if(Mouse::isButtonPressed(Mouse::Left))
         {
-            Vector2f v = rect.getPosition() - board.getPosition() - off;
-            if(rect.getPosition().x <= board.getPosition().x + 0.1) v.x = (int) v.x / scl - 1;
-            else v.x = (int) v.x / scl;
-            if(rect.getPosition().y <= board.getPosition().y + 0.1) v.y = (int) v.y / scl - 1;
-            else v.y = (int) v.y / scl;
+            // Vector2f v = rect.getPosition() - board.getPosition() - off;
+            // if(rect.getPosition().x <= board.getPosition().x + 0.1) v.x = (int) v.x / scl - 1;
+            // else v.x = (int) v.x / scl;
+            // if(rect.getPosition().y <= board.getPosition().y + 0.1) v.y = (int) v.y / scl - 1;
+            // else v.y = (int) v.y / scl;
+            Vector2f v = {x0, y0};
             pos.push_back(v);
 
         }
