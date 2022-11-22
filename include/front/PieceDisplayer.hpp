@@ -16,13 +16,13 @@ protected:
     sf::Vector2i coordinates;
 
 public:
-    PieceDisplayer(Menu &m);
+    PieceDisplayer(Menu &m, int x, int y);
     virtual ~PieceDisplayer();
 
     // The Piece inherts SetRotation() from Shape
     void loop_event();
 
     // Abstract method that will be overriden.
-    virtual void render() = 0;
+    virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl);
 };
 #endif

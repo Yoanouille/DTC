@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o
+OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/VecZ.o
 
@@ -37,7 +37,15 @@ obj/FirstScene.o: src/front/FirstScene.cpp include/front/FirstScene.hpp include/
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/Menu.hpp
+obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/Menu.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/PieceDisplayer.o: src/front/PieceDisplayer.cpp include/front/PieceDisplayer.hpp include/front/Menu.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/TraxPieceDisplayer.o: src/front/TraxPieceDisplayer.cpp include/front/TraxPieceDisplayer.hpp include/front/PieceDisplayer.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

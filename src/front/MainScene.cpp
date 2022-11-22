@@ -1,4 +1,5 @@
 #include "front/MainScene.hpp"
+#include "front/TraxPieceDisplayer.hpp"
 
 using namespace sf;
 using namespace std;
@@ -109,8 +110,12 @@ void MainScene::loop_event()
             // else v.x = (int) v.x / scl;
             // if(rect.getPosition().y <= board.getPosition().y + 0.1) v.y = (int) v.y / scl - 1;
             // else v.y = (int) v.y / scl;
-            Vector2f v = {x0, y0};
-            pos.push_back(v);
+
+        
+            //Vector2f v = {x0, y0};
+            //pos.push_back(v);
+            cout << "COUCOU" << endl;
+            pos.push_back(new TraxPieceDisplayer{menu, x0, y0});
 
         }
 
@@ -174,20 +179,24 @@ void MainScene::render()
     menu.draw(rect);
 
     //draw green rect in the vector pos
-    for(size_t i = 0; i < pos.size(); i++)
+    // for(size_t i = 0; i < pos.size(); i++)
+    // {
+    //     RectangleShape r{};
+
+    //     Vector2f v = pos[i];
+    //     setup_rect(r, v.x * scl, v.y * scl);
+    //     if(r.getSize().x < 0 || r.getSize().y < 0) continue; 
+
+    //     if(r.getGlobalBounds().intersects(board.getGlobalBounds()))
+    //     {
+    //         r.setFillColor(Color::Green); 
+    //         menu.draw(r);
+    //     }
+
+    // }
+    for(PieceDisplayer *p : pos)
     {
-        RectangleShape r{};
-
-        Vector2f v = pos[i];
-        setup_rect(r, v.x * scl, v.y * scl);
-        if(r.getSize().x < 0 || r.getSize().y < 0) continue; 
-
-        if(r.getGlobalBounds().intersects(board.getGlobalBounds()))
-        {
-            r.setFillColor(Color::Green); 
-            menu.draw(r);
-        }
-
+        p->render(off, board, scl);
     }
 }
 

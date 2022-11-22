@@ -5,6 +5,7 @@
 
 #include "Menu.hpp"
 #include "Scene.hpp"
+#include "front/PieceDisplayer.hpp"
 
 #include <iostream>
 #include <vector>
@@ -37,7 +38,7 @@ private:
     sf::Vector2f mouse_coord;
 
     // different pos to draw (actually strore the green square)
-    std::vector<sf::Vector2f> pos;
+    std::vector<PieceDisplayer*> pos;
 
     // if the right button of the mouse id pressed
     bool right_pressed;

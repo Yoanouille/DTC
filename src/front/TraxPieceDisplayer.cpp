@@ -5,16 +5,25 @@ using namespace sf;
  * Constructor
  *
  */
-TraxPieceDisplayer::TraxPieceDisplayer(Menu &m) : PieceDisplayer(m)
+TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m, x, y)
 {
+    std::cout << "BLAOUCOU" << std::endl;
     image.loadFromFile("resources/images/traxR.png");
     sprite.setTexture(image);
 }
 
 TraxPieceDisplayer::~TraxPieceDisplayer() {}
 
-void TraxPieceDisplayer::render()
+void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
 {
+    std::cout << "OUCOU" << std::endl;
+    Vector2f v = {coordinates.x * scl, coordinates.y * scl};
+    this->setPosition(v + board.getPosition() + off);
+    this->setSize({scl, scl});
+    if(this->getGlobalBounds().intersects(board.getGlobalBounds()))
+    {
+        menu.draw(*this);
+    }
 }
 
 // The Piece inherts rotate() from Shape

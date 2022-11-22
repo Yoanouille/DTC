@@ -13,13 +13,13 @@ private:
     sf::Sprite sprite;
 
 public:
-    TraxPieceDisplayer(Menu &m);
+    TraxPieceDisplayer(Menu &m, int x, int y);
     virtual ~TraxPieceDisplayer();
 
     // The Piece inherts rotate() from Shape
     void loop_event();
 
-    void render();
+    void render(sf::Vector2f &off, sf::RectangleShape &board, int scl);
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "front/PieceDisplayer.hpp"
 using namespace sf;
 
-PieceDisplayer::PieceDisplayer(Menu &m) : menu{m} {}
+PieceDisplayer::PieceDisplayer(Menu &m, int x, int y) : menu{m}, coordinates{x,y} {}
 
 PieceDisplayer::~PieceDisplayer() {}
 
@@ -26,3 +26,8 @@ PieceDisplayer::~PieceDisplayer() {}
 //         }
 //     }
 // }
+
+void PieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
+{
+
+}
