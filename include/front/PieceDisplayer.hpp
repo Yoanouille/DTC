@@ -8,10 +8,7 @@
 
 class PieceDisplayer : public sf::RectangleShape
 {
-private:
-    // The Piece we attach the graphic element.
-    Piece &piece;
-
+protected:
     // Application's window that catch the events
     Menu &menu;
 
@@ -19,6 +16,7 @@ private:
     sf::Vector2i coordinates;
 
 public:
+    PieceDisplayer(Menu &m);
     virtual ~PieceDisplayer();
 
     // The Piece inherts SetRotation() from Shape
