@@ -19,10 +19,10 @@ public:
     PieceDisplayer(Menu &m, int x, int y);
     virtual ~PieceDisplayer();
 
-    // The Piece inherts SetRotation() from Shape
-    void loop_event();
+    // The Piece inherts rotation() from Shape
+    virtual void loop_event() = 0;
 
     // Abstract method that will be overriden.
-    virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl);
+    virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) = 0;
 };
 #endif

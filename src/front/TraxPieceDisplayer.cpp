@@ -1,30 +1,49 @@
 #include "front/TraxPieceDisplayer.hpp"
 using namespace sf;
+using namespace std;
+
+/**
+ * Static method that loads TraxPiece's Recto and Verso Textures.
+ * If Textures can't be loaded, print an error on standard error
+ * but the program remains running.
+ */
+void TraxPieceDisplayer::loadTextures()
+{
+    if (!TraxPieceDisplayer::textureRecto.loadFromFile("resources/images/traxR.png"))
+        cerr << "TraxPiece's Texture Loading Failed : traxR.png" << endl;
+
+    if (!TraxPieceDisplayer::textureVerso.loadFromFile("resources/images/traxV.png"))
+        cerr << "TraxPiece's Texture Loading Failed : traxR.png" << endl;
+}
 
 /**
  * Constructor
- *
  */
 TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m, x, y)
 {
-    image.loadFromFile("resources/images/traxR.png");
-    sprite.setTexture(image);
+    setTexture(&textureRecto);
 }
 
+/**
+ * Destructor
+ */
 TraxPieceDisplayer::~TraxPieceDisplayer() {}
 
+/**
+ * Rendering function
+ */
 void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
 {
     Vector2f v = {coordinates.x * scl, coordinates.y * scl};
     this->setPosition(v + board.getPosition() + off);
     this->setSize({scl, scl});
-    if(this->getGlobalBounds().intersects(board.getGlobalBounds()))
-    {
+    if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
         menu.draw(*this);
-    }
 }
 
-// The Piece inherts rotate() from Shape
+/**
+ * Event loop
+ */
 void TraxPieceDisplayer::loop_event()
 {
     Event event;
