@@ -12,16 +12,13 @@ private:
     static sf::Texture textureRecto;
     static sf::Texture textureVerso;
 
-    // Loading method
-    static void loadTextures();
-
     // The TraxPiece we attach our displayer to
     TraxPiece *piece;
 
-    // Independant displaying of the Texture fir a single Piece.
-    sf::Sprite sprite;
-
 public:
+    // Loading method
+    static void loadTextures();
+
     TraxPieceDisplayer(Menu &m, int x, int y);
     virtual ~TraxPieceDisplayer();
 

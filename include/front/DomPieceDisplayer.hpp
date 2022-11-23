@@ -16,6 +16,6 @@ public:
     DomPieceDisplayer(Menu &m, DomPiece &p);
     virtual ~DomPieceDisplayer();
 
-    void render() override;
+    void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
 };
 #endif

@@ -5,12 +5,11 @@ using namespace std;
 
 /**
  * Constructor
-*/
+ */
 FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, app{true}, speed{20}
 {
     init();
 }
-
 
 /** Destructor */
 FirstScene::~FirstScene()
@@ -20,10 +19,10 @@ FirstScene::~FirstScene()
 /** Initialize the Scene */
 void FirstScene::init()
 {
-    //load font
+    // load font
     font.loadFromFile("resources/font/Hylia.otf");
 
-    //setup texts
+    // setup texts
     options = {"Domino", "Trax", "Carcassonne"};
     texts.resize(options.size());
     for (std::size_t i{}; i < texts.size(); ++i)
@@ -39,7 +38,7 @@ void FirstScene::init()
     }
 }
 
-//Manage event
+// Manage event
 void FirstScene::loop_event()
 {
 
@@ -73,9 +72,9 @@ void FirstScene::loop_event()
         {
             Color c = texts[i].getFillColor();
             if (c.g >= speed)
-                c.g -= speed; //speed
+                c.g -= speed; // speed
             if (c.b >= speed)
-                c.b -= speed; //speed
+                c.b -= speed; // speed
 
             texts[i].setFillColor(c);
         }
@@ -83,9 +82,9 @@ void FirstScene::loop_event()
         {
             Color c = texts[i].getFillColor();
             if (c.g < 255 - speed)
-                c.g += speed; //speed
+                c.g += speed; // speed
             if (c.b < 255 - speed)
-                c.b += speed; //speed
+                c.b += speed; // speed
 
             texts[i].setFillColor(c);
         }
@@ -94,7 +93,7 @@ void FirstScene::loop_event()
 
 void FirstScene::render()
 {
-    if (app) //frame mod 2 to slow the disappearing on my screen
+    if (app) // frame mod 2 to slow the disappearing on my screen
         display();
     if (disp)
     {
@@ -105,17 +104,16 @@ void FirstScene::render()
             menu.setScene(2);
         }
     }
-    //draw text
+    // draw text
     for (Text &t : texts)
     {
         menu.draw(t);
     }
 }
 
-
 /**
  * Disappearing of the scene
-*/
+ */
 void FirstScene::dispose()
 {
     if (!disp)
@@ -134,7 +132,7 @@ void FirstScene::dispose()
 
 /**
  * Appearing of the Scene
-*/
+ */
 void FirstScene::display()
 {
     for (Text &t : texts)

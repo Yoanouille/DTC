@@ -6,10 +6,13 @@ using namespace std;
  * There are 2 kinds of TraxPiece : Recto(Crossroad) and Verso
  * The piece is on Recto by default.
  */
-TraxPiece::TraxPiece() : tab{false, true, false, true}, isRecto{true} {}
+TraxPiece::TraxPiece() : tab{false, true, false, true}, recto{true} {}
 
 /** Destructor */
 TraxPiece ::~TraxPiece() {}
+
+/** Getter */
+bool TraxPiece::isRecto() const { return recto; }
 
 /** Overriden function */
 int TraxPiece::connectable(Piece &p, int pDir) { return true; }
@@ -22,7 +25,7 @@ int TraxPiece::getEarnedValue(Piece &p, int pDir) { return 0; }
  */
 void TraxPiece::flip()
 {
-    if (isRecto)
+    if (recto)
     {
         tab[0] = true;
         tab[1] = false;
@@ -33,7 +36,7 @@ void TraxPiece::flip()
         tab[1] = true;
     }
 
-    isRecto = !isRecto;
+    recto = !recto;
 }
 
 /**

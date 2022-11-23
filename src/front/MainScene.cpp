@@ -37,6 +37,10 @@ void MainScene::init()
     // RGBA format
     Color c{0, 0, 0, 200};
     board.setFillColor(c);
+
+    // Load Piece's Textures
+    // TODO : Adapt it to different gamemodes.
+    TraxPieceDisplayer::loadTextures();
 }
 
 /**
