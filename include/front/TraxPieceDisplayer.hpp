@@ -9,8 +9,8 @@ class TraxPieceDisplayer : public PieceDisplayer
 private:
     // Static textures that will be loaded once and for all
     // (It is recommended to use the least number of texture)
-    static sf::Texture &textureRecto;
-    static sf::Texture &textureVerso;
+    static sf::Texture textureRecto;
+    static sf::Texture textureVerso;
 
     // Loading method
     static void loadTextures();
