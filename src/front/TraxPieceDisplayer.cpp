@@ -7,7 +7,6 @@ using namespace sf;
  */
 TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m, x, y)
 {
-    std::cout << "BLAOUCOU" << std::endl;
     image.loadFromFile("resources/images/traxR.png");
     sprite.setTexture(image);
 }
@@ -16,7 +15,6 @@ TraxPieceDisplayer::~TraxPieceDisplayer() {}
 
 void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
 {
-    std::cout << "OUCOU" << std::endl;
     Vector2f v = {coordinates.x * scl, coordinates.y * scl};
     this->setPosition(v + board.getPosition() + off);
     this->setSize({scl, scl});

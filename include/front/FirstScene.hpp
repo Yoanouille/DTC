@@ -35,8 +35,7 @@ private:
     // if appearing
     bool app;
 
-    // count frame % 60
-    int frame;
+    int speed;
 
     void init();
 

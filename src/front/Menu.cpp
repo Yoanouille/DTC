@@ -61,10 +61,21 @@ void Menu::render()
  */
 void Menu::run_menu()
 {
+    sf::Clock clock;
+    float lastTime = 0;
+   
     while (this->isOpen())
     {
-        loop_event();
-        render();
+        //Settings for the 30FPS
+        float currentTime = clock.restart().asSeconds();
+        lastTime += currentTime;
+        if(lastTime >= 1.0 / 30) {
+            float fps = 1.f / (lastTime);
+            //std::cout << fps << std::endl;
+            lastTime = currentTime;
+            loop_event();
+            render();
+        }
     }
 }
 

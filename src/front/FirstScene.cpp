@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Constructor
 */
-FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, app{true}, frame{0}
+FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, app{true}, speed{20}
 {
     init();
 }
@@ -72,20 +72,20 @@ void FirstScene::loop_event()
         if (texts[i].getGlobalBounds().contains(mouse_coord))
         {
             Color c = texts[i].getFillColor();
-            if (c.g >= 1)
-                c.g -= 1; //speed
-            if (c.b >= 1)
-                c.b -= 1; //speed
+            if (c.g >= speed)
+                c.g -= speed; //speed
+            if (c.b >= speed)
+                c.b -= speed; //speed
 
             texts[i].setFillColor(c);
         }
         else
         {
             Color c = texts[i].getFillColor();
-            if (c.g < 255)
-                c.g += 1; //speed
-            if (c.b < 255)
-                c.b += 1; //speed
+            if (c.g < 255 - speed)
+                c.g += speed; //speed
+            if (c.b < 255 - speed)
+                c.b += speed; //speed
 
             texts[i].setFillColor(c);
         }
@@ -94,11 +94,9 @@ void FirstScene::loop_event()
 
 void FirstScene::render()
 {
-    frame++;
-    frame %= 60;
-    if (app && frame % 2 == 0) //frame mod 2 to slow the disappearing on my screen
+    if (app) //frame mod 2 to slow the disappearing on my screen
         display();
-    if (disp && frame % 2 == 0)
+    if (disp)
     {
         dispose();
         if (!disp)
@@ -125,9 +123,9 @@ void FirstScene::dispose()
     for (Text &t : texts)
     {
         Color c = t.getFillColor();
-        c.a -= 1;
+        c.a -= speed;
         t.setFillColor(c);
-        if (c.a < 1)
+        if (c.a < speed)
         {
             disp = false;
         }
@@ -142,9 +140,9 @@ void FirstScene::display()
     for (Text &t : texts)
     {
         Color c = t.getFillColor();
-        c.a += 1;
+        c.a += speed;
         t.setFillColor(c);
-        if (c.a > 254)
+        if (c.a > 255 - speed)
             app = false;
     }
 }

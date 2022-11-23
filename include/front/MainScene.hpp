@@ -52,6 +52,10 @@ private:
     // if appearing
     bool app;
 
+    int speed1;
+
+    int speed2;
+
     void init();
 
     void setup_rect(sf::RectangleShape &r, float x, float y);

@@ -8,7 +8,7 @@ using namespace std;
  * Constructor
  * Initialize some variables, call init()
 */
-MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, app{true}
+MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, app{true}, speed1{40}, speed2{3}
 {
     init();
 }
@@ -114,7 +114,6 @@ void MainScene::loop_event()
         
             //Vector2f v = {x0, y0};
             //pos.push_back(v);
-            cout << "COUCOU" << endl;
             pos.push_back(new TraxPieceDisplayer{menu, x0, y0});
 
         }
@@ -211,14 +210,14 @@ void MainScene::display()
     Vector2f pos_s = scoreBoard.getPosition();
     if(pos_s.x > (menu.get_width() * 4.0) / 5)
     {
-        pos_s.x -= menu.get_width() / (5.0 * 420); //420 manage the speed
+        pos_s.x -= menu.get_width() / (5.0 * speed1); 
         scoreBoard.setPosition(pos_s);
     } else f1 = true;
 
     pos_s = board.getPosition();
     if(pos_s.y > (menu.get_height() / 36))
     {
-        pos_s.y -= menu.get_height() / (36.0 * 30); // 30 manage the speed
+        pos_s.y -= menu.get_height() / (36.0 * speed2);
         board.setPosition(pos_s);
     } else f2 = true;
     if(f1 && f2) app = false;
