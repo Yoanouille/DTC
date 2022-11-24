@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o
+OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/VecZ.o
 
@@ -25,7 +25,7 @@ obj/Main.o: src/Main.cpp include/front/Menu.hpp
 	$(CCO)
 
 #==== Frontend Objects ====#
-obj/Menu.o: src/front/Menu.cpp include/front/Menu.hpp include/front/Scene.hpp include/front/FirstScene.hpp include/front/MainScene.hpp
+obj/Menu.o: src/front/Menu.cpp include/front/Menu.hpp include/front/Scene.hpp include/front/FirstScene.hpp include/front/MainScene.hpp include/front/Controller.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -45,7 +45,11 @@ obj/PieceDisplayer.o: src/front/PieceDisplayer.cpp include/front/PieceDisplayer.
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/TraxPieceDisplayer.o: src/front/TraxPieceDisplayer.cpp include/front/TraxPieceDisplayer.hpp include/front/PieceDisplayer.hpp
+obj/TraxPieceDisplayer.o: src/front/TraxPieceDisplayer.cpp include/front/TraxPieceDisplayer.hpp include/front/PieceDisplayer.hpp include/front/Controller.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/Controller.o: src/front/Controller.cpp include/front/Controller.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

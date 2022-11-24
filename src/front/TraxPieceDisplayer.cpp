@@ -58,24 +58,32 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
  */
 void TraxPieceDisplayer::loop_event()
 {
+    // Set up actions
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
+        this->piece->rotate(false);
+        this->rotate(-90.0); 
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Right, [this](){
+        this->piece->rotate(true); 
+        this->rotate(90.0); 
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
+        this->piece->flip(); 
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
+         this->piece->flip();
+    });
+
+    // Event loop
     Event event;
-    // Controller.setActionOnEvent(Event::MouseWheelMoved)
     while (menu.pollEvent(event))
     {
-        // if (event.type == Event::MouseWheelMoved)
-        // {
-        //     if (event.mouseWheel.delta < 0)
-        //     {
-        //         piece->rotate(false);
-        //         rotate(-90.0);
-        //     }
-        //     else
-        //     {
-        //         piece->rotate(true);
-        //         rotate(90.0);
-        //     }
-        // }
-
-        // TODO : flip the piece but how ?
+        if (event.type == Event::EventType::KeyPressed)
+            (Controller::getInstance()).makeKeyAction(event.key.code);
+        else
+            (Controller::getInstance()).makeAction(event);
     }
 }
