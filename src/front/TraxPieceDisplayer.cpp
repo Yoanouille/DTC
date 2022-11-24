@@ -59,6 +59,7 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
 void TraxPieceDisplayer::loop_event()
 {
     Event event;
+    // Controller.setActionOnEvent(Event::MouseWheelMoved)
     while (menu.pollEvent(event))
     {
         // if (event.type == Event::MouseWheelMoved)
