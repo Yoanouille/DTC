@@ -4,9 +4,9 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/VecZ.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o
+OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o
 
-TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/VecZ.o
+TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o
 
 TARGET=main
 TTARGET=test
@@ -20,7 +20,7 @@ memory: $(TARGET) $(OBJECTS)
 main: $(OBJECTS)
 	$(CC) -o main $(OBJECTS) $(SFML)
 
-obj/Main.o: src/Main.cpp include/front/Menu.hpp
+obj/Main.o: src/Main.cpp include/front/Menu.hpp include/back/VecZ.tpp include/back/VecZ.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -66,15 +66,11 @@ obj/Sack.o : src/back/Sack.cpp include/back/Sack.hpp include/back/Piece.hpp incl
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/VecZ.o:	src/back/VecZ.cpp include/back/VecZ.hpp
-	$(OBJ_DIR)
-	$(CCO)
-
 obj/Player.o: src/back/Player.cpp include/back/Player.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/Game.o: src/back/Game.cpp include/back/Game.hpp include/back/VecZ.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/Player.hpp
+obj/Game.o: src/back/Game.cpp include/back/Game.hpp include/back/VecZ.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/Player.hpp include/back/VecZ.tpp include/back/VecZ.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
