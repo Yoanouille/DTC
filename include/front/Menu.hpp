@@ -1,48 +1,48 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <SFML/Graphics.hpp>
-#include "Scene.hpp"
 #include <iostream>
 #include <string>
 
-//Class that represents the window
+#include <SFML/Graphics.hpp>
+
+#include "Controller.hpp"
+#include "Scene.hpp"
+
+// Class that represents the window
 class Menu : public sf::RenderWindow
 {
-    private:
+private:
+    // Dimension
+    int width;
+    int height;
 
-        //Dimension
-        int width;
-        int height;
+    // current Scene
+    Scene *sc;
+    // old current Scene
+    Scene *old_sc;
 
+    // image, currently store the background
+    sf::Texture image;
 
-        //current Scene
-        Scene *sc;
-        //old current Scene
-        Scene *old_sc;
+    // Sprite of the background, need image
+    sf::Sprite bg;
 
-        //image, currently store the background
-        sf::Texture image;
+    void init();
+    void loop_event();
+    void render();
 
-        //Sprite of the background, need image
-        sf::Sprite bg;
+public:
+    Menu();
+    virtual ~Menu();
 
-        void init();
-        void loop_event();
-        void render();
-    
-    public:
-        Menu();
-        virtual ~Menu();
+    // launch the event loop and the render loop
+    void run_menu();
 
-        //launch the event loop and the render loop
-        void run_menu();
+    int get_height() const;
+    int get_width() const;
 
-        int get_height() const;
-        int get_width() const;
-
-        void setScene(int i);
-
+    void setScene(int i);
 };
 
 #endif

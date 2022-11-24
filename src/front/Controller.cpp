@@ -1,6 +1,13 @@
 #include "front/Controller.hpp"
+
+#include <iostream>
 using namespace sf;
 using namespace std;
+
+Controller Controller::INSTANCE{};
+
+// Static getter of the instance
+Controller Controller::getInstance() { return INSTANCE; }
 
 /**
  * Constructor
@@ -22,9 +29,19 @@ Controller::~Controller() { eventMap.clear(); }
  * @param event The event key
  * @param action The function that will be triggered by event
  */
-void Controller::setActionOnEvent(Event::EventType &event, function<void> &action)
+void Controller::setActionOnEvent(Event::EventType event, const function<void()> &action)
 {
-    eventMap.insert_or_assign(event, action);
+    bool found = false;
+    for (auto &x : eventMap) {
+        if (x.first == event) {
+            x.second = action;
+            break;
+        }
+    }
+
+    if (!found){
+        eventMap.insert({event,action});
+    }
 }
 
 /**
@@ -37,11 +54,11 @@ void Controller::makeAction(Event &polledEvent)
 {
     for (auto &x : eventMap)
         if (x.first == polledEvent.type)
-            *x.second();
+            x.second();
 }
 
 /**
- * Clear the event map
+ * TODO :Clear the event map
  */
 void Controller::clearActions() { eventMap.clear(); }
 
@@ -51,9 +68,21 @@ void Controller::clearActions() { eventMap.clear(); }
  * @param key The key
  * @param action The function trigger when the key is pressed
  */
-void Controller::bindActionOnKey(Keyboard::Key &key, function<void> &action)
+void Controller::bindActionOnKey(Keyboard::Key key, const function<void()> &action)
 {
-    keyMap.insert_or_assign(key, action);
+    bool found = false;
+    for (auto &x : keyMap) {
+        if (x.first == key) {
+            x.second = action;
+            break;
+        }
+    }
+
+    if (!found) {
+        keyMap.insert({key,action});
+    }
+
+    cout << "Action binded." << endl;
 }
 
 /**
@@ -61,11 +90,14 @@ void Controller::bindActionOnKey(Keyboard::Key &key, function<void> &action)
  *
  * @param Key The Key pressed
  */
-void Controller::makeKeyAction(Keyboard::Key &k)
+void Controller::makeKeyAction(Keyboard::Key k)
 {
-    for (auto &x : keyMap)
-        if (x.first == k)
-            *x.second();
+    for (auto &x : keyMap) {
+        if (x.first == k) {
+            cout << "KeyPressed !" << endl;
+            x.second();
+        }         
+    }  
 }
 
 /**
