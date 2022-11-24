@@ -6,11 +6,30 @@ using namespace std;
  * The sack will assume the role of Garbage Collector :
  * It will allocates the Pieces and delete them at the end of a Game
  *
+ */
+Sack::Sack() : index{0}, size{0}, sack{}
+{
+}
+
+
+/**
+ * Destructor
+ * Frees all the memory allocated by the Pieces before destroying itself.
+ */
+Sack::~Sack()
+{
+    for (Piece *p : sack)
+        delete (p);
+}
+
+/**
+ * fill the sack corresponding on the gamemodes
  * @param size The size of the Sack
  * @param gamemode The gamemode : 0 = Dom, 1 = Trax, 2 = Carcassonne
- */
-Sack::Sack(int s, int gamemode) : index{0}, size{s}, sack{}
+*/
+void Sack::fill(int s, int gamemode)
 {
+    size = s;   
     switch (gamemode)
     {
     case 0:
@@ -27,16 +46,6 @@ Sack::Sack(int s, int gamemode) : index{0}, size{s}, sack{}
         throw UnknownGamemodeException();
         break;
     }
-}
-
-/**
- * Destructor
- * Frees all the memory allocated by the Pieces before destroying itself.
- */
-Sack::~Sack()
-{
-    for (Piece *p : sack)
-        delete (p);
 }
 
 /**
@@ -66,6 +75,11 @@ void Sack::initTrax()
 void Sack::initCarcassonne()
 {
     // TODO
+}
+
+bool Sack::isEmpty()
+{
+    return index >= size;
 }
 
 void Sack::shuffle()

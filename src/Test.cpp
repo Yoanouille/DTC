@@ -76,8 +76,11 @@ void testTraxPiece()
  */
 void testSack()
 {
-    Sack domSack{5, 0};
-    Sack traxSack{5, 1};
+    Sack domSack{};
+    domSack.fill(5,0);
+
+    Sack traxSack{};
+    domSack.fill(5,1);
 
     cout << "---- DomPieces ----" << endl;
     cout << domSack << endl;
@@ -87,7 +90,8 @@ void testSack()
     cout << "==== Unknwown Gamemode Test" << endl;
     try
     {
-        Sack unknown{5, 3};
+        Sack unknown{};
+        unknown.fill(5,3);
         cout << " Failure" << endl;
     }
     catch (UnknownGamemodeException &e)

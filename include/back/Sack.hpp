@@ -25,8 +25,11 @@ private:
     void initCarcassonne();
 
 public:
-    Sack(int size, int gamemode);
+    Sack();
     virtual ~Sack();
+
+    void fill(int size, int gamemode);
+    bool isEmpty();
 
     Piece *draw();
 

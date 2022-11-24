@@ -4,7 +4,7 @@
 #include <ostream>
 
 // Useless ??
-enum class Direction
+enum Direction
 {
     UP = 0,
     LEFT = 1,
