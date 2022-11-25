@@ -17,7 +17,7 @@ bool TraxPiece::isRecto() const { return recto; }
 /** Overriden function */
 bool TraxPiece::connectable(Piece &p, int pDir)
 {
-    return tab[(direction + pDir)%4] == ((TraxPiece &)p).tab[pDir];
+    return tab[(direction + pDir)%4] == ((TraxPiece &)p).tab[(pDir + ((TraxPiece &)p).direction + 2) %4];
 }
 
 /** Overriden function*/

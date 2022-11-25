@@ -30,7 +30,7 @@ bool DomPiece::connectable(Piece &p, int pDir)
 {
   int count = 0;
   for (int j = 0; j < 3; j++)
-    if (tab[(pDir + direction)%4][2 - j] == ((DomPiece &)p).tab[pDir][j])
+    if (tab[(pDir + direction)%4][2 - j] == ((DomPiece &)p).tab[(pDir + ((DomPiece &)p).direction + 2) % 4][j])
         count ++;
     return (count == 4);
 }
