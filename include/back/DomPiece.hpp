@@ -18,7 +18,7 @@ private:
 public:
     DomPiece();
     virtual ~DomPiece();
-    bool connectable(Piece &p, int pDir, int dir) override;
+    bool connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
 };

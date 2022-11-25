@@ -24,7 +24,7 @@ public:
     virtual ~Piece();
 
     void rotate(bool clockwise);
-    virtual bool connectable(Piece &p, int pDir, int dir) = 0;
+    virtual bool connectable(Piece &p, int pDir) = 0;
     virtual int getEarnedValue(Piece &p, int pDir) = 0;
     virtual std::string toString() const = 0;
 

@@ -26,11 +26,11 @@ DomPiece::~DomPiece() {}
  *
  * @return A boolean
  */
-bool DomPiece::connectable(Piece &p, int pDir, int dir)
+bool DomPiece::connectable(Piece &p, int pDir)
 {
   int count = 0;
   for (int j = 0; j < 3; j++)
-    if (tab[dir][2 - j] == ((DomPiece &)p).tab[pDir][j])
+    if (tab[(pDir + direction)%4][2 - j] == ((DomPiece &)p).tab[pDir][j])
         count ++;
     return (count == 4);
 }
