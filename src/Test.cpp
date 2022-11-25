@@ -29,14 +29,14 @@ void testDomPiece()
     cout << dom2 << endl;
 
     // 2
-    cout << "==== Connectable on Dom2 ====" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << "Direction " << i << ":" << dom1.connectable((Piece &)dom2, i) << endl;
+    // cout << "==== Connectable on Dom2 ====" << endl;
+    // for (int i = 0; i < 4; i++)
+    //     cout << "Direction " << i << ":" << dom1.connectable((Piece &)dom2, i) << endl;
 
     // 3
-    cout << "==== getEarnedValue on Dom2 ====" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << "Direction " << i << ":" << dom1.getEarnedValue((Piece &)dom2, i) << endl;
+    // cout << "==== getEarnedValue on Dom2 ====" << endl;
+    // for (int i = 0; i < 4; i++)
+    //     cout << "Direction " << i << ":" << dom1.getEarnedValue((Piece &)dom2, i) << endl;
 }
 
 /**

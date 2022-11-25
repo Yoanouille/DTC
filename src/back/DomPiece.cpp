@@ -19,24 +19,20 @@ DomPiece::DomPiece() : tab{}
 DomPiece::~DomPiece() {}
 
 /**
- * Find the direction on which the current Piece can be connected to a given one.
+ * Test if the current Piece can be connected to a given one.
  * @param p A reference to a Piece.
  * @param pDir p's direction we are trying to connect to.
+ * @param dir the current Piece's direction we want to connect on p.
  *
- * @return An integer representing a direction (between 0 and 3) or -1 if the Pieces can't be connected.
+ * @return A boolean
  */
-int DomPiece::connectable(Piece &p, int pDir)
+bool DomPiece::connectable(Piece &p, int pDir, int dir)
 {
-  for (int dir = 0; dir < 4; dir++)
-  {
-    bool found = true;
-    for (int j = 0; j < 3; j++)
-      if (tab[dir][2 - j] != ((DomPiece &)p).tab[pDir][j])
-        found = false;
-    if (found)
-      return dir;
-  }
-  return -1;
+  int count = 0;
+  for (int j = 0; j < 3; j++)
+    if (tab[dir][2 - j] == ((DomPiece &)p).tab[pDir][j])
+        count ++;
+    return (count == 4);
 }
 
 /**
@@ -49,14 +45,14 @@ int DomPiece::connectable(Piece &p, int pDir)
  */
 int DomPiece::getEarnedValue(Piece &p, int pDir)
 {
-  int dir = connectable(p, pDir);
-  if (dir == -1)
-    return 0;
+  // int dir = connectable(p, pDir);
+  // if (dir == -1)
+  //   return 0;
 
-  int sum = 0;
-  for (size_t i = 0; i < 3; i++)
-    sum += ((DomPiece &)p).tab[pDir][i];
-  return sum;
+  // int sum = 0;
+  // for (size_t i = 0; i < 3; i++)
+  //   sum += ((DomPiece &)p).tab[pDir][i];
+  // return sum;
 }
 
 /**

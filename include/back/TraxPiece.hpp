@@ -20,7 +20,7 @@ public:
     virtual ~TraxPiece();
 
     bool isRecto() const;
-    int connectable(Piece &p, int pDir) override;
+    bool connectable(Piece &p, int pDir, int dir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
 
