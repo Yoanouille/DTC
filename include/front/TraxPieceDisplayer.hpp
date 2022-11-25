@@ -23,6 +23,9 @@ public:
     TraxPieceDisplayer(Menu &m, int x, int y);
     virtual ~TraxPieceDisplayer();
 
+    // Getter 
+    TraxPiece * getPiece();
+
     // The Piece inherts rotate() from Shape
     void loop_event() override;
 

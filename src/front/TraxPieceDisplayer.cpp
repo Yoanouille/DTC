@@ -33,12 +33,21 @@ TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m
     setTexture(&textureRecto);
     Vector2u textureSize = textureRecto.getSize();
     setTextureRect(IntRect(0, 0, textureSize.x, textureSize.y));
+
+    cout << "Trax Piece built" << endl;
 }
 
 /**
  * Destructor
  */
 TraxPieceDisplayer::~TraxPieceDisplayer() {}
+
+/**
+ * Getter
+ */
+TraxPiece * TraxPieceDisplayer::getPiece(){
+    return piece;
+}
 
 /**
  * Rendering function
@@ -58,13 +67,14 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
  */
 void TraxPieceDisplayer::loop_event()
 {
+
     // Set up actions
     (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
         this->piece->rotate(false);
         this->rotate(-90.0); 
     });
 
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Right, [this](){
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){
         this->piece->rotate(true); 
         this->rotate(90.0); 
     });
@@ -76,6 +86,8 @@ void TraxPieceDisplayer::loop_event()
     (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
          this->piece->flip();
     });
+
+    cout << "Controller set" << endl;
 
     // Event loop
     Event event;

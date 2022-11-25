@@ -19,7 +19,10 @@ Controller::Controller() : clicked{false}, eventMap{}, keyMap{} {}
  *
  * Is clearing map necessary before destroying ?
  */
-Controller::~Controller() { eventMap.clear(); }
+Controller::~Controller() { 
+    clearActions();
+    clearControls();
+}
 
 /**
  * Overwrite [EventType,Function] in the map if it exists.
@@ -70,19 +73,7 @@ void Controller::clearActions() { eventMap.clear(); }
  */
 void Controller::bindActionOnKey(Keyboard::Key key, const function<void()> &action)
 {
-    bool found = false;
-    for (auto &x : keyMap) {
-        if (x.first == key) {
-            x.second = action;
-            break;
-        }
-    }
-
-    if (!found) {
-        keyMap.insert({key,action});
-    }
-
-    cout << "Action binded." << endl;
+    getInstance().keyMap[key] = action;
 }
 
 /**
@@ -92,15 +83,19 @@ void Controller::bindActionOnKey(Keyboard::Key key, const function<void()> &acti
  */
 void Controller::makeKeyAction(Keyboard::Key k)
 {
-    for (auto &x : keyMap) {
+    cout << "Key Action" << endl;
+    for (pair<const Keyboard::Key,function<void()>> &x : keyMap) {
         if (x.first == k) {
             cout << "KeyPressed !" << endl;
             x.second();
         }         
-    }  
+    }
 }
 
 /**
  * Clear the key map
  */
-void Controller::clearControls() { keyMap.clear(); }
+void Controller::clearControls() {
+    cout << "Cleared" << endl;
+    keyMap.clear(); 
+}

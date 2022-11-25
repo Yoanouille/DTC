@@ -41,6 +41,35 @@ void MainScene::init()
     // Load Piece's Textures
     // TODO : Adapt it to different gamemodes.
     TraxPieceDisplayer::loadTextures();
+
+    // Set up controller
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
+        for(PieceDisplayer * p : this->pos){
+            ((TraxPieceDisplayer *)p)->getPiece()->rotate(true); 
+            p->rotate(90.0); 
+        }
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Right, [this](){
+        for(PieceDisplayer * p : this->pos){
+            ((TraxPieceDisplayer *)p)->getPiece()->rotate(true); 
+            p->rotate(90.0); 
+        }
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
+        for(PieceDisplayer * p : this->pos){
+            ((TraxPieceDisplayer *)p)->getPiece()->flip(); 
+        }
+    });
+
+    (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
+        for(PieceDisplayer * p : this->pos){
+         ((TraxPieceDisplayer *)p)->getPiece()->flip();
+        }
+    });
+
+    cout << "Controller set" << endl;
 }
 
 /**
@@ -67,6 +96,12 @@ void MainScene::loop_event()
                 break;
             scl += event.mouseWheelScroll.delta;
         }
+
+        if (event.type == Event::EventType::KeyPressed){
+            (Controller::getInstance()).makeKeyAction(event.key.code);
+        }
+        else
+            (Controller::getInstance()).makeAction(event);
     }
 
     // Right click -> offset
