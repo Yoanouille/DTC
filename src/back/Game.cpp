@@ -20,6 +20,17 @@ Piece &Game::draw()
     return *(s.draw());
 }
 
+void Game::cleanColor()
+{
+    for(int i = plateau.get_min(); i <= plateau.get_max(); i++)
+    {
+        for(int j = plateau[i].get_min(); j <= plateau[i].get_max(); j++)
+        {
+            plateau[i][j]->cleanColor();
+        }
+    }
+}
+
 bool Game::canPlace(int i, int j, Piece &p)
 {
     if(nb_piece == 0) return 0;

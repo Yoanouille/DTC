@@ -20,6 +20,7 @@ protected:
     int color;
 
 public:
+    Piece();
     virtual ~Piece();
 
     void rotate(bool clockwise);
@@ -29,6 +30,8 @@ public:
 
     int getDirection() const;
     int getColor() const;
+    void cleanColor();
+    virtual void getConnectColor(int color, int *t);
 
     friend std::ostream &operator<<(std::ostream &out, const Piece &p);
 };

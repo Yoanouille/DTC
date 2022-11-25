@@ -17,6 +17,8 @@ class Game
         int current_player;
         int nb_piece;
 
+        void cleanColor();
+
     public:
         Game();
         virtual ~Game();

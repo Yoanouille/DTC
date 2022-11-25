@@ -6,7 +6,7 @@ using namespace std;
  * There are 2 kinds of TraxPiece : Recto(Crossroad) and Verso
  * The piece is on Recto by default.
  */
-TraxPiece::TraxPiece() : tab{false, true, false, true}, recto{true} {}
+TraxPiece::TraxPiece() : tab{false, true, false, true}, recto{true}, color_dir{-1,-1,-1,-1} {}
 
 /** Destructor */
 TraxPiece ::~TraxPiece() {}
@@ -18,7 +18,12 @@ bool TraxPiece::isRecto() const { return recto; }
 int TraxPiece::connectable(Piece &p, int pDir) { return true; }
 
 /** Overriden function*/
-int TraxPiece::getEarnedValue(Piece &p, int pDir) { return 0; }
+int TraxPiece::getEarnedValue(Piece &p, int pDir) { 
+    TraxPiece &p1 = (TraxPiece &)p;
+    //CONNECT COLOR
+    //CHANGER LA BONNE COULEUR POUR MOI ET POUR P
+    return 0; 
+}
 
 /**
  * Flip the TraxPiece
@@ -52,4 +57,12 @@ string TraxPiece::toString() const
     string s{" "};
     s += to_string(tab[0]) + "\n" + to_string(tab[1]) + " " + to_string(tab[3]) + "\n " + to_string(tab[2]);
     return s;
+}
+
+void TraxPiece::getConnectColor(int col, int *t)
+{
+    for(int i = 0; i < 4; i++)
+    {
+        t[i] = color_dir[i];   
+    }
 }

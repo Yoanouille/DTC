@@ -13,6 +13,8 @@ private:
     bool tab[4];
     bool recto;
 
+    int color_dir[4];
+
 public:
     TraxPiece();
     virtual ~TraxPiece();
@@ -21,6 +23,8 @@ public:
     int connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
+
+    void getConnectColor(int col, int *t);
 
     void flip();
 };

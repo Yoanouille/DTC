@@ -1,6 +1,12 @@
 #include "back/Piece.hpp"
 using namespace std;
 
+
+Piece::Piece() : direction{0}, color{0}
+{
+    
+}
+
 /**
  * Destructor
  * Defined to fix the following warning :
@@ -32,6 +38,15 @@ void Piece::rotate(bool clockwise)
         direction = (direction + 3) % 4;
     else
         direction = (direction + 1) % 4;
+}
+
+void Piece::getConnectColor(int color, int *t)
+{
+}
+
+void Piece::cleanColor()
+{
+    color = 0;
 }
 
 /**
