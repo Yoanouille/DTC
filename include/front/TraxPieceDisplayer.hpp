@@ -13,23 +13,21 @@ private:
     static sf::Texture textureRecto;
     static sf::Texture textureVerso;
 
-    // The TraxPiece we attach our displayer to
-    TraxPiece *piece;
+    void setShownSide(bool recto);
 
 public:
     // Loading method
     static void loadTextures();
 
-    TraxPieceDisplayer(Menu &m, int x, int y);
+    TraxPieceDisplayer(Menu &m, TraxPiece &p, int x, int y);
     virtual ~TraxPieceDisplayer();
 
-    // Getter 
-    TraxPiece * getPiece();
-
-    // The Piece inherts rotate() from Shape
-    void loop_event() override;
+    void flip();
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
+    
+    // The Piece inherts rotate() from Shape
+    void loop_event() override;
 };
 
 #endif

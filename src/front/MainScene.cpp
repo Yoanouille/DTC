@@ -16,9 +16,7 @@ MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180
 /**
  * Destructor
  */
-MainScene::~MainScene()
-{
-}
+MainScene::~MainScene() {}
 
 /**
  * initialize the scene
@@ -43,33 +41,18 @@ void MainScene::init()
     TraxPieceDisplayer::loadTextures();
 
     // Set up controller
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
+    Controller & controller = (Controller::getInstance());
+    controller.bindActionOnKey(Keyboard::Left, [this](){ 
         for(PieceDisplayer * p : this->pos){
-            ((TraxPieceDisplayer *)p)->getPiece()->rotate(true); 
-            p->rotate(90.0); 
+            p->rotate(true);
         }
     });
 
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Right, [this](){
+    controller.bindActionOnKey(Keyboard::Right, [this](){
         for(PieceDisplayer * p : this->pos){
-            ((TraxPieceDisplayer *)p)->getPiece()->rotate(true); 
-            p->rotate(90.0); 
+            p->rotate(true);
         }
     });
-
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
-        for(PieceDisplayer * p : this->pos){
-            ((TraxPieceDisplayer *)p)->getPiece()->flip(); 
-        }
-    });
-
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
-        for(PieceDisplayer * p : this->pos){
-         ((TraxPieceDisplayer *)p)->getPiece()->flip();
-        }
-    });
-
-    cout << "Controller set" << endl;
 }
 
 /**
@@ -155,7 +138,8 @@ void MainScene::loop_event()
 
             // Vector2f v = {x0, y0};
             // pos.push_back(v);
-            pos.push_back(new TraxPieceDisplayer{menu, x0, y0});
+            
+            //pos.push_back(new TraxPieceDisplayer{menu, p, x0, y0});
         }
     }
     else

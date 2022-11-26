@@ -12,12 +12,17 @@ protected:
     // Application's window that catch the events
     Menu &menu;
 
+    // The Piece we attache the Displayer to
+    Piece &piece;
+
     // Coordinates on a Board
     sf::Vector2i coordinates;
 
 public:
-    PieceDisplayer(Menu &m, int x, int y);
+    PieceDisplayer(Menu &m, Piece& p, int x, int y);
     virtual ~PieceDisplayer();
+
+    void rotate(bool clockwise);
 
     // The Piece inherts rotation() from Shape
     virtual void loop_event() = 0;

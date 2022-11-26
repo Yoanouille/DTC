@@ -4,10 +4,11 @@
 using namespace sf;
 using namespace std;
 
-Controller Controller::INSTANCE{};
-
 // Static getter of the instance
-Controller Controller::getInstance() { return INSTANCE; }
+Controller& Controller::getInstance() {
+    static Controller INSTANCE;
+    return INSTANCE;
+}
 
 /**
  * Constructor
@@ -34,17 +35,7 @@ Controller::~Controller() {
  */
 void Controller::setActionOnEvent(Event::EventType event, const function<void()> &action)
 {
-    bool found = false;
-    for (auto &x : eventMap) {
-        if (x.first == event) {
-            x.second = action;
-            break;
-        }
-    }
-
-    if (!found){
-        eventMap.insert({event,action});
-    }
+    eventMap[event] = action;
 }
 
 /**
@@ -55,15 +46,9 @@ void Controller::setActionOnEvent(Event::EventType event, const function<void()>
  */
 void Controller::makeAction(Event &polledEvent)
 {
-    for (auto &x : eventMap)
-        if (x.first == polledEvent.type)
-            x.second();
+    if(eventMap.find(polledEvent.type) != eventMap.end())
+        eventMap[polledEvent.type]();
 }
-
-/**
- * TODO :Clear the event map
- */
-void Controller::clearActions() { eventMap.clear(); }
 
 /**
  * Bind an action to a Key
@@ -73,29 +58,21 @@ void Controller::clearActions() { eventMap.clear(); }
  */
 void Controller::bindActionOnKey(Keyboard::Key key, const function<void()> &action)
 {
-    getInstance().keyMap[key] = action;
+    keyMap[key] = action;
 }
 
 /**
  * Triggers the action associated with a key
  *
- * @param Key The Key pressed
+ * @param key The Key pressed
  */
-void Controller::makeKeyAction(Keyboard::Key k)
+void Controller::makeKeyAction(Keyboard::Key key)
 {
-    cout << "Key Action" << endl;
-    for (pair<const Keyboard::Key,function<void()>> &x : keyMap) {
-        if (x.first == k) {
-            cout << "KeyPressed !" << endl;
-            x.second();
-        }         
-    }
+    if(keyMap.find(key) != keyMap.end())
+        keyMap[key]();
 }
 
-/**
- * Clear the key map
- */
-void Controller::clearControls() {
-    cout << "Cleared" << endl;
-    keyMap.clear(); 
-}
+
+// ==== Map Clearing functions ==== //
+void Controller::clearActions() { eventMap.clear(); }
+void Controller::clearControls() { keyMap.clear(); }

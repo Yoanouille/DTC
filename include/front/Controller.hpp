@@ -8,13 +8,16 @@
 
 /**
  * This class contains data that handle user's inputs
- * (as events)
+ * 
+ * This class follows a Singleton Design Pattern :
+ *  Only one instance can exist 
+ * 
+ * cf.
+ * https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
  */
 class Controller
 {
 private:
-    static Controller INSTANCE;
-
     // Boolean that blocks multiple mouse clicks
     // and key combination at the same time
     bool clicked;
@@ -23,12 +26,14 @@ private:
     std::map<const sf::Event::EventType, std::function<void()>> eventMap;
     std::map<const sf::Keyboard::Key, std::function<void()>> keyMap;
 
-public:
+    // Private constructor
     Controller();
+
+public:
     ~Controller();
 
     // Static instance of the Controller
-    static Controller getInstance();
+    static Controller& getInstance();
 
     // Event handling
     void setActionOnEvent(const sf::Event::EventType event, const std::function<void()> &action);

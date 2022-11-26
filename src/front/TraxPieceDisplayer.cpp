@@ -27,14 +27,12 @@ void TraxPieceDisplayer::loadTextures()
 
 /**
  * Constructor
+ * It is private to prevent for creating more than one Controller.
+ * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m, x, y)
+TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, TraxPiece& p, int x, int y) : PieceDisplayer(m, p, x, y)
 {
-    setTexture(&textureRecto);
-    Vector2u textureSize = textureRecto.getSize();
-    setTextureRect(IntRect(0, 0, textureSize.x, textureSize.y));
-
-    cout << "Trax Piece built" << endl;
+    setShownSide(true);
 }
 
 /**
@@ -43,10 +41,27 @@ TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, int x, int y) : PieceDisplayer(m
 TraxPieceDisplayer::~TraxPieceDisplayer() {}
 
 /**
- * Getter
+ * Private method that sets the shown side of the Piece
+ * @param recto A boolean that indicates if the displayer have to show Recto or Verso
  */
-TraxPiece * TraxPieceDisplayer::getPiece(){
-    return piece;
+void TraxPieceDisplayer::setShownSide(bool recto){
+    if(recto)
+        setTexture(&textureRecto);
+    else
+        setTexture(&textureVerso);
+    
+    // Both Images have the same size, we've chosen arbitrarily recto 
+    Vector2u textureSize = textureRecto.getSize();
+    setTextureRect(IntRect(0, 0, textureSize.x, textureSize.y));
+}
+
+/**
+ * Flip the Piece 
+ * Adapt the view : we have to take the rotation into consideration. 
+ */
+void TraxPieceDisplayer::flip(){
+    ((TraxPiece&)piece).flip();
+    setShownSide(((TraxPiece&)piece).isRecto());
 }
 
 /**
@@ -67,35 +82,32 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
  */
 void TraxPieceDisplayer::loop_event()
 {
+    // // Set up actions
+    // (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
+    //     this->rotate(false);
+    // });
 
-    // Set up actions
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
-        this->piece->rotate(false);
-        this->rotate(-90.0); 
-    });
+    // (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){
+    //     this->rotate(true);
+    // });
 
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){
-        this->piece->rotate(true); 
-        this->rotate(90.0); 
-    });
+    // (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
+    //     this->flip(); 
+    // });
 
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
-        this->piece->flip(); 
-    });
+    // (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
+    //      this->flip();
+    // });
 
-    (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
-         this->piece->flip();
-    });
+    // cout << "Controller set" << endl;
 
-    cout << "Controller set" << endl;
-
-    // Event loop
-    Event event;
-    while (menu.pollEvent(event))
-    {
-        if (event.type == Event::EventType::KeyPressed)
-            (Controller::getInstance()).makeKeyAction(event.key.code);
-        else
-            (Controller::getInstance()).makeAction(event);
-    }
+    // // Event loop
+    // Event event;
+    // while (menu.pollEvent(event))
+    // {
+    //     if (event.type == Event::EventType::KeyPressed)
+    //         (Controller::getInstance()).makeKeyAction(event.key.code);
+    //     else
+    //         (Controller::getInstance()).makeAction(event);
+    // }
 }
