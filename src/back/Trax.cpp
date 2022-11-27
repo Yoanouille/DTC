@@ -1,7 +1,10 @@
 #include "back/Trax.hpp"
 #include "back/TraxPiece.hpp"
+#include <stack>
 
-Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}
+using namespace std;
+
+Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}
 {
     s.fill(8*8, 1);
 }
@@ -19,7 +22,96 @@ bool Trax::canPlace(int i, int j, Piece &p)
     return true;
 }
 
+
+void Trax::place(int i, int j, Piece &p)
+{
+    if(canPlace(i, j, p))
+    {
+        Game::place(i, j, p);
+        last_i = i;
+        last_j = j;
+    }
+}
+
+
+
+
+bool Trax::explore(int i, int j, int color, Piece *pre)
+{
+    Piece *p = plateau[i][j];
+    if(i < mini) mini = i;
+    if(i > maxi) maxi = i;
+    if(j < minj) minj = j;
+    if(j > maxj) maxj = j;
+
+    if(maxi - mini >= 7) return true;
+    if(maxj - minj >= 7) return true;
+
+    p->setColor(1);
+    int col[4];
+    p->getConnectColor(col);
+
+    bool rep = false;
+
+    if(col[Direction::UP] == color)
+    {
+        if((pre != plateau[i - 1][j]) && (i - 1 == last_i && j == last_j)) return true;
+        if(plateau[i - 1][j] != nullptr && plateau[i - 1][j]->getColor() == 0)
+        {
+            rep = explore(i - 1, j, color, p);
+        }
+    }
+    if(rep) return true;
+
+    if(col[Direction::DOWN] == color)
+    {
+        if((pre != plateau[i + 1][j]) && (i + 1 == last_i && j == last_j)) return true;
+        if(plateau[i + 1][j] != nullptr && plateau[i + 1][j]->getColor() == 0)
+        {
+            rep = explore(i + 1, j, color, p);
+        }
+    }
+    if(rep) return true;
+
+    if(col[Direction::LEFT] == color)
+    {
+        cout << "la" << endl;
+        if((pre != plateau[i][j - 1]) && (i == last_i && j - 1 == last_j)) return true;
+        if(plateau[i][j - 1] != nullptr && plateau[i][j - 1]->getColor() == 0)
+        {
+            rep = explore(i, j - 1, color, p);
+        }
+    }
+    if(rep) return true;
+
+    if(col[Direction::RIGHT] == color)
+    {
+        cout << "ici" << endl;
+        if((pre != plateau[i][j + 1]) && (i == last_i && j + 1 == last_j)) return true;
+        if(plateau[i][j + 1] != nullptr && plateau[i][j + 1]->getColor() == 0)
+        {
+            rep = explore(i, j + 1, color, p);
+        }
+    }
+    return rep;
+    
+}
+
+bool Trax::DFS(int color)
+{
+    mini = last_i;
+    maxi = last_i;
+    minj = last_j;
+    maxj = last_j;
+    cleanColor();
+
+    return explore(last_i, last_j, color, nullptr);
+
+}
+
 bool Trax::gameOver()
 {
-    return false; //TODO: A Changer EVIDEMENT
+    bool rep = DFS(0) || DFS(1);
+    cleanColor();
+    return rep;
 }

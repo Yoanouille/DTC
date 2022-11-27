@@ -2,6 +2,8 @@
 #include "back/TraxPiece.hpp"
 #include "back/Sack.hpp"
 #include "back/VecZ.hpp"
+#include "back/Game.hpp"
+#include "back/Trax.hpp"
 
 #include <iostream>
 #include <string>
@@ -148,30 +150,121 @@ void testVecZ()
 
 }
 
+void test_trax_1()
+{
+    Game *g = new Trax();  
+    Trax *t = (Trax *)g;
+    bool DF = false;
+
+    //Great Joke !
+    g->add_player("Nicoca");
+    g->add_player("Nicola");
+
+    Piece &p = g->draw();
+    cout << p << endl;
+    cout << g->canPlace(0, 0, p) << endl;
+    g->place(0, 0, p);
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+    TraxPiece &p2 = (TraxPiece &)g->draw();
+    p2.flip();
+    cout << p2 << endl;
+    cout << g->canPlace(0, -1, p2) << endl;
+    g->place(0, -1, p2);
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+    TraxPiece &p3 = (TraxPiece &)g->draw();
+    p3.flip();
+    p3.rotate(false);
+    cout << p3 << endl;
+    cout << g->canPlace(-1, -1, p3) << endl;
+    g->place(-1,-1,p3);
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+    Piece &p4 = g->draw();
+    cout << p4 << endl;
+    cout << g->canPlace(-1, 0, p4) << endl;
+    g->place(-1, 0, p4);
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+    TraxPiece &p5 = (TraxPiece &)g->draw();
+    p5.flip();
+    p5.rotate(true);
+    p5.rotate(true);
+    cout << p5 << endl;
+    cout << g->canPlace(-1, 1, p5) << endl;
+    g->place(-1, 1, p5);
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+    TraxPiece &p6 = (TraxPiece &)g->draw();
+    p6.flip();
+    p6.rotate(true);
+    cout << p6 << endl;
+    cout << g->canPlace(0, 1, p6) << endl;
+    g->place(0, 1, p6);
+
+
+
+    DF =  t->DFS(1);
+    cout << "DFS : " << DF << endl;
+
+
+    delete g; 
+}
+
+void test_trax_2()
+{
+    Game *g = new Trax();
+    Trax *t = (Trax *)g;
+    bool DF = false;
+
+    g->add_player("Nicoca");
+    g->add_player("Nicola");
+
+    for(int i = 0; i < 8; i++)
+    {
+        Piece &p = g->draw();
+        cout << p << endl;
+        cout << g->canPlace(i, 0, p) << endl;
+        g->place(i, 0, p);
+        DF =  t->DFS(0);
+        cout << "DFS : " << DF << endl;
+    }
+
+
+
+}
+
 /**
  * Main function for tests.
  */
 int main()
 {
-    string request{};
-    while (request.size() == 0 || request != "quit")
-    {
-        cout << "Enter a test" << endl;
-        cin >> request;
+    // string request{};
+    // while (request.size() == 0 || request != "quit")
+    // {
+    //     cout << "Enter a test" << endl;
+    //     cin >> request;
 
-        if (request == "dom")
-            testDomPiece();
-        else if (request == "trax")
-            testTraxPiece();
-        else if (request == "sack")
-            testSack();
-        else if(request == "vecz")
-            testVecZ();
-        else if (request != "quit")
-            cout << "Unknown Test. Please try again" << endl;
+    //     if (request == "dom")
+    //         testDomPiece();
+    //     else if (request == "trax")
+    //         testTraxPiece();
+    //     else if (request == "sack")
+    //         testSack();
+    //     else if(request == "vecz")
+    //         testVecZ();
+    //     else if (request != "quit")
+    //         cout << "Unknown Test. Please try again" << endl;
 
-        cout << endl;
-    }
+    //     cout << endl;
+    // }
+    test_trax_2();
 
     return EXIT_SUCCESS;
 }

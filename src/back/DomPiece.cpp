@@ -30,9 +30,9 @@ bool DomPiece::connectable(Piece &p, int pDir)
 {
   int count = 0;
   for (int j = 0; j < 3; j++)
-    if (tab[(pDir + direction)%4][2 - j] == ((DomPiece &)p).tab[(pDir + ((DomPiece &)p).direction + 2) % 4][j])
-        count ++;
-    return (count == 4);
+    if (tab[(pDir + direction + 2)%4][2 - j] == ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j])
+      count ++;
+  return (count >= 1);
 }
 
 /**
@@ -45,14 +45,15 @@ bool DomPiece::connectable(Piece &p, int pDir)
  */
 int DomPiece::getEarnedValue(Piece &p, int pDir)
 {
-  // int dir = connectable(p, pDir);
-  // if (dir == -1)
-  //   return 0;
-
-  // int sum = 0;
-  // for (size_t i = 0; i < 3; i++)
-  //   sum += ((DomPiece &)p).tab[pDir][i];
-  // return sum;
+  int sum = 0;
+  for (int j = 0; j < 3; j++)
+  {
+    if (tab[(pDir + direction + 2)%4][2 - j] == ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j])
+    {
+      sum += tab[(pDir + direction + 2)%4][2 - j];
+    }
+  }
+  return sum;
 }
 
 /**

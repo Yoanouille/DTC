@@ -6,7 +6,7 @@ CCO=$(CC) $(INCL) -c $< -o $@
 OBJ_DIR=@mkdir obj -p
 OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o  obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o
 
-TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o
+TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o
 
 TARGET=main
 TTARGET=test
@@ -97,6 +97,6 @@ memtest: test $(TEST_OBJ)
 test: $(TEST_OBJ)
 	$(CC) -o $(TTARGET) $(TEST_OBJ)
 
-obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp include/back/VecZ.hpp
+obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp include/back/VecZ.hpp include/back/Game.hpp include/back/Trax.hpp include/back/Player.hpp
 	$(OBJ_DIR)
 	$(CCO)
