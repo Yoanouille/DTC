@@ -1,5 +1,7 @@
 #include "front/MainScene.hpp"
 #include "front/TraxPieceDisplayer.hpp"
+#include "front/DomPieceDisplayer.hpp"
+#include "back/Domino.hpp"
 
 using namespace sf;
 using namespace std;
@@ -8,15 +10,21 @@ using namespace std;
  * Constructor
  * Initialize some variables, call init()
  */
-MainScene::MainScene(Menu &m) : menu{m}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, app{true}, speed1{40}, speed2{3}
+MainScene::MainScene(Menu &m) : 
+    menu{m}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, app{true}, speed1{40}, speed2{3}
 {
+    //TODO depend du jeu ! donc arguments au constructeur !
+    game = new Domino();
     init();
 }
 
 /**
  * Destructor
  */
-MainScene::~MainScene() {}
+MainScene::~MainScene() 
+{
+    if(game != nullptr) delete game;
+}
 
 /**
  * initialize the scene
@@ -129,17 +137,8 @@ void MainScene::loop_event()
 
         // if click -> add coord to the vector pos
         if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            // Vector2f v = rect.getPosition() - board.getPosition() - off;
-            // if(rect.getPosition().x <= board.getPosition().x + 0.1) v.x = (int) v.x / scl - 1;
-            // else v.x = (int) v.x / scl;
-            // if(rect.getPosition().y <= board.getPosition().y + 0.1) v.y = (int) v.y / scl - 1;
-            // else v.y = (int) v.y / scl;
-
-            // Vector2f v = {x0, y0};
-            // pos.push_back(v);
-            
-            //pos.push_back(new TraxPieceDisplayer{menu, p, x0, y0});
+        {   
+            pos.push_back(new DomPieceDisplayer{menu, x0, y0, (DomPiece &)game->draw()});
         }
     }
     else
@@ -197,23 +196,6 @@ void MainScene::render()
     menu.draw(scoreBoard);
     menu.draw(board);
     menu.draw(rect);
-
-    // draw green rect in the vector pos
-    //  for(size_t i = 0; i < pos.size(); i++)
-    //  {
-    //      RectangleShape r{};
-
-    //     Vector2f v = pos[i];
-    //     setup_rect(r, v.x * scl, v.y * scl);
-    //     if(r.getSize().x < 0 || r.getSize().y < 0) continue;
-
-    //     if(r.getGlobalBounds().intersects(board.getGlobalBounds()))
-    //     {
-    //         r.setFillColor(Color::Green);
-    //         menu.draw(r);
-    //     }
-
-    // }
 
     // Draw all the Pieces
     // TODO : Generalize it depending on gamemode

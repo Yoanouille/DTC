@@ -9,13 +9,12 @@
 class DomPieceDisplayer : public PieceDisplayer
 {
 private:
-    // The Piece we attach the graphic element.
-    DomPiece &piece;
 
 public:
     DomPieceDisplayer(Menu &m, int x, int y, DomPiece &p);
     virtual ~DomPieceDisplayer();
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
+    void loop_event() override;
 };
 #endif

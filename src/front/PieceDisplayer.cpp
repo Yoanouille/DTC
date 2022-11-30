@@ -1,7 +1,7 @@
 #include "front/PieceDisplayer.hpp"
 using namespace sf;
 
-PieceDisplayer::PieceDisplayer(Menu &m, Piece &p, int x, int y) : menu{m}, piece{p}, coordinates{x, y} {}
+PieceDisplayer::PieceDisplayer(Menu &m, int x, int y, Piece &p) : menu{m}, coordinates{x, y},  piece{p} {}
 
 PieceDisplayer::~PieceDisplayer() {}
 

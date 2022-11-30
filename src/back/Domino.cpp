@@ -2,7 +2,7 @@
 
 Domino::Domino() 
 {
-    s.fill(0, 20);
+    s.fill(20, 0);
 }
 
 Domino::~Domino()

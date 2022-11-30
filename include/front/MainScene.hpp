@@ -6,6 +6,7 @@
 #include "Menu.hpp"
 #include "Scene.hpp"
 #include "front/PieceDisplayer.hpp"
+#include "back/Game.hpp"
 
 #include <iostream>
 #include <vector>
@@ -55,6 +56,8 @@ private:
     int speed1;
 
     int speed2;
+
+    Game *game;
 
     void init();
 
