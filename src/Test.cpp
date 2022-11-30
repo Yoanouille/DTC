@@ -163,6 +163,7 @@ void test_trax_1()
     Piece &p = g->draw();
     cout << p << endl;
     cout << g->canPlace(0, 0, p) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(0, 0, p);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -171,15 +172,17 @@ void test_trax_1()
     p2.flip();
     cout << p2 << endl;
     cout << g->canPlace(0, -1, p2) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(0, -1, p2);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
 
     TraxPiece &p3 = (TraxPiece &)g->draw();
     p3.flip();
-    p3.rotate(false);
+    p3.rotate(true);
     cout << p3 << endl;
     cout << g->canPlace(-1, -1, p3) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(-1,-1,p3);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -187,25 +190,28 @@ void test_trax_1()
     Piece &p4 = g->draw();
     cout << p4 << endl;
     cout << g->canPlace(-1, 0, p4) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(-1, 0, p4);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
 
     TraxPiece &p5 = (TraxPiece &)g->draw();
     p5.flip();
-    p5.rotate(true);
-    p5.rotate(true);
+    p5.rotate(false);
+    p5.rotate(false);
     cout << p5 << endl;
     cout << g->canPlace(-1, 1, p5) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(-1, 1, p5);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
 
     TraxPiece &p6 = (TraxPiece &)g->draw();
     p6.flip();
-    p6.rotate(true);
+    p6.rotate(false);
     cout << p6 << endl;
     cout << g->canPlace(0, 1, p6) << endl;
+    cout << g->getCurrentPlayer().getName() << endl;
     g->place(0, 1, p6);
 
 
@@ -264,7 +270,7 @@ int main()
 
     //     cout << endl;
     // }
-    test_trax_2();
+    test_trax_1();
 
     return EXIT_SUCCESS;
 }

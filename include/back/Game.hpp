@@ -24,6 +24,7 @@ class Game
         virtual ~Game();
 
         void add_player(std::string);
+        Player getCurrentPlayer() const;
 
         virtual Piece &draw();
         virtual bool canPlace(int, int, Piece &p);

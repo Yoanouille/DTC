@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}
+Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}
 {
     s.fill(8*8, 1);
 }
@@ -19,6 +19,16 @@ bool Trax::canPlace(int i, int j, Piece &p)
     if(j > index_max_j && j - index_min_j > 8) return false;
     if(i < index_min_i && index_max_i - i > 8) return false;
     if(j < index_min_j && index_max_j - j > 8) return false;
+
+    if(moveForced.size() != 0)
+    {
+        for(Pair p : moveForced)
+        {
+            if(p.i == i && p.j == j) return true;
+        }
+        return false;
+    }
+
     return true;
 }
 
@@ -30,11 +40,49 @@ void Trax::place(int i, int j, Piece &p)
         Game::place(i, j, p);
         last_i = i;
         last_j = j;
+
+        getForcedMove(i, j);
+
+        if(moveForced.size() != 0)
+        {
+            int index = 0;
+            for(int k = 0; k < moveForced.size(); k++)
+            {
+                Pair pai = moveForced[k];
+                if(pai.i == i && pai.j == j) index = k;
+            }
+            moveForced.erase(moveForced.begin() + index);
+        } else 
+        {
+            current_player = (current_player + 1)% nb_player;
+        }
     }
 }
 
+void Trax::getForcedMove(int i, int j)
+{
+    if(plateau[i - 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i - 1, j)))
+        moveForced.push_back({i-1,j});
+    if(plateau[i + 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i + 1, j)))
+        moveForced.push_back({i+1,j});
+    if(plateau[i][j - 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j - 1)))
+        moveForced.push_back({i,j-1});
+    if(plateau[i][j + 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j + 1)))
+        moveForced.push_back({i,j+1});
+
+}
 
 
+vector<TraxPiece *> Trax::getNeighboors(int i, int j)
+{
+    vector<TraxPiece *> v;
+    v.push_back((TraxPiece *)plateau[i - 1][j]); //UP
+    v.push_back((TraxPiece *)plateau[i][j - 1]); //LEFT
+    v.push_back((TraxPiece *)plateau[i + 1][j]); //DOWN
+    v.push_back((TraxPiece *)plateau[i][j + 1]); //RIGHT
+
+    return v;
+}
 
 bool Trax::explore(int i, int j, int color, Piece *pre)
 {

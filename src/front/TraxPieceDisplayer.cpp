@@ -30,7 +30,7 @@ void TraxPieceDisplayer::loadTextures()
  * It is private to prevent for creating more than one Controller.
  * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, TraxPiece& p, int x, int y) : PieceDisplayer(m, p, x, y)
+TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, TraxPiece& p, int x, int y) : PieceDisplayer(m, x, y), piece{p}
 {
     setShownSide(true);
 }

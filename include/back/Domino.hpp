@@ -12,6 +12,8 @@ class Domino : public Game
         Domino();
         ~Domino();
 
+        void place(int, int, Piece &p);
+
         bool gameOver();
 };
 

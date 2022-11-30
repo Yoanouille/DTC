@@ -1,8 +1,9 @@
 #ifndef TRAXPIECE_H
 #define TRAXPIECE_H
 
-#include <ostream>
+#include <iostream>
 #include <string>
+#include <vector>
 
 #include "Piece.hpp"
 
@@ -25,7 +26,7 @@ public:
     std::string toString() const override;
 
     void getConnectColor(int *t);
-    bool forcedMove(TraxPiece *tabp);
+    static bool forcedMove(std::vector<TraxPiece *> tabp);
 
     void flip();
 };

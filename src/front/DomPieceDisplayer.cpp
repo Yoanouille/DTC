@@ -1,6 +1,6 @@
 #include "front/DomPieceDisplayer.hpp"
 
-DomPieceDisplayer::DomPieceDisplayer(Menu &m, DomPiece &p) : PieceDisplayer(m), piece{&p} {}
+DomPieceDisplayer::DomPieceDisplayer(Menu &m, int x, int y, DomPiece &p) : PieceDisplayer{m,x,y}, piece{p} {}
 
 DomPieceDisplayer::~DomPieceDisplayer() {}
 

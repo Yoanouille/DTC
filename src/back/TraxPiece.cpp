@@ -1,6 +1,7 @@
 #include "back/TraxPiece.hpp"
 using namespace std;
 #include <iostream>
+#include <vector>
 
 /**
  * Constructor
@@ -73,19 +74,34 @@ void TraxPiece::getConnectColor(int *t)
     }
 }
 
-bool TraxPiece::forcedMove(TraxPiece *tabp)
+bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
 {
-    int h = -1;
-    int b = -1;
-    int g = -1;
-    int d = -1;
+    int dir[4] = {-1,-1,-1,-1};
 
-    bool h = tabp[Direction::UP].tab[(tabp[Direction::UP].direction + Direction::DOWN) % 4];
-    bool g = tabp[Direction::LEFT].tab[(tabp[Direction::LEFT].direction + Direction::RIGHT) % 4];
-    bool d = tabp[Direction::DOWN].tab[(tabp[Direction::DOWN].direction + Direction::UP) % 4];
-    bool b = tabp[Direction::RIGHT].tab[(tabp[Direction::RIGHT].direction + Direction::LEFT) % 4];
+    for(int i = 0; i < 4; i++)
+    {
+        if(tabp[i] != nullptr)
+        {
+            dir[i] = tabp[i]->tab[(tabp[i]->direction + i + 2)%4];
+        }
+    }
+
+    int count = 0;
     
+    for(int i = 0; i < 3; i++)
+    {
+        if(dir[i] != -1)
+        {
+            for(int j = i + 1; j < 4; j++)
+            {
+                if(dir[j] != -1 && dir[i] == dir[j])
+                {
+                    count++;
+                }
+            }
+        }
+    }
 
-    return h;
+    return count >= 2;
 
 }

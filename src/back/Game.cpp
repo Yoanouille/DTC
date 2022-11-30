@@ -20,6 +20,12 @@ Piece &Game::draw()
     return *(s.draw());
 }
 
+Player Game::getCurrentPlayer() const
+{
+    return *players[current_player];
+}
+
+
 void Game::cleanColor()
 {
     for(int i = plateau.get_min(); i <= plateau.get_max(); i++)

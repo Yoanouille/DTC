@@ -5,6 +5,12 @@
 #include <iostream>
 #include <vector>
 
+typedef struct Pair
+{
+    int i;
+    int j;
+} Pair;
+
 class Trax : public Game
 {
     private:
@@ -22,6 +28,8 @@ class Trax : public Game
         int minj;
         int maxj;
 
+        std::vector<Pair> moveForced;
+
         bool explore(int i, int j, int col, Piece *pre);
 
         //MANQUE COUP FORCE
@@ -31,6 +39,8 @@ class Trax : public Game
         //QUESTION COMMENT DANS LA ROUTINE DE JEU FORCE CES COUPS !
         //LE JOUEUR DOIT LES POSE LUI MEME OU LE JEU LE FAIT A SA PLACE (perso prefere le joueur)
         
+        std::vector<TraxPiece *> getNeighboors(int i, int j);
+        void getForcedMove(int i, int j);
 
     public:
         Trax();
