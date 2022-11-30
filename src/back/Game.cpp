@@ -26,14 +26,15 @@ void Game::cleanColor()
     {
         for(int j = plateau[i].get_min(); j <= plateau[i].get_max(); j++)
         {
-            plateau[i][j]->cleanColor();
+            if(plateau[i][j] != nullptr)
+                plateau[i][j]->cleanColor();
         }
     }
 }
 
 bool Game::canPlace(int i, int j, Piece &p)
 {
-    if(nb_piece == 0) return 0;
+    if(nb_piece == 0) return true;
     Piece *ph = plateau[i - 1][j];
     Piece *pb = plateau[i + 1][j];
     Piece *pg = plateau[i][j - 1];
@@ -72,6 +73,7 @@ bool Game::canPlace(int i, int j, Piece &p)
 void Game::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
+
     plateau[i][j] = &p;
     nb_piece++;
 
@@ -102,7 +104,7 @@ void Game::place(int i, int j, Piece &p)
         score += p.getEarnedValue(*pd, Direction::LEFT);
     }
 
-    players[i]->addScore(score);
+    players[current_player]->addScore(score);
     //current_player = (current_player + 1) % nb_player;
 
 }

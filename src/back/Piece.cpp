@@ -40,8 +40,13 @@ void Piece::rotate(bool clockwise)
         direction = (direction + 1) % 4;
 }
 
-void Piece::getConnectColor(int color, int *t)
+void Piece::getConnectColor(int *t)
 {
+}
+
+void Piece::setColor(int c)
+{
+    color = c;
 }
 
 void Piece::cleanColor()

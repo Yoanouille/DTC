@@ -24,7 +24,7 @@ public:
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
 
-    void getConnectColor(int col, int *t);
+    void getConnectColor(int *t);
 
     void flip();
 };

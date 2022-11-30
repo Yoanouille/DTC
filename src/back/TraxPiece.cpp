@@ -1,5 +1,6 @@
 #include "back/TraxPiece.hpp"
 using namespace std;
+#include <iostream>
 
 /**
  * Constructor
@@ -17,14 +18,19 @@ bool TraxPiece::isRecto() const { return recto; }
 /** Overriden function */
 bool TraxPiece::connectable(Piece &p, int pDir)
 {
-    return tab[(direction + pDir)%4] == ((TraxPiece &)p).tab[(pDir + ((TraxPiece &)p).direction + 2) %4];
+    //cout << direction << " " << pDir << endl;
+    //cout << ((TraxPiece &)p).direction << endl;
+    //cout << tab[(direction + pDir)%4] << " " << ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction) + 2) %4] << endl;
+    return tab[(direction + pDir + 2)%4] == ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction)) %4];
 }
 
 /** Overriden function*/
 int TraxPiece::getEarnedValue(Piece &p, int pDir) { 
     TraxPiece &p1 = (TraxPiece &)p;
-    //CONNECT COLOR
-    //CHANGER LA BONNE COULEUR POUR MOI ET POUR P
+    int col = 0;
+    if(tab[(direction + pDir + 2)%4]) col = 1;
+    p1.color_dir[pDir] = col;
+    this->color_dir[(pDir + 2)%4] = col;
     return 0; 
 }
 
@@ -58,11 +64,11 @@ void TraxPiece::flip()
 string TraxPiece::toString() const
 {
     string s{" "};
-    s += to_string(tab[0]) + "\n" + to_string(tab[1]) + " " + to_string(tab[3]) + "\n " + to_string(tab[2]);
+    s += to_string(tab[direction]) + "\n" + to_string(tab[(direction + Direction::LEFT) % 4]) + " " + to_string(tab[(direction + Direction::RIGHT) % 4]) + "\n " + to_string(tab[(direction + Direction::DOWN) % 4]);
     return s;
 }
 
-void TraxPiece::getConnectColor(int col, int *t)
+void TraxPiece::getConnectColor(int *t)
 {
     for(int i = 0; i < 4; i++)
     {
