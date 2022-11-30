@@ -56,7 +56,8 @@ void FirstScene::loop_event()
             {
                 if (texts[i].getGlobalBounds().contains(mouse_coord))
                 {
-                    // Change Scene -> maybe strore some variable to know which game it is
+                    // Change Scene to a Scene that sets players.
+                    // maybe strore some variable to know which game it is
                     cout << "Changement de Scene" << endl;
                     disp = true;
                 }
