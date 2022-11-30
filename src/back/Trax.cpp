@@ -75,7 +75,6 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::LEFT] == color)
     {
-        cout << "la" << endl;
         if((pre != plateau[i][j - 1]) && (i == last_i && j - 1 == last_j)) return true;
         if(plateau[i][j - 1] != nullptr && plateau[i][j - 1]->getColor() == 0)
         {
@@ -86,7 +85,6 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::RIGHT] == color)
     {
-        cout << "ici" << endl;
         if((pre != plateau[i][j + 1]) && (i == last_i && j + 1 == last_j)) return true;
         if(plateau[i][j + 1] != nullptr && plateau[i][j + 1]->getColor() == 0)
         {

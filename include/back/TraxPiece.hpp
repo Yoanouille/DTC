@@ -25,6 +25,7 @@ public:
     std::string toString() const override;
 
     void getConnectColor(int *t);
+    bool forcedMove(TraxPiece *tabp);
 
     void flip();
 };

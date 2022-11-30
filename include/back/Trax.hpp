@@ -2,6 +2,8 @@
 #define TRAX_HPP
 
 #include "back/Game.hpp"
+#include <iostream>
+#include <vector>
 
 class Trax : public Game
 {
@@ -28,6 +30,7 @@ class Trax : public Game
         // AUTOUR DE P : AU MOINS 2 PIECE POSE ET 2 FOIS MEME COULEUR
         //QUESTION COMMENT DANS LA ROUTINE DE JEU FORCE CES COUPS !
         //LE JOUEUR DOIT LES POSE LUI MEME OU LE JEU LE FAIT A SA PLACE (perso prefere le joueur)
+        
 
     public:
         Trax();

@@ -18,9 +18,6 @@ bool TraxPiece::isRecto() const { return recto; }
 /** Overriden function */
 bool TraxPiece::connectable(Piece &p, int pDir)
 {
-    //cout << direction << " " << pDir << endl;
-    //cout << ((TraxPiece &)p).direction << endl;
-    //cout << tab[(direction + pDir)%4] << " " << ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction) + 2) %4] << endl;
     return tab[(direction + pDir + 2)%4] == ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction)) %4];
 }
 
@@ -74,4 +71,21 @@ void TraxPiece::getConnectColor(int *t)
     {
         t[i] = color_dir[i];   
     }
+}
+
+bool TraxPiece::forcedMove(TraxPiece *tabp)
+{
+    int h = -1;
+    int b = -1;
+    int g = -1;
+    int d = -1;
+
+    bool h = tabp[Direction::UP].tab[(tabp[Direction::UP].direction + Direction::DOWN) % 4];
+    bool g = tabp[Direction::LEFT].tab[(tabp[Direction::LEFT].direction + Direction::RIGHT) % 4];
+    bool d = tabp[Direction::DOWN].tab[(tabp[Direction::DOWN].direction + Direction::UP) % 4];
+    bool b = tabp[Direction::RIGHT].tab[(tabp[Direction::RIGHT].direction + Direction::LEFT) % 4];
+    
+
+    return h;
+
 }

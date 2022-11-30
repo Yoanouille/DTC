@@ -35,9 +35,9 @@ int Piece::getColor() const
 void Piece::rotate(bool clockwise)
 {
     if (clockwise)
-        direction = (direction + 3) % 4;
-    else
         direction = (direction + 1) % 4;
+    else
+        direction = (direction + 3) % 4;
 }
 
 void Piece::getConnectColor(int *t)
