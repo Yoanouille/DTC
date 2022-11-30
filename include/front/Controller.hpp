@@ -6,7 +6,7 @@
 #include <map>
 #include <utility>
 
-#include "Menu.hpp"
+#include "App.hpp"
 
 /**
  * This class contains data that handle user's inputs

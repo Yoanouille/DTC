@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/Menu.o obj/FirstScene.o obj/Scene.o obj/MainScene.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o  obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o
+OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o
 
@@ -20,12 +20,16 @@ memory: $(TARGET) $(OBJECTS)
 main: $(OBJECTS)
 	$(CC) -o main $(OBJECTS) $(SFML)
 
-obj/Main.o: src/Main.cpp include/front/Menu.hpp include/back/VecZ.tpp include/back/VecZ.hpp
+obj/Main.o: src/Main.cpp include/front/App.hpp include/back/VecZ.tpp include/back/VecZ.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
 #==== Frontend Objects ====#
-obj/Menu.o: src/front/Menu.cpp include/front/Menu.hpp include/front/Scene.hpp include/front/FirstScene.hpp include/front/MainScene.hpp include/front/Controller.hpp
+obj/AssetsLoader.o : src/front/AssetsLoader.cpp include/front/AssetsLoader.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/App.o: src/front/App.cpp include/front/App.hpp include/front/Scene.hpp include/front/MainMenu.hpp include/front/PlayerSettingsScene.hpp include/front/MainScene.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -33,15 +37,27 @@ obj/Scene.o: src/front/Scene.cpp include/front/Scene.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/FirstScene.o: src/front/FirstScene.cpp include/front/FirstScene.hpp include/front/Scene.hpp include/front/Menu.hpp
+obj/MainMenu.o: src/front/MainMenu.cpp include/front/MainMenu.hpp include/front/Scene.hpp include/front/App.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/Menu.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp include/back/Game.hpp
+obj/PlayerSettingsScene.o: src/front/PlayerSettingsScene.cpp include/front/PlayerSettingsScene.hpp include/front/TextField.hpp include/front/Button.hpp include/front/App.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/PieceDisplayer.o: src/front/PieceDisplayer.cpp include/front/PieceDisplayer.hpp include/front/Menu.hpp
+obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/App.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/Button.o: src/front/Button.cpp include/front/Button.hpp include/front/App.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/TextField.o: src/front/TextField.cpp include/front/TextField.hpp include/front/App.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/PieceDisplayer.o: src/front/PieceDisplayer.cpp include/front/PieceDisplayer.hpp include/front/App.hpp 
 	$(OBJ_DIR)
 	$(CCO)
 

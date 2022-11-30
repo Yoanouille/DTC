@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "back/Piece.hpp"
-#include "Menu.hpp"
+#include "App.hpp"
 
 class PieceDisplayer : public sf::RectangleShape
 {
@@ -12,7 +12,7 @@ protected:
 
 
     // Application's window that catch the events
-    Menu &menu;
+    App &app;
 
     // Coordinates on a Board
     sf::Vector2i coordinates;
@@ -21,7 +21,7 @@ protected:
     Piece &piece;
 
 public:
-    PieceDisplayer(Menu &m, int x, int y, Piece &p);
+    PieceDisplayer(App &app, int x, int y, Piece &p);
     virtual ~PieceDisplayer();
 
     void rotate(bool clockwise);

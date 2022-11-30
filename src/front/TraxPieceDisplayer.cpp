@@ -3,34 +3,11 @@ using namespace sf;
 using namespace std;
 
 /**
- * Initializing static fields.
- * They will be set with loadTextures
- */
-Texture TraxPieceDisplayer::textureRecto;
-Texture TraxPieceDisplayer::textureVerso;
-
-/**
- * Static method that loads TraxPiece's Recto and Verso Textures.
- * If Textures can't be loaded, print an error on standard error
- * but the program continue its execution.
- */
-void TraxPieceDisplayer::loadTextures()
-{
-    if (!TraxPieceDisplayer::textureRecto.loadFromFile("resources/images/traxR.png"))
-        cerr << "TraxPiece's Texture Loading Failed : traxR.png" << endl;
-
-    else if (!TraxPieceDisplayer::textureVerso.loadFromFile("resources/images/traxV.png"))
-        cerr << "TraxPiece's Texture Loading Failed : traxR.png" << endl;
-    else
-        cout << "TraxPiece's Textures loaded ! " << endl;
-}
-
-/**
  * Constructor
  * It is private to prevent for creating more than one Controller.
  * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(Menu &m, TraxPiece& p, int x, int y) : PieceDisplayer(m, x, y, p)
+TraxPieceDisplayer::TraxPieceDisplayer(App &app, TraxPiece& p, int x, int y) : PieceDisplayer(app, x, y, p)
 {
     setShownSide(true);
 }
@@ -46,12 +23,12 @@ TraxPieceDisplayer::~TraxPieceDisplayer() {}
  */
 void TraxPieceDisplayer::setShownSide(bool recto){
     if(recto)
-        setTexture(&textureRecto);
+        setTexture(&Assets::getInstance()->TraxTextureRecto);
     else
-        setTexture(&textureVerso);
+        setTexture(&Assets::getInstance()->TraxTextureVerso);
     
     // Both Images have the same size, we've chosen arbitrarily recto 
-    Vector2u textureSize = textureRecto.getSize();
+    Vector2u textureSize = Assets::getInstance()->TraxTextureRecto.getSize();
     setTextureRect(IntRect(0, 0, textureSize.x, textureSize.y));
 }
 
@@ -69,12 +46,12 @@ void TraxPieceDisplayer::flip(){
  */
 void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
 {
-    Vector2f v{coordinates.x * scl, coordinates.y * scl};
+    Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
     this->setPosition(v + board.getPosition() + off);
-    this->setSize({scl, scl});
+    this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
-        menu.draw(*this);
+        app.draw(*this);
 }
 
 /**
@@ -103,7 +80,7 @@ void TraxPieceDisplayer::loop_event()
 
     // // Event loop
     // Event event;
-    // while (menu.pollEvent(event))
+    // while (App.pollEvent(event))
     // {
     //     if (event.type == Event::EventType::KeyPressed)
     //         (Controller::getInstance()).makeKeyAction(event.key.code);

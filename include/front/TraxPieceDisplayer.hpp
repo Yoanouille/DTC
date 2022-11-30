@@ -2,24 +2,17 @@
 #define TRAXPIECEDISPLAYER_H
 
 #include "back/TraxPiece.hpp"
+#include "AssetsLoader.hpp"
 #include "PieceDisplayer.hpp"
 #include "Controller.hpp"
 
 class TraxPieceDisplayer : public PieceDisplayer
 {
 private:
-    // Static textures that will be loaded once and for all
-    // (It is recommended to use the least number of texture)
-    static sf::Texture textureRecto;
-    static sf::Texture textureVerso;
-
     void setShownSide(bool recto);
 
 public:
-    // Loading method
-    static void loadTextures();
-
-    TraxPieceDisplayer(Menu &m, TraxPiece &p, int x, int y);
+    TraxPieceDisplayer(App &app, TraxPiece &p, int x, int y);
     virtual ~TraxPieceDisplayer();
 
     void flip();

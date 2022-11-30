@@ -1,4 +1,4 @@
-#include "front/FirstScene.hpp"
+#include "front/MainMenu.hpp"
 
 using namespace sf;
 using namespace std;
@@ -6,52 +6,47 @@ using namespace std;
 /**
  * Constructor
  */
-FirstScene::FirstScene(Menu &m) : Scene{}, menu{m}, font{}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, app{true}, speed{20}
-{
-    init();
+MainMenu::MainMenu(App &app) : Scene{}, app{app}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, appear{true}, speed{20}
+{ 
+    init(); 
 }
 
 /** Destructor */
-FirstScene::~FirstScene()
-{
-}
+MainMenu::~MainMenu() {}
 
 /** Initialize the Scene */
-void FirstScene::init()
+void MainMenu::init()
 {
-    // load font
-    font.loadFromFile("resources/font/Hylia.otf");
-
-    // setup texts
+    // Setup texts
     options = {"Domino", "Trax", "Carcassonne"};
     texts.resize(options.size());
     for (std::size_t i{}; i < texts.size(); ++i)
     {
-        texts[i].setFont(font);
+        texts[i].setFont(Assets::getInstance()->MainMenuFont);
         texts[i].setString(options[i]);
         texts[i].setCharacterSize(75);
         Color c{255, 255, 255, 0};
         texts[i].setFillColor(c);
         FloatRect r = texts[i].getGlobalBounds();
         texts[i].setOrigin(0.5 * r.width, 0.5 * r.height);
-        texts[i].setPosition(menu.get_width() / 2, (i + 1) * menu.get_height() / (options.size() + 1));
+        texts[i].setPosition(app.getWidth() / 2, (i + 1) * app.getHeight() / (options.size() + 1));
     }
 }
 
 // Manage event
-void FirstScene::loop_event()
+void MainMenu::loop_event()
 {
 
     Event event;
-    while (menu.pollEvent(event))
+    while (app.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            menu.close();
+            app.close();
 
-        pos_mouse = Mouse::getPosition(menu);
-        mouse_coord = menu.mapPixelToCoords(pos_mouse);
+        pos_mouse = Mouse::getPosition(app);
+        mouse_coord = app.mapPixelToCoords(pos_mouse);
 
-        if (!app && !disp && Mouse::isButtonPressed(Mouse::Left))
+        if (!appear && !disp && Mouse::isButtonPressed(Mouse::Left))
             for (size_t i = 0; i < texts.size(); i++)
             {
                 if (texts[i].getGlobalBounds().contains(mouse_coord))
@@ -92,9 +87,9 @@ void FirstScene::loop_event()
     }
 }
 
-void FirstScene::render()
+void MainMenu::render()
 {
-    if (app) // frame mod 2 to slow the disappearing on my screen
+    if (appear) // frame mod 2 to slow the disappearing on my screen
         display();
     if (disp)
     {
@@ -102,20 +97,20 @@ void FirstScene::render()
         if (!disp)
         {
             // DIRE DE CHANGER DE SCENE
-            menu.setScene(2);
+            app.setScene(2);
         }
     }
     // draw text
     for (Text &t : texts)
     {
-        menu.draw(t);
+        app.draw(t);
     }
 }
 
 /**
  * Disappearing of the scene
  */
-void FirstScene::dispose()
+void MainMenu::dispose()
 {
     if (!disp)
         return;
@@ -134,7 +129,7 @@ void FirstScene::dispose()
 /**
  * Appearing of the Scene
  */
-void FirstScene::display()
+void MainMenu::display()
 {
     for (Text &t : texts)
     {
@@ -142,6 +137,6 @@ void FirstScene::display()
         c.a += speed;
         t.setFillColor(c);
         if (c.a > 255 - speed)
-            app = false;
+            appear = false;
     }
 }

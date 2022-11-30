@@ -2,19 +2,22 @@
 using namespace sf;
 using namespace std;
 
-TextField::TextField(unsigned int maxSize, Font &font) 
+TextField::TextField(unsigned int maxSize, Font &font, Vector2f containerSize, Vector2f position) 
     : maxSize{maxSize}, font{font},
-      container{Vector2f{15 * maxSize, 20}},
+      container{Vector2f{containerSize.x * maxSize, containerSize.y}},
       focus{false}
 {
     container.setOutlineThickness(2);
     container.setFillColor(Color::White);
     container.setOutlineColor(Color::Black);
-    container.setPosition(this->getPosition()); 
+    container.setPosition(position); 
+    
+    text.setFont(font);
+    text.setPosition(position);
 } 
 
 const std::string TextField::getText() const {
-    return text;
+    return text.getString();
 }
 
 void TextField::setPosition(float x, float y){
@@ -34,12 +37,17 @@ void TextField::setFocus(bool focus){
         container.setOutlineColor(sf::Color::Black);
 }
 
-void TextField::handleInput(sf::Event e){
+void TextField::handleInput(sf::Event &e){
     if (!focus || e.type != sf::Event::TextEntered)
         return;
 
     if (e.text.unicode == 8)   // Delete key
-        text = text.substr(0, text.size() - 1);
-    else if (text.size() < maxSize)
-        text += e.text.unicode;
+        text.setString(text.getString().substring(0, text.getString().getSize() - 1));
+    else if (text.getString().getSize() < maxSize)
+        text.setString(text.getString() + e.text.unicode);
+}
+
+void TextField::render(App &app){
+    app.draw(container);
+    app.draw(text);
 }

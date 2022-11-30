@@ -2,28 +2,30 @@
 #define TEXTFIELD_H
 
 #include <SFML/Graphics.hpp>
+#include "App.hpp"
 
 /**
  * I am not going to code this without any help.
- * cf.
- * https://stackoverflow.com/questions/53734084/write-text-input-on-the-screen-in-sfml
+ * cf. https://stackoverflow.com/questions/53734084/write-text-input-on-the-screen-in-sfml
  */
-class TextField : public sf::Transformable, public sf::Drawable{
+class TextField : public sf::Transformable{
     private:
         unsigned int maxSize;
         sf::Font &font;
-        std::string text;
+        sf::Text text;
         sf::RectangleShape container;
         bool focus;
 
     public :
-        TextField(unsigned int maxSize, sf::Font &font);  
+        TextField(unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
 
         const std::string getText() const;
         void setPosition(float x, float y);
         bool contains(sf::Vector2f point);
         void setFocus(bool focus);
-        void handleInput(sf::Event e);
+        void handleInput(sf::Event &e);
+
+        void render(App &m);
 };
 
 #endif

@@ -296,7 +296,7 @@
                         <mxRectangle x="1121" y="33" width="80" height="18" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="MjsJlT0-aBO1oH4Jwxmf-55" value="MenuDisplayer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#3399FF;" parent="1" vertex="1">
+                <mxCell id="MjsJlT0-aBO1oH4Jwxmf-55" value="AppDisplayer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#3399FF;" parent="1" vertex="1">
                     <mxGeometry x="1426" y="97" width="160" height="86" as="geometry"/>
                 </mxCell>
                 <mxCell id="MjsJlT0-aBO1oH4Jwxmf-56" value="+ field: type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="MjsJlT0-aBO1oH4Jwxmf-55" vertex="1">

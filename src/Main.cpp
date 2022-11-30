@@ -1,9 +1,9 @@
-#include "front/Menu.hpp"
+#include "front/App.hpp"
 
 int main()
 {
-    Menu menu{};
-    menu.run_menu();
+    App App{};
+    App.runApp();
 
     return 0;
 }

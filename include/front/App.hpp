@@ -1,16 +1,17 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef APP_H
+#define APP_H
 
 #include <iostream>
 #include <string>
 
 #include <SFML/Graphics.hpp>
 
+#include "AssetsLoader.hpp"
 #include "Controller.hpp"
 #include "Scene.hpp"
 
-// Class that represents the window
-class Menu : public sf::RenderWindow
+// Class that represents the Window
+class App : public sf::RenderWindow
 {
 private:
     // Dimension
@@ -22,9 +23,6 @@ private:
     // old current Scene
     Scene *old_sc;
 
-    // image, currently store the background
-    sf::Texture image;
-
     // Sprite of the background, need image
     sf::Sprite bg;
 
@@ -33,14 +31,14 @@ private:
     void render();
 
 public:
-    Menu();
-    virtual ~Menu();
+    App();
+    virtual ~App();
 
     // launch the event loop and the render loop
-    void run_menu();
+    void runApp();
 
-    int get_height() const;
-    int get_width() const;
+    int getHeight() const;
+    int getWidth() const;
 
     void setScene(int i);
 };

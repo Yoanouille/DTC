@@ -1,14 +1,16 @@
 #include "front/App.hpp"
 #include "front/MainMenu.hpp"
+#include "front/PlayerSettingsScene.hpp"
 #include "front/MainScene.hpp"
 
 using namespace sf;
 
-/** Constructor
- *  Initialize different variables.
+/** 
+ * Constructor
+ * Initialize different variables.
  */
-App::App() : width{1280}, height{720}, sc{nullptr}, old_sc{nullptr}, image{}, bg{}
-{
+App::App() : width{1280}, height{720}, sc{nullptr}, old_sc{nullptr}, bg{}
+{  
     init();
 }
 
@@ -26,19 +28,17 @@ App::~App()
  */
 void App::init()
 {
-    this->create(sf::VideoMode(width, height), "App SFML", sf::Style::Titlebar | sf::Style::Close);
+    this->create(sf::VideoMode(width, height), "DTC", sf::Style::Titlebar | sf::Style::Close);
     this->setPosition(sf::Vector2i(0, 0));
 
-    image.loadFromFile("resources/images/bg1.png");
-    bg.setTexture(image);
+    bg.setTexture(Assets::getInstance()->MainMenuBackground);
     bg.setScale(0.33, 0.33);
 
     sc = new MainMenu(*this);
-    // sc = new MainScene(*this);
 }
 
 /**
- * Manage the event in function of the current scene
+ * Manage the event depending on the current scene
  */
 void App::loop_event()
 {
@@ -46,7 +46,7 @@ void App::loop_event()
 }
 
 /**
- * Manage the render in function of the current scene
+ * Manage the render depending on the current scene
  */
 void App::render()
 {
@@ -59,7 +59,7 @@ void App::render()
 /**
  * Launch the 2 main loop (event and render)
  */
-void App::run_App()
+void App::runApp()
 {
     sf::Clock clock;
     float lastTime = 0;
@@ -81,25 +81,28 @@ void App::run_App()
 
 /**
  * Getter of the height
- * @return An integer, the height of the window
+ * @return An integer, the height of the App
  */
-int App::get_height() const
+int App::getHeight() const
 {
     return height;
 }
 
 /**
  * Getter of the width
- * @return An integer, the width of the window
+ * @return An integer, the width of the App
  */
-int App::get_width() const
+int App::getWidth() const
 {
     return width;
 }
 
 /**
  * Set the current scene and store the current scene into old_sc
- * @param i An integer, which identify a scene (1 -> MainMenu, 2 -> MainScene)
+ * @param i An integer, which identify a scene :
+ *  1 -> MainMenu
+ *  2 -> PlayerSettingsScene 
+ *  3 -> MainScene
  */
 void App::setScene(int i)
 {
@@ -113,6 +116,13 @@ void App::setScene(int i)
         break;
 
     case 2:
+        if (old_sc != nullptr)
+            delete old_sc;
+        old_sc = sc;
+        sc = new PlayerSettingsScene(*this,2);
+        break;
+
+    case 3:
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;

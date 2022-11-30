@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Menu.hpp"
+#include "App.hpp"
 #include "Scene.hpp"
 #include "front/PieceDisplayer.hpp"
 #include "back/Game.hpp"
@@ -15,7 +15,7 @@ class MainScene : public Scene
 {
 private:
     // current window (needed to draw and to change scene)
-    Menu &menu;
+    App &app;
 
     // White rectangle (future scoreboard)
     sf::RectangleShape scoreBoard;
@@ -51,7 +51,7 @@ private:
     bool disp;
 
     // if appearing
-    bool app;
+    bool appear;
 
     int speed1;
 
@@ -64,7 +64,7 @@ private:
     void setup_rect(sf::RectangleShape &r, float x, float y);
 
 public:
-    MainScene(Menu &m);
+    MainScene(App &app);
     virtual ~MainScene();
 
     void loop_event();

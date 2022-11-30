@@ -11,7 +11,7 @@ class DomPieceDisplayer : public PieceDisplayer
 private:
 
 public:
-    DomPieceDisplayer(Menu &m, int x, int y, DomPiece &p);
+    DomPieceDisplayer(App &app, int x, int y, DomPiece &p);
     virtual ~DomPieceDisplayer();
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
