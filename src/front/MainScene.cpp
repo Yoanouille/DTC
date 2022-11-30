@@ -41,18 +41,18 @@ void MainScene::init()
     TraxPieceDisplayer::loadTextures();
 
     // Set up controller
-    Controller & controller = (Controller::getInstance());
-    controller.bindActionOnKey(Keyboard::Left, [this](){ 
-        for(PieceDisplayer * p : this->pos){
-            p->rotate(true);
-        }
-    });
+    // Controller & controller = (Controller::getInstance());
+    // controller.bindActionOnKey(Keyboard::Left, [this](){ 
+    //     for(PieceDisplayer * p : this->pos){
+    //         p->rotate(true);
+    //     }
+    // });
 
-    controller.bindActionOnKey(Keyboard::Right, [this](){
-        for(PieceDisplayer * p : this->pos){
-            p->rotate(true);
-        }
-    });
+    // controller.bindActionOnKey(Keyboard::Right, [this](){
+    //     for(PieceDisplayer * p : this->pos){
+    //         p->rotate(true);
+    //     }
+    // });
 }
 
 /**
@@ -80,11 +80,11 @@ void MainScene::loop_event()
             scl += event.mouseWheelScroll.delta;
         }
 
-        if (event.type == Event::EventType::KeyPressed){
-            (Controller::getInstance()).makeKeyAction(event.key.code);
-        }
-        else
-            (Controller::getInstance()).makeAction(event);
+        // if (event.type == Event::EventType::KeyPressed){
+        //     (Controller::getInstance()).makeKeyAction(event.key.code);
+        // }
+        // else
+        //     (Controller::getInstance()).makeAction(event);
     }
 
     // Right click -> offset
