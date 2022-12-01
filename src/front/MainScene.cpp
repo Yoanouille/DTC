@@ -11,7 +11,7 @@ using namespace std;
  * Initialize some variables, call init()
  */
 MainScene::MainScene(App &app) : 
-    app{app}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, old_pos{0, 0}, disp{false}, appear{true}, speed1{40}, speed2{3}
+    app{app}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, disp{false}, appear{true}, speed1{40}, speed2{3}
 {
     //TODO depend du jeu ! donc arguments au constructeur !
     game = new Domino();
@@ -91,6 +91,11 @@ void MainScene::loop_event()
         //     (Controller::getInstance()).makeAction(event);
     }
 
+    if(!Mouse::isButtonPressed(Mouse::Left))
+    {
+        left_pressed = false;
+    }
+
     // Right click -> offset
     if (!appear && !disp && Mouse::isButtonPressed(Mouse::Right))
     {
@@ -132,9 +137,12 @@ void MainScene::loop_event()
         rect.setFillColor(c);
 
         // if click -> add coord to the vector pos
-        if (Mouse::isButtonPressed(Mouse::Left))
+        if (!left_pressed && Mouse::isButtonPressed(Mouse::Left))
         {   
-            pos.push_back(new DomPieceDisplayer{app, x0, y0, (DomPiece &)game->draw()});
+            left_pressed = true;
+            DomPiece &p = (DomPiece &)game->draw();
+            cout << p << endl;
+            pos.push_back(new DomPieceDisplayer{app, x0, y0, p});
         }
     }
     else

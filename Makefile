@@ -45,7 +45,7 @@ obj/PlayerSettingsScene.o: src/front/PlayerSettingsScene.cpp include/front/Playe
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/App.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp
+obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/App.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -65,7 +65,7 @@ obj/TraxPieceDisplayer.o: src/front/TraxPieceDisplayer.cpp include/front/TraxPie
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/DomPieceDisplayer.o: src/front/DomPieceDisplayer.cpp include/front/DomPieceDisplayer.hpp include/front/PieceDisplayer.hpp include/front/Controller.hpp
+obj/DomPieceDisplayer.o: src/front/DomPieceDisplayer.cpp include/front/DomPieceDisplayer.hpp include/front/PieceDisplayer.hpp include/front/Controller.hpp include/front/AssetsLoader.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

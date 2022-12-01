@@ -9,10 +9,12 @@
 class TraxPieceDisplayer : public PieceDisplayer
 {
 private:
+    TraxPiece &piece;
+
     void setShownSide(bool recto);
 
 public:
-    TraxPieceDisplayer(App &app, TraxPiece &p, int x, int y);
+    TraxPieceDisplayer(App &app, int x, int y, TraxPiece &p);
     virtual ~TraxPieceDisplayer();
 
     void flip();
@@ -21,6 +23,8 @@ public:
     
     // The Piece inherts rotate() from Shape
     void loop_event() override;
+
+    void rotate(bool clockwise) override;
 };
 
 #endif

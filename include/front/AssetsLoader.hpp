@@ -38,6 +38,7 @@ class Assets {
     friend class PlayerSettingsScene;
     friend class MainScene;
     friend class TraxPieceDisplayer;
+    friend class DomPieceDisplayer;
 };
 
 #endif

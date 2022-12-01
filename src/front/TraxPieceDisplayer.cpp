@@ -7,7 +7,7 @@ using namespace std;
  * It is private to prevent for creating more than one Controller.
  * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(App &app, TraxPiece& p, int x, int y) : PieceDisplayer(app, x, y, p)
+TraxPieceDisplayer::TraxPieceDisplayer(App &app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}
 {
     setShownSide(true);
 }
@@ -87,4 +87,10 @@ void TraxPieceDisplayer::loop_event()
     //     else
     //         (Controller::getInstance()).makeAction(event);
     // }
+}
+
+void TraxPieceDisplayer::rotate(bool clockwise)
+{
+    piece.rotate(clockwise);
+    //TODO Rotate image
 }

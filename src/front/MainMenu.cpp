@@ -89,7 +89,7 @@ void MainMenu::loop_event()
 
 void MainMenu::render()
 {
-    if (appear) // frame mod 2 to slow the disappearing on my screen
+    if (appear) 
         display();
     if (disp)
     {
@@ -97,7 +97,7 @@ void MainMenu::render()
         if (!disp)
         {
             // DIRE DE CHANGER DE SCENE
-            app.setScene(2);
+            app.setScene(3);
         }
     }
     // draw text

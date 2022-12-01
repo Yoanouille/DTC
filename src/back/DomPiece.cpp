@@ -81,3 +81,8 @@ string DomPiece::toString() const
 
   return s;
 }
+
+int DomPiece::getVal(int dir, int i)
+{
+  return tab[(dir + direction)%4][i];
+}

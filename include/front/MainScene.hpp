@@ -44,6 +44,8 @@ private:
     // if the right button of the mouse id pressed
     bool right_pressed;
 
+    bool left_pressed;
+
     // old position of the mouse
     sf::Vector2f old_pos;
 

@@ -21,5 +21,8 @@ public:
     bool connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
+
+    int getVal(int dir, int i);
+
 };
 #endif

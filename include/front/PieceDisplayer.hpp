@@ -17,14 +17,11 @@ protected:
     // Coordinates on a Board
     sf::Vector2i coordinates;
 
-    // The Piece we attache the Displayer to
-    Piece &piece;
-
 public:
-    PieceDisplayer(App &app, int x, int y, Piece &p);
+    PieceDisplayer(App &app, int x, int y);
     virtual ~PieceDisplayer();
 
-    void rotate(bool clockwise);
+    virtual void rotate(bool clockwise) = 0;
 
     // The Piece inherts rotation() from Shape
     virtual void loop_event() = 0;
