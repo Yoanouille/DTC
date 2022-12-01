@@ -24,7 +24,7 @@ private:
 public:
     Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
     
-    sf::Text getText() const;
+    sf::Text &getText();
     void setText(std::string text);
     void setPosition(float x, float y);
     bool contains(sf::Vector2f point);

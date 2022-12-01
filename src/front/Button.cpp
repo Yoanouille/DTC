@@ -21,7 +21,7 @@ Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int 
     setPosition(position.x,position.y);  
 }
 
-Text Button::getText() const{
+Text &Button::getText() {
     return text;
 }
 
@@ -104,7 +104,10 @@ void Button::setActionOnMouseExited(const std::function<void(void)> &action){
  */ 
 void Button::handleHover(Vector2f mousepos){
     if (contains(mousepos))
+    {
+        //text.setFillColor(Color::Red);
         this->mouseEnteredAction();
+    }
     else 
         this->mouseExitedAction();
 }

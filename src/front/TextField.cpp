@@ -4,19 +4,21 @@ using namespace std;
 
 TextField::TextField(unsigned int maxSize, Font &font, Vector2f containerSize, Vector2f position) 
     : maxSize{maxSize}, font{font},
-      container{Vector2f{containerSize.x * maxSize, containerSize.y}},
+      container{},
       focus{false}
 {
-    container.setOutlineThickness(2);
+    container.setSize(Vector2f{containerSize.x * maxSize, containerSize.y});
+    container.setOutlineThickness(3);
     container.setFillColor(Color::White);
     container.setOutlineColor(Color::Black);
     container.setPosition(position); 
     
     text.setFont(font);
     text.setPosition(position);
+    text.setFillColor(Color::Black);
 } 
 
-const Text TextField::getText() const {
+Text &TextField::getText() {
     return text;
 }
 
@@ -49,26 +51,31 @@ bool TextField::contains(sf::Vector2f point){
 }
 
 void TextField::setFocus(bool focus){
+
     this->focus = focus;
     if (focus)
-        container.setOutlineColor(sf::Color::Blue);
+    {
+        this->container.setOutlineColor(sf::Color::Blue);
+    }
     else
+    {
         container.setOutlineColor(sf::Color::Black);
+    }
 }
 
 void TextField::handleInput(sf::Event &e,Vector2f mousepos){
-    if (Mouse::isButtonPressed(Mouse::Left) && contains(mousepos))
-        setFocus(true);
-    else 
-        setFocus(false);
         
     if (!focus || e.type != sf::Event::TextEntered)
+    {
         return;
+    }
 
     if (e.text.unicode == 8)   // Delete key
         text.setString(text.getString().substring(0, text.getString().getSize() - 1));
     else if (text.getString().getSize() < maxSize)
+    {
         text.setString(text.getString() + e.text.unicode);
+    }
 }
 
 void TextField::render(App &app){

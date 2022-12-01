@@ -35,6 +35,7 @@ void PlayerSettingsScene::initFields(){
       TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
 
       nameFields.push_back(tf);
+      nameFields[i - 1].setOutlineColor(Color::Cyan);
       vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;
     }
 }
@@ -47,7 +48,10 @@ void PlayerSettingsScene::initButtons(){
     backButton.setActionOnMouseEntered([this](){ this->backButton.getText().setFillColor(Color::Red); });
     plusButton.setActionOnMouseEntered([this](){ this->plusButton.getText().setFillColor(Color::Red); });
     minusButton.setActionOnMouseEntered([this](){ this->minusButton.getText().setFillColor(Color::Red); });
-    submitButton.setActionOnMouseEntered([this](){ this->submitButton.getText().setFillColor(Color::Red); });
+    submitButton.setActionOnMouseEntered([this](){ 
+      
+      this->submitButton.getText().setFillColor(Color::Red); 
+    });
 
     // The texts turn white when the mouse leaves the button
     backButton.setActionOnMouseExited([this](){ this->backButton.getText().setFillColor(Color::White); });
@@ -119,8 +123,19 @@ void PlayerSettingsScene::loop_event(){
       app.close();
 
     Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
-    for(TextField t:nameFields)
-      t.handleInput(event,mousepos);
+    for(TextField &t:nameFields)
+    {
+      if(Mouse::isButtonPressed(Mouse::Left) && t.contains(mousepos))
+      {
+        t.setFocus(true);
+      } else if(Mouse::isButtonPressed(Mouse::Left))
+      {
+        t.setFocus(false);
+      } else 
+      {
+        t.handleInput(event,mousepos);
+      }
+    }
 
     backButton.handleHover(mousepos);
     plusButton.handleHover(mousepos);

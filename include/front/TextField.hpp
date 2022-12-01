@@ -19,7 +19,7 @@ class TextField : public sf::Transformable{
     public :
         TextField(unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
 
-        const sf::Text getText() const;
+        sf::Text &getText();
         void setText(std::string str);
         void trim();
 
