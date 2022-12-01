@@ -17,19 +17,26 @@ private:
     sf::Font &font;
 
     bool clicked;
-    std::function<void()> action;
+    std::function<void()> clickAction;
+    std::function<void()> mouseEnteredAction;
+    std::function<void()> mouseExitedAction;
 
 public:
     Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
     
-    const std::string getText() const;
+    sf::Text getText() const;
     void setText(std::string text);
     void setPosition(float x, float y);
     bool contains(sf::Vector2f point);
 
-    // Handles action
+    // Handles click
     void setActionOnClick(const std::function<void()> &action);
     void handleClick(sf::Event &e, sf::Vector2f mousepos);
+
+    // Handles hover
+    void setActionOnMouseEntered(const std::function<void()> &action);
+    void setActionOnMouseExited(const std::function<void()> &action);
+    void handleHover(sf::Vector2f mousepos);
 
     void render(App &app);
 };

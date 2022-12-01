@@ -12,59 +12,104 @@ Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int 
     container.setOutlineThickness(5);
     container.setFillColor(Color::Transparent);
     container.setOutlineColor(Color::Blue);
-    container.setPosition(position);
-    
+
     setText(text);
     this->text.setFont(font);
     this->text.setCharacterSize(fontSize); 
 
-    // Center the text in the container
-    Vector2f pos{};
-    pos.x = container.getPosition().x + container.getGlobalBounds().width/2 - this->text.getGlobalBounds().width ;
-    pos.y = container.getPosition().y + container.getGlobalBounds().height/2 - this->text.getGlobalBounds().height ;
-    this->text.setPosition(pos);
-
+    setPosition(position.x,position.y);  
 }
 
-const string Button::getText() const{
-    return text.getString();
+Text Button::getText() const{
+    return text;
 }
 
 void Button::setText(string text) {
     this->text.setString(text);
 }
 
+/**
+ * Set button's position
+ * We move the container to (x,y)
+ * The text inside the container is centered 
+ */
 void Button::setPosition(float x, float y){
     Transformable::setPosition(x, y);
-    setPosition(x,y);
+    container.setPosition(x,y);
+
+    // TODO : Center the text in the container
+    this->text.setPosition(container.getPosition().x + container.getGlobalBounds().width/2, container.getPosition().y + container.getGlobalBounds().height/2);
 }
 
+/**
+ * Check if the button contains a certain point
+ * @param point A vector containing mouseposition 
+ */
 bool Button::contains(Vector2f point){
     return container.getGlobalBounds().contains(point);
 }
     
 /**
  * Setter that sets the action 
+ * @param action A lambda expression
  */ 
 void Button::setActionOnClick(const std::function<void()> &action){
-    this->action = action;
+    this->clickAction = action;
 }
 
 /**
  * Execute the action if the button is clicked in the right area
+ * 
+ * @param e An event polled from the event queue
+ * @param mousepos The mouse's position
  */ 
 void Button::handleClick(Event &e, Vector2f mousepos){
-    if (e.type == Event::MouseButtonPressed 
+    if (e.type == Mouse::isButtonPressed(Mouse::Left)
         && contains(mousepos)
         && !clicked) {
-            this->action();
+            this->clickAction();
             clicked = true;
     }
-    else if (e.type == Event::MouseButtonReleased || !contains(mousepos)){
+    else if (e.type != Mouse::isButtonPressed(Mouse::Left) || !contains(mousepos)){
         clicked = false;
     } 
 }
 
+/**
+ * Setter that sets the action triggered
+ * when the mouse enters in the button.
+ * 
+ * @param action A lambda expression
+ */
+void Button::setActionOnMouseEntered(const std::function<void()> &action){
+    this->mouseEnteredAction = action;
+}
+
+/**
+ * Setter that sets the action triggered
+ * when the mouse exits from the button 
+ * 
+ * @param action A lambda expression
+ */
+void Button::setActionOnMouseExited(const std::function<void()> &action){
+    this->mouseExitedAction = action;
+}
+
+/**
+ * Execute the action if the button is clicked in the right area
+ * 
+ * @param mousepos The mouse's position as a vector
+ */ 
+void Button::handleHover(Vector2f mousepos){
+    if (contains(mousepos))
+        this->mouseEnteredAction();
+    else 
+        this->mouseExitedAction();
+}
+
+/**
+ * Rendering function 
+ */
 void Button::render(App &m){
     m.draw(container);
     m.draw(text);

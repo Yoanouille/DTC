@@ -97,7 +97,7 @@ void MainMenu::render()
         if (!disp)
         {
             // DIRE DE CHANGER DE SCENE
-            app.setScene(3);
+            app.setScene(2);
         }
     }
     // draw text

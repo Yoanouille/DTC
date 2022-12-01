@@ -20,6 +20,10 @@ const std::string TextField::getText() const {
     return text.getString();
 }
 
+const FloatRect TextField::getGlobalBounds() const{
+    return container.getGlobalBounds();
+}
+
 void TextField::setPosition(float x, float y){
     Transformable::setPosition(x, y);
     container.setPosition(x,y);
@@ -37,7 +41,12 @@ void TextField::setFocus(bool focus){
         container.setOutlineColor(sf::Color::Black);
 }
 
-void TextField::handleInput(sf::Event &e){
+void TextField::handleInput(sf::Event &e,Vector2f mousepos){
+    if (e.type == Mouse::isButtonPressed(Mouse::Left) && contains(mousepos))
+        setFocus(true);
+    else 
+        setFocus(false);
+        
     if (!focus || e.type != sf::Event::TextEntered)
         return;
 

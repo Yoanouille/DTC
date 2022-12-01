@@ -20,10 +20,11 @@ class TextField : public sf::Transformable{
         TextField(unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
 
         const std::string getText() const;
+        const sf::FloatRect getGlobalBounds()const;
         void setPosition(float x, float y);
         bool contains(sf::Vector2f point);
         void setFocus(bool focus);
-        void handleInput(sf::Event &e);
+        void handleInput(sf::Event &e, sf::Vector2f mousepos);
 
         void render(App &m);
 };
