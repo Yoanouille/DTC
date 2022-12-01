@@ -64,13 +64,13 @@ void Button::setActionOnClick(const std::function<void()> &action){
  * @param mousepos The mouse's position
  */ 
 void Button::handleClick(Event &e, Vector2f mousepos){
-    if (e.type == Mouse::isButtonPressed(Mouse::Left)
+    if (Mouse::isButtonPressed(Mouse::Left)
         && contains(mousepos)
         && !clicked) {
             this->clickAction();
             clicked = true;
     }
-    else if (e.type != Mouse::isButtonPressed(Mouse::Left) || !contains(mousepos)){
+    else if (Mouse::isButtonPressed(Mouse::Left) || !contains(mousepos)){
         clicked = false;
     } 
 }

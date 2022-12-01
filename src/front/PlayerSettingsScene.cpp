@@ -65,6 +65,7 @@ void PlayerSettingsScene::initButtons(){
     });
 
     plusButton.setActionOnClick([this](){
+      cout << "coucou" << endl;
       if(this->nbPlayers < 4)
         this->addPlayer();
     });
@@ -99,7 +100,7 @@ void PlayerSettingsScene::removePlayer(){
 
 void PlayerSettingsScene::loop_event(){
   Event event;
-  while(!app.pollEvent(event)){
+  while(app.pollEvent(event)){
     if (event.type == Event::Closed)
       app.close();
 
