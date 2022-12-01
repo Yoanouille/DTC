@@ -19,7 +19,8 @@ class PlayerSettingsScene : public Scene {
         Button minusButton;
 
         Button submitButton;
-        
+
+        float vSpace = 50.0f;
         std::vector<sf::Text> fieldLabels;
         std::vector<TextField> nameFields;
 

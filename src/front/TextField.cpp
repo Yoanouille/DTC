@@ -57,7 +57,7 @@ void TextField::setFocus(bool focus){
 }
 
 void TextField::handleInput(sf::Event &e,Vector2f mousepos){
-    if (e.type == Mouse::isButtonPressed(Mouse::Left) && contains(mousepos))
+    if (Mouse::isButtonPressed(Mouse::Left) && contains(mousepos))
         setFocus(true);
     else 
         setFocus(false);

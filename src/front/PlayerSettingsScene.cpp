@@ -12,7 +12,7 @@ PlayerSettingsScene::PlayerSettingsScene(App &app, int n) :
       plusButton{nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f} , {app.getWidth()/20.0f * 17, app.getHeight()/3.8f}}, 
       minusButton{nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
-      fieldLabels{}, nameFields{}
+      vSpace{50.0f}, fieldLabels{}, nameFields{}
 { 
   initFields(); 
   initButtons();
@@ -24,7 +24,7 @@ PlayerSettingsScene::~PlayerSettingsScene(){}
  * Setup TextFields and Labels
  */
 void PlayerSettingsScene::initFields(){
-    float vSpace = 50.0f;
+    
     for(int i = 1; i <= nbPlayers; i++){
       Text t{};
       t.setFont(Assets::getInstance()->MainMenuFont);
@@ -60,7 +60,6 @@ void PlayerSettingsScene::initButtons(){
     });
 
     plusButton.setActionOnClick([this](){
-      cout << "coucou" << endl;
       if(this->nbPlayers < 4)
         this->addPlayer();
     });
@@ -95,13 +94,20 @@ void PlayerSettingsScene::initButtons(){
 void PlayerSettingsScene::addPlayer(){
   nbPlayers++;
   Text t{};
+  t.setFont(Assets::getInstance()->MainMenuFont);
   t.setString("Player " + to_string(nbPlayers));
+  t.setPosition({app.getWidth()/3.5f, vSpace});
   fieldLabels.push_back(t);
-  nameFields.push_back({20, Assets::getInstance()->DefaultFont,{3,20}, {560,80}});
+
+  TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+  nameFields.push_back(tf);
+
+  vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;
 }
 
 void PlayerSettingsScene::removePlayer(){
   nbPlayers--;
+  vSpace -= nameFields[nameFields.size()-1].getPosition().y + nameFields[nameFields.size()-1].getGlobalBounds().height + 50; 
   fieldLabels.pop_back();
   nameFields.pop_back();
 }
