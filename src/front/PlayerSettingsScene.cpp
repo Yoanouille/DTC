@@ -60,6 +60,7 @@ void PlayerSettingsScene::initButtons(){
     });
 
     plusButton.setActionOnClick([this](){
+      cout << "coucou" << endl;
       if(this->nbPlayers < 4)
         this->addPlayer();
     });
