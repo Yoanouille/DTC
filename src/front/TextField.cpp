@@ -16,8 +16,23 @@ TextField::TextField(unsigned int maxSize, Font &font, Vector2f containerSize, V
     text.setPosition(position);
 } 
 
-const std::string TextField::getText() const {
-    return text.getString();
+const Text TextField::getText() const {
+    return text;
+}
+
+void TextField::setText(string str){
+    text.setString(str);
+}
+
+void TextField::setOutlineColor(Color c){
+    container.setOutlineColor(c);
+}
+
+void TextField::trim(){
+    string s = text.getString().toAnsiString();
+    s.erase(0,s.find_first_not_of(" "));
+    s.erase(s.find_last_not_of(" ") +1);
+    setText(s);
 }
 
 const FloatRect TextField::getGlobalBounds() const{

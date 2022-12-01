@@ -1,5 +1,4 @@
 #include "front/PlayerSettingsScene.hpp"
-#include <iostream>
 using namespace sf;
 using namespace std;
 
@@ -44,22 +43,18 @@ void PlayerSettingsScene::initFields(){
  * Setup buttons' actions. (Click and Hover)
  */
 void PlayerSettingsScene::initButtons(){
-
-    cout << "ok1" << endl;
     // The texts turn red when the mouse hovers the button
     backButton.setActionOnMouseEntered([this](){ this->backButton.getText().setFillColor(Color::Red); });
     plusButton.setActionOnMouseEntered([this](){ this->plusButton.getText().setFillColor(Color::Red); });
     minusButton.setActionOnMouseEntered([this](){ this->minusButton.getText().setFillColor(Color::Red); });
     submitButton.setActionOnMouseEntered([this](){ this->submitButton.getText().setFillColor(Color::Red); });
 
-    cout << "ok2" << endl;
     // The texts turn white when the mouse leaves the button
     backButton.setActionOnMouseExited([this](){ this->backButton.getText().setFillColor(Color::White); });
     plusButton.setActionOnMouseExited([this](){ this->plusButton.getText().setFillColor(Color::White); });
     minusButton.setActionOnMouseExited([this](){ this->minusButton.getText().setFillColor(Color::White); });
     submitButton.setActionOnMouseExited([this](){ this->submitButton.getText().setFillColor(Color::White); });
 
-    cout << "ok3" <<endl;
     backButton.setActionOnClick([this](){ 
       this->app.setScene(2); 
     });
@@ -75,11 +70,24 @@ void PlayerSettingsScene::initButtons(){
     });
 
     submitButton.setActionOnClick([this](){
-      // TODO : Check if all the Fields are filled
-      // TODO : Instantiate the Game
+      // Check if all the Fields are filled
+      bool allGood = true;
+      for (int i = 0; i < this->nbPlayers; i++){
+        this->nameFields[i].trim();
+        if (this->nameFields[i].getText().getString() == "") {
+          this->nameFields[i].setOutlineColor(Color::Red);
+          allGood = false;
+        } else {
+          this->nameFields[i].setOutlineColor(Color::Black);
+        }
+      }
 
-      // Change the Scene to MainScene(id = 3)
-      this->app.setScene(3);
+      // ? How To Instantiate the Game
+
+      if(allGood){
+        // Change the Scene to MainScene(id = 3)
+        this->app.setScene(3);
+      }
     });
 }
 
@@ -99,7 +107,7 @@ void PlayerSettingsScene::removePlayer(){
 
 void PlayerSettingsScene::loop_event(){
   Event event;
-  while(!app.pollEvent(event)){
+  while(app.pollEvent(event)){
     if (event.type == Event::Closed)
       app.close();
 
@@ -112,10 +120,10 @@ void PlayerSettingsScene::loop_event(){
     minusButton.handleHover(mousepos);
     submitButton.handleHover(mousepos);
 
-    backButton.handleClick(event,mousepos);
-    plusButton.handleClick(event,mousepos);
-    minusButton.handleClick(event,mousepos);
-    submitButton.handleClick(event,mousepos);
+    backButton.handleClick(mousepos);
+    plusButton.handleClick(mousepos);
+    minusButton.handleClick(mousepos);
+    submitButton.handleClick(mousepos);
   }
 }
 

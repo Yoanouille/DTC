@@ -19,7 +19,11 @@ class TextField : public sf::Transformable{
     public :
         TextField(unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
 
-        const std::string getText() const;
+        const sf::Text getText() const;
+        void setText(std::string str);
+        void trim();
+
+        void setOutlineColor(Color c); 
         const sf::FloatRect getGlobalBounds()const;
         void setPosition(float x, float y);
         bool contains(sf::Vector2f point);

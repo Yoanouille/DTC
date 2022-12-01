@@ -31,7 +31,7 @@ public:
 
     // Handles click
     void setActionOnClick(const std::function<void()> &action);
-    void handleClick(sf::Event &e, sf::Vector2f mousepos);
+    void handleClick(sf::Vector2f mousepos);
 
     // Handles hover
     void setActionOnMouseEntered(const std::function<void()> &action);
