@@ -14,6 +14,8 @@ class TextField : public sf::Transformable{
         sf::Font &font;
         sf::Text text;
         sf::RectangleShape container;
+
+        bool clicked;
         bool focus;
 
     public :
@@ -27,7 +29,7 @@ class TextField : public sf::Transformable{
         const sf::FloatRect getGlobalBounds()const;
         void setPosition(float x, float y);
         bool contains(sf::Vector2f point);
-        void setFocus(bool focus);
+        void setFocus(bool f);
         void handleInput(sf::Event &e, sf::Vector2f mousepos);
 
         void render(App &m);
