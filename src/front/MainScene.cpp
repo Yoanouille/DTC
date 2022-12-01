@@ -2,6 +2,7 @@
 #include "front/TraxPieceDisplayer.hpp"
 #include "front/DomPieceDisplayer.hpp"
 #include "back/Domino.hpp"
+#include "front/AssetsLoader.hpp"
 
 using namespace sf;
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
  * Initialize some variables, call init()
  */
 MainScene::MainScene(App &app) : 
-    app{app}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, disp{false}, appear{true}, speed1{40}, speed2{3}
+    app{app}, scoreBoard{}, board{}, scl{75}, off{180, 180}, rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, disp{false}, appear{true}, speed1{40}, speed2{3}
 {
     //TODO depend du jeu ! donc arguments au constructeur !
     game = new Domino();
@@ -43,6 +44,10 @@ void MainScene::init()
     // RGBA format
     Color c{0, 0, 0, 200};
     board.setFillColor(c);
+
+    rectBG.setTexture(&Assets::getInstance()->MainMenuBackground);
+    rectBG.setScale(0.33, 0.33);
+
 
     // Set up controller
     // Controller & controller = (Controller::getInstance());
@@ -197,7 +202,6 @@ void MainScene::render()
         }
     }
     // draw scoreboard, board, the current rect of the mouse
-    app.draw(scoreBoard);
     app.draw(board);
     app.draw(rect);
 
@@ -207,7 +211,13 @@ void MainScene::render()
     {
         p->render(off, board, scl);
     }
+    this->redrawBG();
+    app.draw(scoreBoard);
+
+
 }
+
+
 
 /**
  * When the scene is appearing
@@ -243,4 +253,35 @@ void MainScene::display()
  */
 void MainScene::dispose()
 {
+}
+
+void MainScene::redrawBG()
+{
+    Vector2f vB = board.getPosition();
+    Vector2f bB {board.getGlobalBounds().width, board.getGlobalBounds().height};
+
+    // rectBG.setFillColor(Color::Red);
+    rectBG.setPosition(0, 0);
+    //rectBG.setOutlineColor(Color::Red);
+    //rectBG.setOutlineThickness(3);
+   // rectBG.setScale(1, app.getHeight() / vB.y);
+    rectBG.setTextureRect(IntRect{0, 0, app.getWidth() / rectBG.getScale().x , vB.y / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x, vB.y / rectBG.getScale().y});
+    app.draw(rectBG);
+
+    rectBG.setTextureRect(IntRect{0, 0, vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
+
+    rectBG.setPosition(vB.x + bB.x, 0);
+    rectBG.setTextureRect(IntRect{(vB.x + bB.x) / rectBG.getScale().x, 0, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
+
+    rectBG.setPosition(0, vB.y + bB.y);
+    rectBG.setTextureRect(IntRect{0, (vB.y + bB.y) / rectBG.getScale().y, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
+
+
 }

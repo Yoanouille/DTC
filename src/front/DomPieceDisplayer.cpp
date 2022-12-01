@@ -7,9 +7,16 @@ DomPieceDisplayer::DomPieceDisplayer(App &app, int x, int y, DomPiece &p) : Piec
 {   
     Color c{255,255,255,255};
     this->setFillColor(c);
+    this->setOutlineColor(Color::Transparent);
+
 
     text.setFont(Assets::getInstance()->DefaultFont);
     text.setFillColor({255,0,0,255});
+
+    rect.setPosition(-20,-20);
+    rect.setFillColor(Color::Transparent);
+    rect.setOutlineThickness(0);
+    rect.setOutlineColor({0,0,0,0});
 }
 
 DomPieceDisplayer::~DomPieceDisplayer() {}
@@ -92,6 +99,9 @@ void DomPieceDisplayer::drawRect(int s)
             app.draw(text);          
         }
     }
+
+    rect.setFillColor(Color::Transparent);
+    rect.setOutlineThickness(0);
 
 }
 

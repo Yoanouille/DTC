@@ -32,6 +32,8 @@ private:
     // rectangle to draw different things
     sf::RectangleShape rect;
 
+    sf::RectangleShape rectBG;
+
     // position of the mouse on the screen
     sf::Vector2i pos_mouse;
 
@@ -64,6 +66,7 @@ private:
     void init();
 
     void setup_rect(sf::RectangleShape &r, float x, float y);
+    void redrawBG();
 
 public:
     MainScene(App &app);
