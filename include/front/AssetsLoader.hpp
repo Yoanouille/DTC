@@ -34,6 +34,7 @@ class Assets {
         static Assets* getInstance();
 
     friend class App;
+    friend class Button;
     friend class MainMenu;
     friend class PlayerSettingsScene;
     friend class MainScene;

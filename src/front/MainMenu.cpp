@@ -6,7 +6,9 @@ using namespace std;
 /**
  * Constructor
  */
-MainMenu::MainMenu(App &app) : Scene{}, app{app}, options{}, texts{}, pos_mouse{}, mouse_coord{}, disp{false}, appear{true}, speed{20}
+MainMenu::MainMenu(App &app) : 
+    Scene{}, app{app}, options{}, 
+    disp{false}, appear{true}, speed{20}
 { 
     init(); 
 }
@@ -16,21 +18,62 @@ MainMenu::~MainMenu() {}
 
 /** Initialize the Scene */
 void MainMenu::init()
-{
-    // Setup texts
-    options = {"Domino", "Trax", "Carcassonne"};
-    texts.resize(options.size());
-    for (std::size_t i{}; i < texts.size(); ++i)
-    {
-        texts[i].setFont(Assets::getInstance()->MainMenuFont);
-        texts[i].setString(options[i]);
-        texts[i].setCharacterSize(75);
-        Color c{255, 255, 255, 0};
-        texts[i].setFillColor(c);
-        FloatRect r = texts[i].getGlobalBounds();
-        texts[i].setOrigin(0.5 * r.width, 0.5 * r.height);
-        texts[i].setPosition(app.getWidth() / 2, (i + 1) * app.getHeight() / (options.size() + 1));
+{   
+    Button dominoButton{nullptr,"Domino", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
+    Button traxButton{nullptr,"Trax", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
+    Button carcassonneButton{nullptr,"Carcassonne", Assets::getInstance()->MainMenuFont, 60, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
+    
+    options.push_back(dominoButton);
+    options.push_back(traxButton);
+    options.push_back(carcassonneButton);
+    options.resize(3);
+
+    for (std::size_t i{}; i < options.size(); i++){
+        FloatRect r = options[i].getGlobalBounds();
+        options[i].setOrigin(r.width/2.0f, r.height/2.0f );
+        options[i].setPosition(app.getWidth()/2.5f, (i + 0.5) * app.getHeight() / (options.size() + 1.0f));
     }
+    
+    // TODO : Make Animation works
+    options[0].setActionOnMouseEntered([this](){ this->options[0].setFillColor(Color::Red); });
+    options[1].setActionOnMouseEntered([this](){ this->options[1].setFillColor(Color::Red); });
+    options[2].setActionOnMouseEntered([this](){ this->options[2].setFillColor(Color::Red); });
+    
+    // TODO : Make Animation works
+    options[0].setActionOnMouseExited([this](){ this->options[0].setFillColor(Color::White); });
+    options[1].setActionOnMouseExited([this](){ this->options[1].setFillColor(Color::White); });
+    options[2].setActionOnMouseExited([this](){ this->options[2].setFillColor(Color::White); });
+
+    // Set Action on Click : Change Scene to PlayerSettingsScene depending on the gamemode :
+    // Trax will only authorize two players.
+
+    // ? How to make the Scene fade out without any problem ?
+    options[0].setActionOnClick([this](){
+        app.setScene(2);
+    });
+
+    options[1].setActionOnClick([this](){ 
+        app.setScene(2,true);
+    });
+
+    options[2].setActionOnClick([this](){
+        app.setScene(2);
+    });
+
+    // // Setup texts
+    // options = {"Domino", "Trax", "Carcassonne"};
+    // texts.resize(options.size());
+    // for (std::size_t i{}; i < texts.size(); ++i)
+    // {
+    //     texts[i].setFont(Assets::getInstance()->MainMenuFont);
+    //     texts[i].setString(options[i]);
+    //     texts[i].setCharacterSize(75);
+    //     Color c{255, 255, 255, 0};
+    //     texts[i].setFillColor(c);
+    //     FloatRect r = texts[i].getGlobalBounds();
+    //     texts[i].setOrigin(0.5 * r.width, 0.5 * r.height);
+    //     texts[i].setPosition(app.getWidth() / 2.0f, (i + 1) * app.getHeight() / (options.size() + 1));
+    // }
 }
 
 // Manage event
@@ -43,68 +86,59 @@ void MainMenu::loop_event()
         if (event.type == sf::Event::Closed)
             app.close();
 
-        pos_mouse = Mouse::getPosition(app);
-        mouse_coord = app.mapPixelToCoords(pos_mouse);
+        // Get the position of the mouse
+        Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
+         for (size_t i = 0; i < options.size(); i++)
+        {
+                options[i].handleHover(mousepos);
+                options[i].handleClick(mousepos);
+        }
 
-        if (!appear && !disp && Mouse::isButtonPressed(Mouse::Left))
-            for (size_t i = 0; i < texts.size(); i++)
-            {
-                if (texts[i].getGlobalBounds().contains(mouse_coord))
-                {
-                    // Change Scene to a Scene that sets players.
-                    // maybe strore some variable to know which game it is
-                    cout << "Changement de Scene" << endl;
-                    disp = true;
-                }
-            }
+        // if (!appear && !disp && Mouse::isButtonPressed(Mouse::Left))
+        //     for (size_t i = 0; i < options.size(); i++)
+        //     {
+        //         options[i].handleHover(mousepos);
+        //         options[i].handleClick(mousepos);
+               
+                // if (texts[i].getGlobalBounds().contains(mouse_coord))
+                // {
+                //     // Change Scene to a Scene that sets players.
+                //     // maybe strore some variable to know which game it is
+                //     cout << "Changement de Scene" << endl;
+                //     disp = true;
+                // }
+        //  }
     }
 
-    /** If the mouse is on a text change his color to red
-     * if not change his color to white
-     */
-    for (size_t i = 0; i < texts.size(); i++)
-    {
-        if (texts[i].getGlobalBounds().contains(mouse_coord))
-        {
-            Color c = texts[i].getFillColor();
-            if (c.g >= speed)
-                c.g -= speed; // speed
-            if (c.b >= speed)
-                c.b -= speed; // speed
+    // Actions on Hover 
+    // Color c = this->options[0].getText().getFillColor();
+        // while(c != Color::Red){
+        //     if (c.g >= this->speed)
+        //         c.g -= this->speed; // speed
+        //     if (c.b >= this->speed)
+        //         c.b -= this->speed; // speed
 
-            texts[i].setFillColor(c);
-        }
-        else
-        {
-            Color c = texts[i].getFillColor();
-            if (c.g < 255 - speed)
-                c.g += speed; // speed
-            if (c.b < 255 - speed)
-                c.b += speed; // speed
+        //    this->options[0].getText().setFillColor(c);
+        // }
 
-            texts[i].setFillColor(c);
-        }
-    }
+    // Color c = this->options[0].getText().getFillColor();
+        // while(c != Color::Red){
+        //     if (c.g < 255 - this->speed)
+        //         c.g += this->speed; // speed
+        //     if (c.b < 255 - this->speed)
+        //         c.b += this->speed; // speed
+
+        //    this->options[0].getText().setFillColor(c);
+        // }
 }
 
 void MainMenu::render()
 {
     if (appear) 
         display();
-    if (disp)
-    {
-        dispose();
-        if (!disp)
-        {
-            // DIRE DE CHANGER DE SCENE
-            app.setScene(2);
-        }
-    }
-    // draw text
-    for (Text &t : texts)
-    {
-        app.draw(t);
-    }
+
+    for (Button &b : options)
+        b.render(app);
 }
 
 /**
@@ -114,15 +148,14 @@ void MainMenu::dispose()
 {
     if (!disp)
         return;
-    for (Text &t : texts)
+
+    for (Button &b : options)
     {
-        Color c = t.getFillColor();
+        Color c = b.getFillColor();
         c.a -= speed;
-        t.setFillColor(c);
+        b.setFillColor(c);
         if (c.a < speed)
-        {
             disp = false;
-        }
     }
 }
 
@@ -131,11 +164,11 @@ void MainMenu::dispose()
  */
 void MainMenu::display()
 {
-    for (Text &t : texts)
+    for (Button &b : options)
     {
-        Color c = t.getFillColor();
+        Color c = b.getFillColor();
         c.a += speed;
-        t.setFillColor(c);
+        b.setFillColor(c); 
         if (c.a > 255 - speed)
             appear = false;
     }

@@ -5,6 +5,7 @@
 #include <string>
 
 #include "App.hpp"
+#include "AssetsLoader.hpp"
 
 class Button :  public sf::Transformable {
 private:
@@ -22,10 +23,17 @@ private:
     std::function<void()> mouseExitedAction;
 
 public:
+    Button();
     Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
     
     sf::Text &getText();
     void setText(std::string text);
+
+    sf::Color getFillColor();
+    void setFillColor(Color c);
+
+    sf::FloatRect getGlobalBounds();
+    
     void setPosition(float x, float y);
     bool contains(sf::Vector2f point);
 

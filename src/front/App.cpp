@@ -104,7 +104,7 @@ int App::getWidth() const
  *  2 -> PlayerSettingsScene 
  *  3 -> MainScene
  */
-void App::setScene(int i)
+void App::setScene(int i,bool isTraxGame)
 {
     switch (i)
     {
@@ -119,7 +119,7 @@ void App::setScene(int i)
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new PlayerSettingsScene(*this,2);
+        sc = new PlayerSettingsScene(*this,2,isTraxGame);
         break;
 
     case 3:

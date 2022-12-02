@@ -3,6 +3,9 @@
 using namespace sf;
 using namespace std;
 
+Button::Button() : container{},text{},font{Assets::getInstance()->DefaultFont} {}
+
+
 Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
     : container{containerSize}, text{}, font{font}
 {
@@ -21,12 +24,26 @@ Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int 
     setPosition(position.x,position.y);  
 }
 
+// Text Getter and Setter
 Text &Button::getText() {
     return text;
 }
 
 void Button::setText(string text) {
     this->text.setString(text);
+}
+
+// Text Color Getter and Setter
+Color Button::getFillColor(){
+    return text.getFillColor();
+}
+
+void Button::setFillColor(Color c){
+    text.setFillColor(c);
+}
+
+FloatRect Button::getGlobalBounds(){
+    return container.getGlobalBounds();
 }
 
 /**

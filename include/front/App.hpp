@@ -40,7 +40,7 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    void setScene(int i);
+    void setScene(int i, bool isTraxGame = false);
 };
 
 #endif

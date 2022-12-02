@@ -37,7 +37,7 @@ obj/Scene.o: src/front/Scene.cpp include/front/Scene.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainMenu.o: src/front/MainMenu.cpp include/front/MainMenu.hpp include/front/Scene.hpp include/front/App.hpp
+obj/MainMenu.o: src/front/MainMenu.cpp include/front/MainMenu.hpp include/front/Button.hpp include/front/Scene.hpp include/front/App.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

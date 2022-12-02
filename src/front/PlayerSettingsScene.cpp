@@ -5,10 +5,11 @@ using namespace std;
 /**
  * Constructor
  */
-PlayerSettingsScene::PlayerSettingsScene(App &app, int n) : 
+PlayerSettingsScene::PlayerSettingsScene(App &app, int nbPlayers, bool isTraxGame) : 
       app{app}, 
-      nbPlayers{n}, 
+      nbPlayers{nbPlayers}, 
       backButton{nullptr, "<", Assets::getInstance()->MainMenuFont, 200, {app.getHeight()/7.0f, app.getHeight()/7.0f}, {app.getWidth()/20.0f,app.getHeight()/23.0f}},
+      isTraxGame{isTraxGame},
       plusButton{nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f} , {app.getWidth()/20.0f * 17, app.getHeight()/3.8f}}, 
       minusButton{nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
@@ -45,22 +46,22 @@ void PlayerSettingsScene::initFields(){
  */
 void PlayerSettingsScene::initButtons(){
     // The texts turn red when the mouse hovers the button
-    backButton.setActionOnMouseEntered([this](){ this->backButton.getText().setFillColor(Color::Red); });
-    plusButton.setActionOnMouseEntered([this](){ this->plusButton.getText().setFillColor(Color::Red); });
-    minusButton.setActionOnMouseEntered([this](){ this->minusButton.getText().setFillColor(Color::Red); });
+    backButton.setActionOnMouseEntered([this](){ this->backButton.setFillColor(Color::Red); });
+    plusButton.setActionOnMouseEntered([this](){ this->plusButton.setFillColor(Color::Red); });
+    minusButton.setActionOnMouseEntered([this](){ this->minusButton.setFillColor(Color::Red); });
     submitButton.setActionOnMouseEntered([this](){ 
       
-      this->submitButton.getText().setFillColor(Color::Red); 
+      this->submitButton.setFillColor(Color::Red); 
     });
 
     // The texts turn white when the mouse leaves the button
-    backButton.setActionOnMouseExited([this](){ this->backButton.getText().setFillColor(Color::White); });
-    plusButton.setActionOnMouseExited([this](){ this->plusButton.getText().setFillColor(Color::White); });
-    minusButton.setActionOnMouseExited([this](){ this->minusButton.getText().setFillColor(Color::White); });
-    submitButton.setActionOnMouseExited([this](){ this->submitButton.getText().setFillColor(Color::White); });
+    backButton.setActionOnMouseExited([this](){ this->backButton.setFillColor(Color::White); });
+    plusButton.setActionOnMouseExited([this](){ this->plusButton.setFillColor(Color::White); });
+    minusButton.setActionOnMouseExited([this](){ this->minusButton.setFillColor(Color::White); });
+    submitButton.setActionOnMouseExited([this](){ this->submitButton.setFillColor(Color::White); });
 
     backButton.setActionOnClick([this](){ 
-      this->app.setScene(2); 
+      this->app.setScene(1); 
     });
 
     plusButton.setActionOnClick([this](){
@@ -123,18 +124,14 @@ void PlayerSettingsScene::loop_event(){
       app.close();
 
     Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
-    for(TextField &t:nameFields)
+    for(TextField &t : nameFields)
     {
       if(Mouse::isButtonPressed(Mouse::Left) && t.contains(mousepos))
-      {
         t.setFocus(true);
-      } else if(Mouse::isButtonPressed(Mouse::Left))
-      {
+      else if(Mouse::isButtonPressed(Mouse::Left))
         t.setFocus(false);
-      } else 
-      {
+      else 
         t.handleInput(event,mousepos);
-      }
     }
 
     backButton.handleHover(mousepos);
@@ -154,8 +151,11 @@ void PlayerSettingsScene::loop_event(){
  */
 void PlayerSettingsScene::render(){
   backButton.render(app);
-  plusButton.render(app);
-  minusButton.render(app);
+
+  if(!isTraxGame){
+    plusButton.render(app);
+    minusButton.render(app);
+  }
   submitButton.render(app);
 
   for(int i = 0; i < nbPlayers; i++){

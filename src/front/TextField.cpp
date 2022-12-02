@@ -87,13 +87,9 @@ void TextField::setFocus(bool focus){
 
     this->focus = focus;
     if (focus)
-    {
         this->container.setOutlineColor(sf::Color::Blue);
-    }
     else
-    {
         container.setOutlineColor(sf::Color::Black);
-    }
 }
 
 /**
@@ -107,16 +103,12 @@ void TextField::setFocus(bool focus){
 void TextField::handleInput(sf::Event &e,Vector2f mousepos){
         
     if (!focus || e.type != sf::Event::TextEntered)
-    {
         return;
-    }
 
     if (e.text.unicode == 8)   // Delete key
         text.setString(text.getString().substring(0, text.getString().getSize() - 1));
     else if (text.getString().getSize() < maxSize)
-    {
         text.setString(text.getString() + e.text.unicode);
-    }
 }
 
 /**
