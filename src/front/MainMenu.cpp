@@ -88,17 +88,12 @@ void MainMenu::loop_event()
 
         // Get the position of the mouse
         Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
-         for (size_t i = 0; i < options.size(); i++)
-        {
+
+        if (!appear && !disp)
+            for (size_t i = 0; i < options.size(); i++)
+            {
                 options[i].handleHover(mousepos);
                 options[i].handleClick(mousepos);
-        }
-
-        // if (!appear && !disp && Mouse::isButtonPressed(Mouse::Left))
-        //     for (size_t i = 0; i < options.size(); i++)
-        //     {
-        //         options[i].handleHover(mousepos);
-        //         options[i].handleClick(mousepos);
                
                 // if (texts[i].getGlobalBounds().contains(mouse_coord))
                 // {
@@ -107,7 +102,7 @@ void MainMenu::loop_event()
                 //     cout << "Changement de Scene" << endl;
                 //     disp = true;
                 // }
-        //  }
+         }
     }
 
     // Actions on Hover 
