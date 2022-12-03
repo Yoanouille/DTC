@@ -30,6 +30,7 @@ class PlayerSettingsScene : public Scene {
 
         bool appear;
         bool disp;
+        int dispF;
         int nextScene;
 
         void initFields();
@@ -50,6 +51,7 @@ class PlayerSettingsScene : public Scene {
 
         void display();
         void dispose();
+        void disposeField();
 };
 
 #endif

@@ -170,7 +170,7 @@ void Button::handleClick(Vector2f mousepos){
             this->clickAction();
             clicked = true;
     }
-    else if (Mouse::isButtonPressed(Mouse::Left) || !contains(mousepos)){
+    else if (!Mouse::isButtonPressed(Mouse::Left) || !contains(mousepos)){
         clicked = false;
     } 
 }

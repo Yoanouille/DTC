@@ -13,7 +13,7 @@ PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, bool isTraxGam
       minusButton{app, nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{app, nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
       vSpace{50.0f}, fieldLabels{}, nameFields{},
-      mousepos{}, appear{true}, disp{false}, nextScene{-1}
+      mousepos{}, appear{true}, disp{false}, dispF{-1}, nextScene{-1}
 { 
   initFields(); 
   initButtons();
@@ -76,7 +76,7 @@ void PlayerSettingsScene::initButtons(){
     minusButton.setActionOnClick([this](){
       if(this->nbPlayers > 2)
       {
-        this->removePlayer();
+        dispF = 1;
       }
     });
 
@@ -179,6 +179,12 @@ void PlayerSettingsScene::render(){
     if(!disp && nextScene != -1) app.setScene(nextScene, isTraxGame);
   }
 
+  if(dispF != -1) 
+  {
+    disposeField();
+    if(dispF == -1) removePlayer();
+  }
+
   backButton.render();
 
   if(!isTraxGame){
@@ -240,4 +246,23 @@ void PlayerSettingsScene::dispose()
     if(!t.fadeOut()) disp = true;
   }
 
+}
+
+void PlayerSettingsScene::disposeField()
+{
+
+  if(nameFields[nameFields.size()-1].fadeOut())
+  {
+    dispF = -1;
+  } else 
+  {
+    Text &t = fieldLabels[fieldLabels.size() - 1];
+    Color c = t.getFillColor();
+    if(c.a >= 20)
+    {
+      c.a -= 20;
+      t.setFillColor(c);
+    }
+
+  }
 }
