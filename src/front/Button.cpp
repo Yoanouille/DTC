@@ -3,6 +3,8 @@
 using namespace sf;
 using namespace std;
 
+int Button::speed = 20;
+
 Button::Button(App &app) : app{app}, container{},text{},font{Assets::getInstance()->DefaultFont} {}
 
 Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
@@ -68,63 +70,82 @@ bool Button::contains(Vector2f point){
 }
 
 /**
- * Animation  
+ * Fade in animation  
  */
-void Button::fadeIn(){
+bool Button::fadeIn(){
     Color c = text.getFillColor();
-    while(c.a <= 255 - speed){
+    if (c.a <= 255 - speed){
         c.a += speed;
-        sleep(sf::milliseconds(5));
         text.setFillColor(c); 
-        render();
-    }
+        return false;
+    } 
 
-    if (c.a <= 255){
-        c.a = 255;
-        text.setFillColor(c); 
-        render();
-    }
+    c.a = 255;
+    text.setFillColor(c); 
+    return true;
 }
 
-void Button::fadeOut(){
+/**
+ * Fade out animation
+ */
+bool Button::fadeOut(){
     Color c = text.getFillColor();
-    while(c.a >=  speed){
+    if(c.a >=  speed){
         c.a -= speed;
         text.setFillColor(c); 
-    }
+        return false;
+    } 
 
-    if (c.a >= 0){
-        c.a = 0;
-        text.setFillColor(c);
-    }
+    c.a = 0;
+    text.setFillColor(c);
+    return true;
 }
 
-void Button::fadeInColor(Color col){
+/**
+ * Make the text's Color fade into a given Color 
+ * 
+ * @param c The given Color
+ */
+bool Button::fadeInColor(Color col){
     Color c = text.getFillColor();
+    int okay = 0;
 
+    // Treats Red
     if (c.r <= col.r - speed)
         c.r += speed;
     else if (c.r >= col.r + speed)
         c.r -= speed;
-    else
+    else{
         c.r = col.r;
+        okay++;
+    }
     
+    // Treats Green
     if (c.g <= col.g - speed)
         c.g += speed;
     else if (c.g >= col.g + speed)
         c.g -= speed;
+        
     else
+    {
         c.g = col.g;
-
+        okay++;
+    }
+       
+    // Treats Blue
     if (c.b <= col.b - speed)
         c.b += speed;
     else if (c.b >= col.b + speed)
         c.b -= speed;
     else
+    {
         c.b = col.b;
+        okay++;
+    }
 
     text.setFillColor(c);
 
+    return (okay == 3);
 }
     
 /**
@@ -180,10 +201,7 @@ void Button::setActionOnMouseExited(const std::function<void(void)> &action){
  */ 
 void Button::handleHover(Vector2f mousepos){
     if (contains(mousepos))
-    {
-        //text.setFillColor(Color::Red);
         this->mouseEnteredAction();
-    }
     else 
         this->mouseExitedAction();
 }

@@ -11,7 +11,7 @@ class Button :  public sf::Transformable {
 private:
     App &app;
 
-    static const int speed = 20;
+    static int speed;
 
     // Container : Image will be loaded statically elsewhere.
     sf::RectangleShape container;
@@ -41,9 +41,9 @@ public:
     bool contains(sf::Vector2f point);
 
     // Animations
-    void fadeIn();
-    void fadeOut();
-    void fadeInColor(sf::Color c);
+    bool fadeIn();
+    bool fadeOut();
+    bool fadeInColor(sf::Color c);
 
     // Handles click
     void setActionOnClick(const std::function<void()> &action);

@@ -10,9 +10,7 @@ MainMenu::MainMenu(App &app) :
     Scene{}, 
     app{app}, 
     options{3,Button{app,nullptr,"", Assets::getInstance()->MainMenuFont,70,{app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}}}, 
-    disp{false}, 
-    appear{true}, 
-    speed{20}
+    disp{false}, appear{true}
 { 
     init(); 
 }
@@ -23,25 +21,62 @@ MainMenu::~MainMenu() {}
 /** Initialize the Scene */
 void MainMenu::init()
 {   
+    // Set the Texts
     options[0].setText("Domino") ;
     options[1].setText("Trax");
     options[2].setText("Carcassonne");
 
+    // Set the Texts' color
+    options[0].setFillColor({255,255,255,0});
+    options[1].setFillColor({255,255,255,0});
+    options[2].setFillColor({255,255,255,0});
+
+    // Set the positions
     for (std::size_t i{}; i < options.size(); i++){
         FloatRect r = options[i].getGlobalBounds();
         options[i].setOrigin(r.width/2.0f, r.height/2.0f );
         options[i].setPosition(app.getWidth()/2.5f, (i + 0.5) * app.getHeight() / (options.size() + 1.0f));
     }
     
-    // TODO : Make Animation works
-    options[0].setActionOnMouseEntered([this](){ this->options[0].fadeInColor(Color::Red); });
-    options[1].setActionOnMouseEntered([this](){ this->options[1].fadeInColor(Color::Red); });
-    options[2].setActionOnMouseEntered([this](){ this->options[2].fadeInColor(Color::Red); });
+    // When the Mouse enters a button 
+    // Fade that button's text color into red
+    options[0].setActionOnMouseEntered([this](){
+        bool ok = false;
+        while(!ok)
+            ok = this->options[0].fadeInColor(Color::Red); 
+    });
+
+    options[1].setActionOnMouseEntered([this](){ 
+        bool ok = false;
+        while(!ok)
+            ok = this->options[1].fadeInColor(Color::Red); 
+    });
+
+    options[2].setActionOnMouseEntered([this](){ 
+        bool ok = false;
+        while(!ok)
+            ok = this->options[2].fadeInColor(Color::Red); 
+    });
     
-    // TODO : Make Animation works
-    options[0].setActionOnMouseExited([this](){ this->options[0].fadeInColor(Color::White); });
-    options[1].setActionOnMouseExited([this](){ this->options[1].fadeInColor(Color::White); });
-    options[2].setActionOnMouseExited([this](){ this->options[2].fadeInColor(Color::White); });
+    // When the Mouse exits a button
+    // Fade that button's text color into white
+    options[0].setActionOnMouseExited([this](){ 
+        bool ok = false;
+        while(!ok)
+            ok = this->options[0].fadeInColor(Color::White); 
+    });
+
+    options[1].setActionOnMouseExited([this](){ 
+        bool ok = false;
+        while(!ok)
+            ok = this->options[1].fadeInColor(Color::White); 
+    });
+
+    options[2].setActionOnMouseExited([this](){ 
+        bool ok = false;
+        while(!ok)
+            ok = this->options[2].fadeInColor(Color::White); 
+    });
 
     // Set Action on Click : Change Scene to PlayerSettingsScene depending on the gamemode :
     // Trax will only authorize two players.
@@ -61,27 +96,11 @@ void MainMenu::init()
         this->dispose();
         this->app.setScene(2);
     });
-
-    // // Setup texts
-    // options = {"Domino", "Trax", "Carcassonne"};
-    // texts.resize(options.size());
-    // for (std::size_t i{}; i < texts.size(); ++i)
-    // {
-    //     texts[i].setFont(Assets::getInstance()->MainMenuFont);
-    //     texts[i].setString(options[i]);
-    //     texts[i].setCharacterSize(75);
-    //     Color c{255, 255, 255, 0};
-    //     texts[i].setFillColor(c);
-    //     FloatRect r = texts[i].getGlobalBounds();
-    //     texts[i].setOrigin(0.5 * r.width, 0.5 * r.height);
-    //     texts[i].setPosition(app.getWidth() / 2.0f, (i + 1) * app.getHeight() / (options.size() + 1));
-    // }
 }
 
 // Manage event
 void MainMenu::loop_event()
 {
-
     Event event;
     while (app.pollEvent(event))
     {
@@ -96,37 +115,8 @@ void MainMenu::loop_event()
             {
                 options[i].handleHover(mousepos);
                 options[i].handleClick(mousepos);
-               
-                // if (texts[i].getGlobalBounds().contains(mouse_coord))
-                // {
-                //     // Change Scene to a Scene that sets players.
-                //     // maybe strore some variable to know which game it is
-                //     cout << "Changement de Scene" << endl;
-                //     disp = true;
-                // }
          }
     }
-
-    // Actions on Hover 
-    // Color c = this->options[0].getText().getFillColor();
-        // while(c != Color::Red){
-        //     if (c.g >= this->speed)
-        //         c.g -= this->speed; // speed
-        //     if (c.b >= this->speed)
-        //         c.b -= this->speed; // speed
-
-        //    this->options[0].getText().setFillColor(c);
-        // }
-
-    // Color c = this->options[0].getText().getFillColor();
-        // while(c != Color::Red){
-        //     if (c.g < 255 - this->speed)
-        //         c.g += this->speed; // speed
-        //     if (c.b < 255 - this->speed)
-        //         c.b += this->speed; // speed
-
-        //    this->options[0].getText().setFillColor(c);
-        // }
 }
 
 void MainMenu::render()
@@ -143,11 +133,15 @@ void MainMenu::render()
  */
 void MainMenu::dispose()
 {
-    if (!disp)
-        return;
+    disp = true;
 
-    for (Button &b : options)
-        b.fadeOut();
+    bool ok = false;
+    while (!ok){
+        for (Button &b : options){
+            ok = b.fadeOut();
+        }
+    }
+    
 }
 
 /**
@@ -155,6 +149,12 @@ void MainMenu::dispose()
  */
 void MainMenu::display()
 {
-    for (Button &b : options)
-        b.fadeIn();
+    bool ok = false;
+    while (!ok){
+        for (Button &b : options){
+            ok = b.fadeIn();
+        }
+    }
+
+    appear = false;
 }

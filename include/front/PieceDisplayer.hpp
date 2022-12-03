@@ -18,9 +18,9 @@ public:
     PieceDisplayer(App& app, int x, int y);
     virtual ~PieceDisplayer();
 
+    // The Piece inherts rotation() from Shape
     virtual void rotate(bool clockwise) = 0;
 
-    // The Piece inherts rotation() from Shape
     virtual void loop_event() = 0;
 
     // Abstract method that will be overriden.

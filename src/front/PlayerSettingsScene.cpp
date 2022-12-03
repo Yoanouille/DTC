@@ -69,7 +69,7 @@ void PlayerSettingsScene::initButtons(){
     });
 
     minusButton.setActionOnClick([this](){
-      if(this->nbPlayers > 1)
+      if(this->nbPlayers > 2)
         this->removePlayer();
     });
 
@@ -134,14 +134,18 @@ void PlayerSettingsScene::loop_event(){
     }
 
     backButton.handleHover(mousepos);
-    plusButton.handleHover(mousepos);
-    minusButton.handleHover(mousepos);
     submitButton.handleHover(mousepos);
 
     backButton.handleClick(mousepos);
-    plusButton.handleClick(mousepos);
-    minusButton.handleClick(mousepos);
     submitButton.handleClick(mousepos);
+
+    if(!isTraxGame){
+      plusButton.handleHover(mousepos);
+      minusButton.handleHover(mousepos);
+      
+      plusButton.handleClick(mousepos);
+      minusButton.handleClick(mousepos);
+    }
   }
 }
 

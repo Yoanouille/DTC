@@ -21,8 +21,6 @@ private:
     // if appearing
     bool appear;
 
-    int speed;
-
     void init();
 
 public:
