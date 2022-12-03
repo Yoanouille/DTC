@@ -9,12 +9,13 @@
 class TraxPieceDisplayer : public PieceDisplayer
 {
 private:
+
     TraxPiece &piece;
 
     void setShownSide(bool recto);
 
 public:
-    TraxPieceDisplayer(int x, int y, TraxPiece &p);
+    TraxPieceDisplayer(App& app, int x, int y, TraxPiece &p);
     virtual ~TraxPieceDisplayer();
 
     void flip();

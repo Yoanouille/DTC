@@ -3,10 +3,10 @@
 using namespace sf;
 using namespace std;
 
-Button::Button() : container{},text{},font{Assets::getInstance()->DefaultFont} {}
+Button::Button(App &app) : app{app}, container{},text{},font{Assets::getInstance()->DefaultFont} {}
 
-Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
-    : container{containerSize}, text{}, font{font}
+Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
+    : app{app}, container{containerSize}, text{}, font{font}
 {
     if(imageTexture != nullptr){
         Vector2u textureSize = imageTexture->getSize();
@@ -192,6 +192,6 @@ void Button::handleHover(Vector2f mousepos){
  * Rendering function 
  */
 void Button::render(){
-    App::getInstance()->draw(container);
-    App::getInstance()->draw(text);
+    app.draw(container);
+    app.draw(text);
 }

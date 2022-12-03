@@ -14,6 +14,7 @@
 class MainScene : public Scene
 {
 private:
+    App &app;
 
     // White rectangle (future scoreboard)
     sf::RectangleShape scoreBoard;
@@ -67,7 +68,7 @@ private:
     void redrawBG();
 
 public:
-    MainScene();
+    MainScene(App &app);
     virtual ~MainScene();
 
     void loop_event();

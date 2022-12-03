@@ -10,6 +10,8 @@
  */
 class TextField : public sf::Transformable{
     private:
+        App &app;
+
         unsigned int maxSize;
         sf::Font &font;
         sf::Text text;
@@ -19,7 +21,7 @@ class TextField : public sf::Transformable{
         bool focus;
 
     public :
-        TextField(unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
+        TextField(App &app, unsigned int maxSize, sf::Font &font, sf::Vector2f containerSize, sf::Vector2f position);  
 
         sf::Text &getText();
         void setText(std::string str);

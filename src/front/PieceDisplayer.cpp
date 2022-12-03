@@ -1,6 +1,6 @@
 #include "front/PieceDisplayer.hpp"
 using namespace sf;
 
-PieceDisplayer::PieceDisplayer(int x, int y) : coordinates{x, y} {}
+PieceDisplayer::PieceDisplayer(App &app, int x, int y) : app{app}, coordinates{x, y} {}
 
 PieceDisplayer::~PieceDisplayer() {}

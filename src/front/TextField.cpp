@@ -11,8 +11,8 @@ using namespace std;
  * @param containerSize A vector storing the size of the container
  * @param position A vector storing the coodinates of the top_left corner of the TextField
  */
-TextField::TextField(unsigned int maxSize, Font &font, Vector2f containerSize, Vector2f position) 
-    : maxSize{maxSize}, font{font},
+TextField::TextField(App &app, unsigned int maxSize, Font &font, Vector2f containerSize, Vector2f position) 
+    : app{app}, maxSize{maxSize}, font{font},
       container{},
       focus{false}
 {
@@ -115,6 +115,6 @@ void TextField::handleInput(sf::Event &e,Vector2f mousepos){
  * rendering function 
  */
 void TextField::render(){
-    App::getInstance()->draw(container);
-    App::getInstance()->draw(text);
+    app.draw(container);
+    app.draw(text);
 }

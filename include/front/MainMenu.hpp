@@ -12,6 +12,7 @@
 class MainMenu : public Scene
 {
 private:
+    App & app;
     std::vector<Button> options;
 
     // if disappearing
@@ -25,7 +26,7 @@ private:
     void init();
 
 public:
-    MainMenu();
+    MainMenu(App &app);
     ~MainMenu();
 
     void loop_event();

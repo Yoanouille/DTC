@@ -8,15 +8,6 @@
 using namespace sf;
 using namespace std;
 
-App *App::instance = nullptr;
-
-App *App::getInstance(){
-    if (instance == nullptr)
-        instance = new App();
-
-    return instance;
-}
-
 /** 
  * Constructor
  * Initialize different variables.
@@ -33,8 +24,6 @@ App::~App()
         delete sc;
     if (old_sc != nullptr)
         delete old_sc;
-
-    cout << "App destroyed" << endl;
 }
 
 /**
@@ -48,7 +37,7 @@ void App::init()
     bg.setTexture(Assets::getInstance()->MainMenuBackground);
     bg.setScale(0.33, 0.33);
 
-    sc = new MainMenu();
+    sc = new MainMenu(*this);
 }
 
 /**
@@ -126,21 +115,21 @@ void App::setScene(int i,bool isTraxGame)
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new MainMenu();
+        sc = new MainMenu(*this);
         break;
 
     case 2:
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new PlayerSettingsScene(2,isTraxGame);
+        sc = new PlayerSettingsScene(*this,2,isTraxGame);
         break;
 
     case 3:
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new MainScene();
+        sc = new MainScene(*this);
         break;
 
     default:

@@ -3,7 +3,7 @@
 
 using namespace sf;
 
-DomPieceDisplayer::DomPieceDisplayer(int x, int y, DomPiece &p) : PieceDisplayer{x,y}, piece{p}, rect{}, text{}
+DomPieceDisplayer::DomPieceDisplayer(App &app, int x, int y, DomPiece &p) : PieceDisplayer{app,x,y}, piece{p}, rect{}, text{}
 {   
     Color c{255,255,255,255};
     this->setFillColor(c);
@@ -32,7 +32,7 @@ void DomPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
     {
-        App::getInstance()->draw(*this);
+        app.draw(*this);
         drawRect(scl);
     }
 }
@@ -45,7 +45,7 @@ void DomPieceDisplayer::drawRect(int s)
     rect.setSize({scl - dp.x * 0.5, scl - dp.y * 0.5});
     rect.setOutlineThickness(1);
     rect.setOutlineColor({0,0,0,255});
-    App::getInstance()->draw(rect);  
+    app.draw(rect);  
 
     text.setCharacterSize(scl);
     text.setString("0");
@@ -63,40 +63,40 @@ void DomPieceDisplayer::drawRect(int s)
             rect.setFillColor(Color::White);
 
         rect.setPosition({x + i * scl + dp.x, y + dp.y});
-        App::getInstance()->draw(rect);
+        app.draw(rect);
 
         if(i != 0)
         {
             rect.setPosition({x + dp.x, y + i * scl + dp.y});
-            App::getInstance()->draw(rect);
+            app.draw(rect);
         }
 
         rect.setPosition({x + i * scl + dp.x, y + 4 * scl + dp.y});
-        App::getInstance()->draw(rect);
+        app.draw(rect);
 
         if(i != 4)
         {
             rect.setPosition({x + 4 * scl + dp.x, y + i * scl + dp.y});
-            App::getInstance()->draw(rect);
+            app.draw(rect);
         }
 
         if(i >= 1 && i <= 3)
         {
             text.setPosition({x + i * scl + dp.x + r.width * 0.5, y + dp.y - r.height * 0.20});
             text.setString(to_string(piece.getVal(Direction::UP, i - 1)));
-            App::getInstance()->draw(text);
+            app.draw(text);
 
             text.setPosition({x + i * scl + dp.x + r.width * 0.5, y  + 4 * scl + dp.y - r.height * 0.20});
             text.setString(to_string(piece.getVal(Direction::DOWN, 3 - i)));
-            App::getInstance()->draw(text);  
+            app.draw(text);  
 
             text.setPosition({x + dp.x + r.width * 0.5, y  + i * scl + dp.y - r.height * 0.20});
             text.setString(to_string(piece.getVal(Direction::LEFT, 3 - i)));
-            App::getInstance()->draw(text);
+            app.draw(text);
 
             text.setPosition({x + 4 * scl + dp.x + r.width * 0.5, y  + i * scl + dp.y - r.height * 0.20});
             text.setString(to_string(piece.getVal(Direction::RIGHT, i - 1)));
-            App::getInstance()->draw(text);          
+            app.draw(text);          
         }
     }
 

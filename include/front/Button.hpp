@@ -9,6 +9,8 @@
 
 class Button :  public sf::Transformable {
 private:
+    App &app;
+
     static const int speed = 20;
 
     // Container : Image will be loaded statically elsewhere.
@@ -24,8 +26,8 @@ private:
     std::function<void()> mouseExitedAction;
 
 public:
-    Button();
-    Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
+    Button(App &app);
+    Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
     
     sf::Text &getText();
     void setText(std::string text);

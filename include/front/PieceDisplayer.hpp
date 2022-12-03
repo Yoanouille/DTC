@@ -9,12 +9,13 @@
 class PieceDisplayer : public sf::RectangleShape
 {
 protected:
-
+    App &app;
+    
     // Coordinates on a Board
     sf::Vector2i coordinates;
 
 public:
-    PieceDisplayer(int x, int y);
+    PieceDisplayer(App& app, int x, int y);
     virtual ~PieceDisplayer();
 
     virtual void rotate(bool clockwise) = 0;

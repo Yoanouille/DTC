@@ -11,7 +11,8 @@ using namespace std;
  * Constructor
  * Initialize some variables, call init()
  */
-MainScene::MainScene() : 
+MainScene::MainScene(App &app) : 
+    app{app},
     scoreBoard{}, board{}, scl{75}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
@@ -36,14 +37,14 @@ MainScene::~MainScene()
 void MainScene::init()
 {
     // setup the scoreboard
-    scoreBoard.setSize(Vector2f(App::getInstance()->getWidth() / 5, App::getInstance()->getHeight()));
-    scoreBoard.setPosition(Vector2f((App::getInstance()->getWidth() * 6.0) / 5, 0));
+    scoreBoard.setSize(Vector2f(app.getWidth() / 5, app.getHeight()));
+    scoreBoard.setPosition(Vector2f((app.getWidth() * 6.0) / 5, 0));
     scoreBoard.setFillColor(Color::White);
 
     // setup the board
-    double dx = (App::getInstance()->getWidth() - scoreBoard.getSize().x);
-    board.setSize(Vector2f(dx * 15.0 / 16, App::getInstance()->getHeight() * 17 / 18));
-    board.setPosition(Vector2f(App::getInstance()->getWidth() / 32.0, App::getInstance()->getHeight() * 38.0 / 36));
+    double dx = (app.getWidth() - scoreBoard.getSize().x);
+    board.setSize(Vector2f(dx * 15.0 / 16, app.getHeight() * 17 / 18));
+    board.setPosition(Vector2f(app.getWidth() / 32.0, app.getHeight() * 38.0 / 36));
     // RGBA format
     Color c{0, 0, 0, 200};
     board.setFillColor(c);
@@ -73,15 +74,15 @@ void MainScene::init()
 void MainScene::loop_event()
 {
     Event event;
-    while (App::getInstance()->pollEvent(event))
+    while (app.pollEvent(event))
     {
         // Action on Window Closed Event
         if (event.type == sf::Event::Closed)
-            App::getInstance()->close();
+            app.close();
 
         // Get mouse_pos in the window
-        pos_mouse = Mouse::getPosition(*App::getInstance());
-        mouse_coord = App::getInstance()->mapPixelToCoords(pos_mouse);
+        pos_mouse = Mouse::getPosition(app);
+        mouse_coord = app.mapPixelToCoords(pos_mouse);
 
         // Zooming with the mousewheel
         if (!appear && !disp && event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
@@ -150,7 +151,7 @@ void MainScene::loop_event()
             left_pressed = true;
             DomPiece &p = (DomPiece &)game->draw();
             cout << p << endl;
-            pos.push_back(new DomPieceDisplayer{x0, y0, p});
+            pos.push_back(new DomPieceDisplayer{app, x0, y0, p});
         }
     }
     else
@@ -205,8 +206,8 @@ void MainScene::render()
         }
     }
     // draw scoreboard, board, the current rect of the mouse
-    App::getInstance()->draw(board);
-    App::getInstance()->draw(rect);
+    app.draw(board);
+    app.draw(rect);
 
     // Draw all the Pieces
     // TODO : Generalize it depending on gamemode
@@ -215,7 +216,7 @@ void MainScene::render()
         p->render(off, board, scl);
     }
     this->redrawBG();
-    App::getInstance()->draw(scoreBoard);
+    app.draw(scoreBoard);
 
 
 }
@@ -231,18 +232,18 @@ void MainScene::display()
     bool f2 = false;
 
     Vector2f pos_s = scoreBoard.getPosition();
-    if (pos_s.x > (App::getInstance()->getWidth() * 4.0) / 5)
+    if (pos_s.x > (app.getWidth() * 4.0) / 5)
     {
-        pos_s.x -= App::getInstance()->getWidth() / (5.0 * speed1);
+        pos_s.x -= app.getWidth() / (5.0 * speed1);
         scoreBoard.setPosition(pos_s);
     }
     else
         f1 = true;
 
     pos_s = board.getPosition();
-    if (pos_s.y > (App::getInstance()->getHeight() / 36))
+    if (pos_s.y > (app.getHeight() / 36))
     {
-        pos_s.y -= App::getInstance()->getHeight() / (36.0 * speed2);
+        pos_s.y -= app.getHeight() / (36.0 * speed2);
         board.setPosition(pos_s);
     }
     else
@@ -267,24 +268,24 @@ void MainScene::redrawBG()
     rectBG.setPosition(0, 0);
     //rectBG.setOutlineColor(Color::Red);
     //rectBG.setOutlineThickness(3);
-   // rectBG.setScale(1, App::getInstance()->getHeight() / vB.y);
-    rectBG.setTextureRect(IntRect{0, 0, App::getInstance()->getWidth() / rectBG.getScale().x , vB.y / rectBG.getScale().y});
-    rectBG.setSize({App::getInstance()->getWidth() / rectBG.getScale().x, vB.y / rectBG.getScale().y});
-    App::getInstance()->draw(rectBG);
+   // rectBG.setScale(1, app.getHeight() / vB.y);
+    rectBG.setTextureRect(IntRect{0, 0, app.getWidth() / rectBG.getScale().x , vB.y / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x, vB.y / rectBG.getScale().y});
+    app.draw(rectBG);
 
-    rectBG.setTextureRect(IntRect{0, 0, vB.x / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    rectBG.setSize({vB.x / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    App::getInstance()->draw(rectBG);
+    rectBG.setTextureRect(IntRect{0, 0, vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
 
     rectBG.setPosition(vB.x + bB.x, 0);
-    rectBG.setTextureRect(IntRect{(vB.x + bB.x) / rectBG.getScale().x, 0, App::getInstance()->getWidth() / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    rectBG.setSize({App::getInstance()->getWidth() / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    App::getInstance()->draw(rectBG);
+    rectBG.setTextureRect(IntRect{(vB.x + bB.x) / rectBG.getScale().x, 0, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
 
     rectBG.setPosition(0, vB.y + bB.y);
-    rectBG.setTextureRect(IntRect{0, (vB.y + bB.y) / rectBG.getScale().y, App::getInstance()->getWidth() / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    rectBG.setSize({App::getInstance()->getWidth() / rectBG.getScale().x , App::getInstance()->getHeight() / rectBG.getScale().y});
-    App::getInstance()->draw(rectBG);
+    rectBG.setTextureRect(IntRect{0, (vB.y + bB.y) / rectBG.getScale().y, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    app.draw(rectBG);
 
 
 }

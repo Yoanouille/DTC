@@ -17,7 +17,7 @@ private:
     void drawRect(int scl);
 
 public:
-    DomPieceDisplayer(int x, int y, DomPiece &p);
+    DomPieceDisplayer(App &app, int x, int y, DomPiece &p);
     virtual ~DomPieceDisplayer();
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;

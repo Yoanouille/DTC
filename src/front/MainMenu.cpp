@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Constructor
  */
-MainMenu::MainMenu() : Scene{}, options{}, disp{false}, appear{true}, speed{20}
+MainMenu::MainMenu(App &app) : Scene{}, app{app}, options{3,Button{app}}, disp{false}, appear{true}, speed{20}
 { 
     init(); 
 }
@@ -17,19 +17,18 @@ MainMenu::~MainMenu() {}
 /** Initialize the Scene */
 void MainMenu::init()
 {   
-    Button dominoButton{nullptr,"Domino", Assets::getInstance()->MainMenuFont, 70, {App::getInstance()->getWidth()/4.0f, App::getInstance()->getHeight()/5.0f},{0,0}};
-    Button traxButton{nullptr,"Trax", Assets::getInstance()->MainMenuFont, 70, {App::getInstance()->getWidth()/4.0f, App::getInstance()->getHeight()/5.0f},{0,0}};
-    Button carcassonneButton{nullptr,"Carcassonne", Assets::getInstance()->MainMenuFont, 60, {App::getInstance()->getWidth()/4.0f, App::getInstance()->getHeight()/5.0f},{0,0}};
+    Button dominoButton{app, nullptr,"Domino", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
+    Button traxButton{app, nullptr,"Trax", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
+    Button carcassonneButton{app, nullptr,"Carcassonne", Assets::getInstance()->MainMenuFont, 60, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
     
     options.push_back(dominoButton);
     options.push_back(traxButton);
     options.push_back(carcassonneButton);
-    options.resize(3);
 
     for (std::size_t i{}; i < options.size(); i++){
         FloatRect r = options[i].getGlobalBounds();
         options[i].setOrigin(r.width/2.0f, r.height/2.0f );
-        options[i].setPosition(App::getInstance()->getWidth()/2.5f, (i + 0.5) * App::getInstance()->getHeight() / (options.size() + 1.0f));
+        options[i].setPosition(app.getWidth()/2.5f, (i + 0.5) * app.getHeight() / (options.size() + 1.0f));
     }
     
     // TODO : Make Animation works
@@ -48,17 +47,17 @@ void MainMenu::init()
     // ? How to make the Scene fade out without any problem ?
     options[0].setActionOnClick([this](){
         this->dispose();
-        App::getInstance()->setScene(2);
+        this->app.setScene(2);
     });
 
     options[1].setActionOnClick([this](){ 
         this->dispose();
-        App::getInstance()->setScene(2,true);
+        this->app.setScene(2,true);
     });
 
     options[2].setActionOnClick([this](){
         this->dispose();
-        App::getInstance()->setScene(2);
+        this->app.setScene(2);
     });
 
     // // Setup texts
@@ -73,7 +72,7 @@ void MainMenu::init()
     //     texts[i].setFillColor(c);
     //     FloatRect r = texts[i].getGlobalBounds();
     //     texts[i].setOrigin(0.5 * r.width, 0.5 * r.height);
-    //     texts[i].setPosition(App::getInstance()->getWidth() / 2.0f, (i + 1) * App::getInstance()->getHeight() / (options.size() + 1));
+    //     texts[i].setPosition(app.getWidth() / 2.0f, (i + 1) * app.getHeight() / (options.size() + 1));
     // }
 }
 
@@ -82,13 +81,13 @@ void MainMenu::loop_event()
 {
 
     Event event;
-    while (App::getInstance()->pollEvent(event))
+    while (app.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            App::getInstance()->close();
+            app.close();
 
         // Get the position of the mouse
-        Vector2f mousepos = App::getInstance()->mapPixelToCoords(Mouse::getPosition(*App::getInstance()));
+        Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
 
         if (!appear && !disp)
             for (size_t i = 0; i < options.size(); i++)
