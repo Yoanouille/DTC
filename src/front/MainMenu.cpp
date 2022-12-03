@@ -6,7 +6,13 @@ using namespace std;
 /**
  * Constructor
  */
-MainMenu::MainMenu(App &app) : Scene{}, app{app}, options{3,Button{app}}, disp{false}, appear{true}, speed{20}
+MainMenu::MainMenu(App &app) : 
+    Scene{}, 
+    app{app}, 
+    options{3,Button{app,nullptr,"", Assets::getInstance()->MainMenuFont,70,{app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}}}, 
+    disp{false}, 
+    appear{true}, 
+    speed{20}
 { 
     init(); 
 }
@@ -17,13 +23,9 @@ MainMenu::~MainMenu() {}
 /** Initialize the Scene */
 void MainMenu::init()
 {   
-    Button dominoButton{app, nullptr,"Domino", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
-    Button traxButton{app, nullptr,"Trax", Assets::getInstance()->MainMenuFont, 70, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
-    Button carcassonneButton{app, nullptr,"Carcassonne", Assets::getInstance()->MainMenuFont, 60, {app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}};
-    
-    options.push_back(dominoButton);
-    options.push_back(traxButton);
-    options.push_back(carcassonneButton);
+    options[0].setText("Domino") ;
+    options[1].setText("Trax");
+    options[2].setText("Carcassonne");
 
     for (std::size_t i{}; i < options.size(); i++){
         FloatRect r = options[i].getGlobalBounds();
