@@ -10,15 +10,11 @@ class PieceDisplayer : public sf::RectangleShape
 {
 protected:
 
-
-    // Application's window that catch the events
-    App &app;
-
     // Coordinates on a Board
     sf::Vector2i coordinates;
 
 public:
-    PieceDisplayer(App &app, int x, int y);
+    PieceDisplayer(int x, int y);
     virtual ~PieceDisplayer();
 
     virtual void rotate(bool clockwise) = 0;

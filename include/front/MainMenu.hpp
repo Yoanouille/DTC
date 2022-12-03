@@ -12,9 +12,6 @@
 class MainMenu : public Scene
 {
 private:
-    // Current Window (needed to draw and to change scene)
-    App &app;
-
     std::vector<Button> options;
 
     // if disappearing
@@ -28,7 +25,7 @@ private:
     void init();
 
 public:
-    MainMenu(App &app);
+    MainMenu();
     ~MainMenu();
 
     void loop_event();

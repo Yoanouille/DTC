@@ -14,6 +14,8 @@
 class App : public sf::RenderWindow
 {
 private:
+    static App * instance;
+
     // Dimension
     int width;
     int height;
@@ -30,9 +32,14 @@ private:
     void loop_event();
     void render();
 
-public:
     App();
+public:
+    static App* getInstance();
+
+    App(const App &) = delete;
     virtual ~App();
+
+    void operator=(const App &) = delete;
 
     // launch the event loop and the render loop
     void runApp();

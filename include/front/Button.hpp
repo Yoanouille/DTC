@@ -9,6 +9,7 @@
 
 class Button :  public sf::Transformable {
 private:
+    static const int speed = 20;
 
     // Container : Image will be loaded statically elsewhere.
     sf::RectangleShape container;
@@ -37,6 +38,11 @@ public:
     void setPosition(float x, float y);
     bool contains(sf::Vector2f point);
 
+    // Animations
+    void fadeIn();
+    void fadeOut();
+    void fadeInColor(sf::Color c);
+
     // Handles click
     void setActionOnClick(const std::function<void()> &action);
     void handleClick(sf::Vector2f mousepos);
@@ -46,7 +52,7 @@ public:
     void setActionOnMouseExited(const std::function<void()> &action);
     void handleHover(sf::Vector2f mousepos);
 
-    void render(App &app);
+    void render();
 };
 
 #endif

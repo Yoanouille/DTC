@@ -14,7 +14,7 @@ private:
     void setShownSide(bool recto);
 
 public:
-    TraxPieceDisplayer(App &app, int x, int y, TraxPiece &p);
+    TraxPieceDisplayer(int x, int y, TraxPiece &p);
     virtual ~TraxPieceDisplayer();
 
     void flip();

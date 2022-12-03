@@ -5,7 +5,6 @@ using namespace std;
 
 Button::Button() : container{},text{},font{Assets::getInstance()->DefaultFont} {}
 
-
 Button::Button(sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
     : container{containerSize}, text{}, font{font}
 {
@@ -66,6 +65,66 @@ void Button::setPosition(float x, float y){
  */
 bool Button::contains(Vector2f point){
     return container.getGlobalBounds().contains(point);
+}
+
+/**
+ * Animation  
+ */
+void Button::fadeIn(){
+    Color c = text.getFillColor();
+    while(c.a <= 255 - speed){
+        c.a += speed;
+        sleep(sf::milliseconds(5));
+        text.setFillColor(c); 
+        render();
+    }
+
+    if (c.a <= 255){
+        c.a = 255;
+        text.setFillColor(c); 
+        render();
+    }
+}
+
+void Button::fadeOut(){
+    Color c = text.getFillColor();
+    while(c.a >=  speed){
+        c.a -= speed;
+        text.setFillColor(c); 
+    }
+
+    if (c.a >= 0){
+        c.a = 0;
+        text.setFillColor(c);
+    }
+}
+
+void Button::fadeInColor(Color col){
+    Color c = text.getFillColor();
+
+    if (c.r <= col.r - speed)
+        c.r += speed;
+    else if (c.r >= col.r + speed)
+        c.r -= speed;
+    else
+        c.r = col.r;
+    
+    if (c.g <= col.g - speed)
+        c.g += speed;
+    else if (c.g >= col.g + speed)
+        c.g -= speed;
+    else
+        c.g = col.g;
+
+    if (c.b <= col.b - speed)
+        c.b += speed;
+    else if (c.b >= col.b + speed)
+        c.b -= speed;
+    else
+        c.b = col.b;
+
+    text.setFillColor(c);
+
 }
     
 /**
@@ -132,7 +191,7 @@ void Button::handleHover(Vector2f mousepos){
 /**
  * Rendering function 
  */
-void Button::render(App &m){
-    m.draw(container);
-    m.draw(text);
+void Button::render(){
+    App::getInstance()->draw(container);
+    App::getInstance()->draw(text);
 }

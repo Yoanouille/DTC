@@ -2,8 +2,7 @@
 
 int main()
 {
-    App App{};
-    App.runApp();
+    App::getInstance()->runApp();
 
-    return 0;
+    return EXIT_SUCCESS;
 }

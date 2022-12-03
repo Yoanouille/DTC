@@ -32,7 +32,7 @@ class TextField : public sf::Transformable{
         void setFocus(bool f);
         void handleInput(sf::Event &e, sf::Vector2f mousepos);
 
-        void render(App &m);
+        void render();
 };
 
 #endif

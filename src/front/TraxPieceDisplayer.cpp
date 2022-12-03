@@ -7,7 +7,7 @@ using namespace std;
  * It is private to prevent for creating more than one Controller.
  * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(App &app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}
+TraxPieceDisplayer::TraxPieceDisplayer(int x, int y, TraxPiece& p) : PieceDisplayer(x, y), piece{p}
 {
     setShownSide(true);
 }
@@ -51,7 +51,7 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
-        app.draw(*this);
+        App::getInstance()->draw(*this);
 }
 
 /**
@@ -80,7 +80,7 @@ void TraxPieceDisplayer::loop_event()
 
     // // Event loop
     // Event event;
-    // while (App.pollEvent(event))
+    // while (App::getInstance()->pollEvent(event))
     // {
     //     if (event.type == Event::EventType::KeyPressed)
     //         (Controller::getInstance()).makeKeyAction(event.key.code);

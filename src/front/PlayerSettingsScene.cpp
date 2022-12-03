@@ -5,14 +5,13 @@ using namespace std;
 /**
  * Constructor
  */
-PlayerSettingsScene::PlayerSettingsScene(App &app, int nbPlayers, bool isTraxGame) : 
-      app{app}, 
+PlayerSettingsScene::PlayerSettingsScene(int nbPlayers, bool isTraxGame) : 
       nbPlayers{nbPlayers}, 
-      backButton{nullptr, "<", Assets::getInstance()->MainMenuFont, 200, {app.getHeight()/7.0f, app.getHeight()/7.0f}, {app.getWidth()/20.0f,app.getHeight()/23.0f}},
+      backButton{nullptr, "<", Assets::getInstance()->MainMenuFont, 200, {App::getInstance()->getHeight()/7.0f, App::getInstance()->getHeight()/7.0f}, {App::getInstance()->getWidth()/20.0f,App::getInstance()->getHeight()/23.0f}},
       isTraxGame{isTraxGame},
-      plusButton{nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f} , {app.getWidth()/20.0f * 17, app.getHeight()/3.8f}}, 
-      minusButton{nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
-      submitButton{nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
+      plusButton{nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {App::getInstance()->getWidth()/12.0f, App::getInstance()->getWidth()/12.0f} , {App::getInstance()->getWidth()/20.0f * 17, App::getInstance()->getHeight()/3.8f}}, 
+      minusButton{nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {App::getInstance()->getWidth()/12.0f, App::getInstance()->getWidth()/12.0f}, {App::getInstance()->getWidth()/20.0f * 17, App::getInstance()->getHeight()/3.8f + App::getInstance()->getWidth()/12.0f + 50}},
+      submitButton{nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {App::getInstance()->getWidth()/6.0f, App::getInstance()->getHeight()/7.0f}, {App::getInstance()->getWidth()/2.5f, App::getInstance()->getHeight()/(12.0f) * 9}},
       vSpace{50.0f}, fieldLabels{}, nameFields{}
 { 
   initFields(); 
@@ -30,10 +29,10 @@ void PlayerSettingsScene::initFields(){
       Text t{};
       t.setFont(Assets::getInstance()->MainMenuFont);
       t.setString("Player " + to_string(i));
-      t.setPosition({app.getWidth()/3.5f, vSpace});
+      t.setPosition({App::getInstance()->getWidth()/3.5f, vSpace});
       fieldLabels.push_back(t);
 
-      TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+      TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{App::getInstance()->getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
 
       nameFields.push_back(tf);
       nameFields[i - 1].setOutlineColor(Color::Cyan);
@@ -61,7 +60,7 @@ void PlayerSettingsScene::initButtons(){
     submitButton.setActionOnMouseExited([this](){ this->submitButton.setFillColor(Color::White); });
 
     backButton.setActionOnClick([this](){ 
-      this->app.setScene(1); 
+      App::getInstance()->setScene(1); 
     });
 
     plusButton.setActionOnClick([this](){
@@ -91,7 +90,7 @@ void PlayerSettingsScene::initButtons(){
 
       if(allGood){
         // Change the Scene to MainScene(id = 3)
-        this->app.setScene(3);
+        App::getInstance()->setScene(3);
       }
     });
 }
@@ -101,10 +100,10 @@ void PlayerSettingsScene::addPlayer(){
   Text t{};
   t.setFont(Assets::getInstance()->MainMenuFont);
   t.setString("Player " + to_string(nbPlayers));
-  t.setPosition({app.getWidth()/3.5f, vSpace});
+  t.setPosition({App::getInstance()->getWidth()/3.5f, vSpace});
   fieldLabels.push_back(t);
 
-  TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+  TextField tf{20, Assets::getInstance()->DefaultFont,{30,40},{App::getInstance()->getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
   nameFields.push_back(tf);
 
   vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;
@@ -119,11 +118,11 @@ void PlayerSettingsScene::removePlayer(){
 
 void PlayerSettingsScene::loop_event(){
   Event event;
-  while(app.pollEvent(event)){
+  while(App::getInstance()->pollEvent(event)){
     if (event.type == Event::Closed)
-      app.close();
+      App::getInstance()->close();
 
-    Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
+    Vector2f mousepos = App::getInstance()->mapPixelToCoords(Mouse::getPosition(*App::getInstance()));
     for(TextField &t : nameFields)
     {
       if(Mouse::isButtonPressed(Mouse::Left) && t.contains(mousepos))
@@ -150,16 +149,16 @@ void PlayerSettingsScene::loop_event(){
  * Overriden rendering function 
  */
 void PlayerSettingsScene::render(){
-  backButton.render(app);
+  backButton.render();
 
   if(!isTraxGame){
-    plusButton.render(app);
-    minusButton.render(app);
+    plusButton.render();
+    minusButton.render();
   }
-  submitButton.render(app);
+  submitButton.render();
 
   for(int i = 0; i < nbPlayers; i++){
-    app.draw(fieldLabels[i]);
-    nameFields[i].render(app);
+    App::getInstance()->draw(fieldLabels[i]);
+    nameFields[i].render();
   }
 }

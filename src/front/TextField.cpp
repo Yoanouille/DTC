@@ -114,7 +114,7 @@ void TextField::handleInput(sf::Event &e,Vector2f mousepos){
 /**
  * rendering function 
  */
-void TextField::render(App &app){
-    app.draw(container);
-    app.draw(text);
+void TextField::render(){
+    App::getInstance()->draw(container);
+    App::getInstance()->draw(text);
 }
