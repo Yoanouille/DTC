@@ -18,14 +18,13 @@ TextField::TextField(App &app, unsigned int maxSize, Font &font, Vector2f contai
 {
     container.setSize(Vector2f{containerSize.x * maxSize, containerSize.y});
     container.setOutlineThickness(3);
-    container.setFillColor(Color::White);
-    container.setOutlineColor(Color::Black);
+    container.setFillColor({255,255,255,0});
+    container.setOutlineColor({0,0,0,0});
     container.setPosition(position); 
     
-    text.setFillColor(Color::Black);
+    text.setFillColor({0,0,0,0});
     text.setFont(font);
     text.setPosition(position);
-    text.setFillColor(Color::Black);
 } 
 
 Text &TextField::getText() {
@@ -117,4 +116,38 @@ void TextField::handleInput(sf::Event &e,Vector2f mousepos){
 void TextField::render(){
     app.draw(container);
     app.draw(text);
+}
+
+bool TextField::fadeIn()
+{
+    Color c1 = container.getFillColor();
+    Color c2 = container.getOutlineColor();
+    Color c3 = text.getFillColor();
+    if(c1.a <= 255 - 20)
+    {
+        c1.a += 20;
+        c2.a += 20;
+        c3.a += 20;
+        container.setFillColor(c1);
+        container.setOutlineColor(c2);
+        text.setFillColor(c3);
+        return false;
+    } else return true;
+}
+
+bool TextField::fadeOut()
+{
+    Color c1 = container.getFillColor();
+    Color c2 = container.getOutlineColor();
+    Color c3 = text.getFillColor();
+    if(c1.a >= 20)
+    {
+        c1.a -= 20;
+        c2.a -= 20;
+        c3.a -= 20;
+        container.setFillColor(c1);
+        container.setOutlineColor(c2);
+        text.setFillColor(c3);
+        return false;
+    } else return true;
 }

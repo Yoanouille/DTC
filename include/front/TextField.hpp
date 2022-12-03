@@ -35,6 +35,8 @@ class TextField : public sf::Transformable{
         void handleInput(sf::Event &e, sf::Vector2f mousepos);
 
         void render();
+        bool fadeIn();
+        bool fadeOut();
 };
 
 #endif

@@ -10,7 +10,7 @@ MainMenu::MainMenu(App &app) :
     Scene{}, 
     app{app}, 
     options{3,Button{app,nullptr,"", Assets::getInstance()->MainMenuFont,70,{app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}}}, 
-    disp{false}, appear{true}
+    disp{false}, appear{true}, mousepos{}, game{0}
 { 
     init(); 
 }
@@ -41,41 +41,29 @@ void MainMenu::init()
     // When the Mouse enters a button 
     // Fade that button's text color into red
     options[0].setActionOnMouseEntered([this](){
-        bool ok = false;
-        while(!ok)
-            ok = this->options[0].fadeInColor(Color::Red); 
+        this->options[0].fadeInColor(Color::Red); 
     });
 
     options[1].setActionOnMouseEntered([this](){ 
-        bool ok = false;
-        while(!ok)
-            ok = this->options[1].fadeInColor(Color::Red); 
+        this->options[1].fadeInColor(Color::Red); 
     });
 
     options[2].setActionOnMouseEntered([this](){ 
-        bool ok = false;
-        while(!ok)
-            ok = this->options[2].fadeInColor(Color::Red); 
+        this->options[2].fadeInColor(Color::Red); 
     });
     
     // When the Mouse exits a button
     // Fade that button's text color into white
     options[0].setActionOnMouseExited([this](){ 
-        bool ok = false;
-        while(!ok)
-            ok = this->options[0].fadeInColor(Color::White); 
+        this->options[0].fadeInColor(Color::White); 
     });
 
     options[1].setActionOnMouseExited([this](){ 
-        bool ok = false;
-        while(!ok)
-            ok = this->options[1].fadeInColor(Color::White); 
+        this->options[1].fadeInColor(Color::White); 
     });
 
     options[2].setActionOnMouseExited([this](){ 
-        bool ok = false;
-        while(!ok)
-            ok = this->options[2].fadeInColor(Color::White); 
+        this->options[2].fadeInColor(Color::White); 
     });
 
     // Set Action on Click : Change Scene to PlayerSettingsScene depending on the gamemode :
@@ -84,17 +72,17 @@ void MainMenu::init()
     // ? How to make the Scene fade out without any problem ?
     options[0].setActionOnClick([this](){
         this->dispose();
-        this->app.setScene(2);
+        this->game = 0;
     });
 
     options[1].setActionOnClick([this](){ 
         this->dispose();
-        this->app.setScene(2,true);
+        this->game = 1;
     });
 
     options[2].setActionOnClick([this](){
         this->dispose();
-        this->app.setScene(2);
+        this->game = 2;
     });
 }
 
@@ -108,14 +96,17 @@ void MainMenu::loop_event()
             app.close();
 
         // Get the position of the mouse
-        Vector2f mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
+        mousepos = app.mapPixelToCoords(Mouse::getPosition(app));
 
-        if (!appear && !disp)
-            for (size_t i = 0; i < options.size(); i++)
-            {
-                options[i].handleHover(mousepos);
-                options[i].handleClick(mousepos);
-         }
+    }
+
+    if (!appear && !disp)
+    {
+        for (size_t i = 0; i < options.size(); i++)
+        {
+            options[i].handleHover(mousepos);
+            options[i].handleClick(mousepos);
+        }
     }
 }
 
@@ -123,6 +114,12 @@ void MainMenu::render()
 {
     if (appear) 
         display();
+
+    if(disp)
+    {
+        dispose();
+        if(!disp) app.setScene(2, (game == 1));
+    }
 
     for (Button &b : options)
         b.render();
@@ -135,13 +132,10 @@ void MainMenu::dispose()
 {
     disp = true;
 
-    bool ok = false;
-    while (!ok){
-        for (Button &b : options){
-            ok = b.fadeOut();
-        }
+    for (Button &b : options){
+        if(b.fadeOut())
+            disp = false;
     }
-    
 }
 
 /**
@@ -149,12 +143,8 @@ void MainMenu::dispose()
  */
 void MainMenu::display()
 {
-    bool ok = false;
-    while (!ok){
-        for (Button &b : options){
-            ok = b.fadeIn();
-        }
+    for (Button &b : options){
+        if(b.fadeIn())
+            appear = false;
     }
-
-    appear = false;
 }

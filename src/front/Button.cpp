@@ -21,6 +21,7 @@ Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &
     setText(text);
     this->text.setFont(font);
     this->text.setCharacterSize(fontSize); 
+    this->text.setFillColor({255,255,255,0});
 
     setPosition(position.x,position.y);  
 }

@@ -26,6 +26,12 @@ class PlayerSettingsScene : public Scene {
         std::vector<sf::Text> fieldLabels;
         std::vector<TextField> nameFields;
 
+        sf::Vector2f mousepos;
+
+        bool appear;
+        bool disp;
+        int nextScene;
+
         void initFields();
         void initButtons();
 
@@ -41,6 +47,9 @@ class PlayerSettingsScene : public Scene {
 
         // Manager the visual of the scene
         void render() override;
+
+        void display();
+        void dispose();
 };
 
 #endif

@@ -21,6 +21,10 @@ private:
     // if appearing
     bool appear;
 
+    sf::Vector2f mousepos;
+
+    int game;
+
     void init();
 
 public:
