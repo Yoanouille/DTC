@@ -13,7 +13,7 @@ PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, bool isTraxGam
       minusButton{app, nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{app, nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
       vSpace{50.0f}, fieldLabels{}, nameFields{},
-      mousepos{}, appear{true}, disp{false}, nextScene{1}
+      mousepos{}, appear{true}, disp{false}, nextScene{-1}
 { 
   initFields(); 
   initButtons();
@@ -67,12 +67,17 @@ void PlayerSettingsScene::initButtons(){
 
     plusButton.setActionOnClick([this](){
       if(this->nbPlayers < 4)
+      {
+        appear = true;
         this->addPlayer();
+      }
     });
 
     minusButton.setActionOnClick([this](){
       if(this->nbPlayers > 2)
+      {
         this->removePlayer();
+      }
     });
 
     submitButton.setActionOnClick([this](){
@@ -141,6 +146,12 @@ void PlayerSettingsScene::loop_event(){
       backButton.handleClick(mousepos);
       submitButton.handleClick(mousepos);
 
+      if(!isTraxGame)
+      {
+        plusButton.handleClick(mousepos);
+        minusButton.handleClick(mousepos);
+      }
+
     }
   }
 
@@ -151,9 +162,6 @@ void PlayerSettingsScene::loop_event(){
      if(!isTraxGame){
       plusButton.handleHover(mousepos);
       minusButton.handleHover(mousepos);
-      
-      plusButton.handleClick(mousepos);
-      minusButton.handleClick(mousepos);
     }
   }
 }
@@ -168,7 +176,7 @@ void PlayerSettingsScene::render(){
   if(disp)
   {
     dispose();
-    if(!disp) app.setScene(nextScene, isTraxGame);
+    if(!disp && nextScene != -1) app.setScene(nextScene, isTraxGame);
   }
 
   backButton.render();
@@ -187,10 +195,11 @@ void PlayerSettingsScene::render(){
 
 void PlayerSettingsScene::display()
 {
-  if(backButton.fadeIn()) appear = false;
-  if(plusButton.fadeIn()) appear = false;
-  if(minusButton.fadeIn()) appear = false;
-  if(submitButton.fadeIn()) appear = false;
+  appear = false;
+  if(!backButton.fadeIn()) appear = true;
+  if(!plusButton.fadeIn()) appear = true;
+  if(!minusButton.fadeIn()) appear = true;
+  if(!submitButton.fadeIn()) appear = true;
 
   for(Text &t : fieldLabels)
   {
@@ -199,20 +208,22 @@ void PlayerSettingsScene::display()
     {
       c.a += 20;
       t.setFillColor(c);
-    } else appear = false;
+      appear = true;
+    }
   }
   for(TextField &t : nameFields)
   {
-    if(t.fadeIn()) appear = false;
+    if(!t.fadeIn()) appear = true;
   }
 }
 
 void PlayerSettingsScene::dispose()
 {
-  if(backButton.fadeOut()) disp = false;
-  if(plusButton.fadeOut()) disp = false;
-  if(minusButton.fadeOut()) disp = false;
-  if(submitButton.fadeOut()) disp = false;
+  disp = false;
+  if(!backButton.fadeOut()) disp = true;
+  if(!plusButton.fadeOut()) disp = true;
+  if(!minusButton.fadeOut()) disp = true;
+  if(!submitButton.fadeOut()) disp = true;
 
   for(Text &t : fieldLabels)
   {
@@ -221,11 +232,12 @@ void PlayerSettingsScene::dispose()
     {
       c.a -= 20;
       t.setFillColor(c);
-    } else disp = false;
+      disp = true;
+    }
   }
   for(TextField &t : nameFields)
   {
-    if(t.fadeOut()) disp = false;
+    if(!t.fadeOut()) disp = true;
   }
 
 }
