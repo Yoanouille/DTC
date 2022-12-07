@@ -4,9 +4,9 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o
+OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o
 
-TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o
+TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o obj/CarcPiece.o
 
 TARGET=main
 TTARGET=test
@@ -86,6 +86,10 @@ obj/TraxPiece.o: src/back/TraxPiece.cpp include/back/TraxPiece.hpp include/back/
 	$(OBJ_DIR)
 	$(CCO)
 
+obj/CarcPiece.o: src/back/CarcPiece.cpp include/back/CarcPiece.hpp include/back/Piece.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
 obj/Sack.o : src/back/Sack.cpp include/back/Sack.hpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp
 	$(OBJ_DIR)
 	$(CCO)
@@ -117,6 +121,6 @@ memtest: test $(TEST_OBJ)
 test: $(TEST_OBJ)
 	$(CC) -o $(TTARGET) $(TEST_OBJ)
 
-obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp include/back/VecZ.hpp include/back/Game.hpp include/back/Trax.hpp include/back/Player.hpp
+obj/Test.o: src/Test.cpp include/back/Piece.hpp include/back/DomPiece.hpp include/back/TraxPiece.hpp include/back/Sack.hpp include/back/VecZ.hpp include/back/Game.hpp include/back/Trax.hpp include/back/Player.hpp include/back/CarcPiece.hpp
 	$(OBJ_DIR)
 	$(CCO)

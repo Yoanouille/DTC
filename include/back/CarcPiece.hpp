@@ -11,6 +11,9 @@ class CarcPiece : public Piece
         int border[4][3];
         int center;
 
+        int play[4];
+        int play_center;
+
         int color_dir[4];
     
     public:
@@ -21,6 +24,7 @@ class CarcPiece : public Piece
         int getEarnedValue(Piece &p, int pDir) override;
         std::string toString() const override;
         void getConnectColor(int *t) const override;
+        bool playOnPiece(int dir, int player);
 
 
 };

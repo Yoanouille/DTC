@@ -4,7 +4,7 @@
 
 using namespace std;
 
-CarcPiece::CarcPiece(int i) : id{i}, color_dir{-1,-1,-1,-1}
+CarcPiece::CarcPiece(int i) : id{i}, play{-1,-1,-1,-1}, play_center{-1}, color_dir{-1,-1,-1,-1}
 {
     //TODO Générer la pièce en fonction de l'id
 }
@@ -55,4 +55,18 @@ string CarcPiece::toString() const
         s += to_string(border[2][2 - j]) + " ";
 
   return s;
+}
+
+bool CarcPiece::playOnPiece(int dir, int player)
+{
+    if(dir >= 0 && dir <= 4 && play[4] == -1) 
+    {
+        play[dir] = player;
+        return true;
+    }
+    if(dir == 5 && play_center == -1)
+    {
+        play_center = player;
+        return true;
+    }
 }
