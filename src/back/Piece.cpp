@@ -40,7 +40,7 @@ void Piece::rotate(bool clockwise)
         direction = (direction + 3) % 4;
 }
 
-void Piece::getConnectColor(int *t)
+void Piece::getConnectColor(int *t) const
 {
 }
 

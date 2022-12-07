@@ -31,7 +31,7 @@ public:
     int getDirection() const;
     int getColor() const;
     void cleanColor();
-    virtual void getConnectColor(int *t);
+    virtual void getConnectColor(int *t) const;
     void setColor(int c);
 
     friend std::ostream &operator<<(std::ostream &out, const Piece &p);

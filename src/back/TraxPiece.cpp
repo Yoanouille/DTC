@@ -66,7 +66,7 @@ string TraxPiece::toString() const
     return s;
 }
 
-void TraxPiece::getConnectColor(int *t)
+void TraxPiece::getConnectColor(int *t) const
 {
     for(int i = 0; i < 4; i++)
     {

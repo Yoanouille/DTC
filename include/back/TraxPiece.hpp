@@ -25,7 +25,7 @@ public:
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
 
-    void getConnectColor(int *t);
+    void getConnectColor(int *t) const override;
     static bool forcedMove(std::vector<TraxPiece *> tabp);
 
     void flip();
