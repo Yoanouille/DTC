@@ -25,8 +25,12 @@ class Assets {
         Texture TraxTextureRecto;
         Texture TraxTextureVerso;
         Texture CarcasonneTexture;
+        Texture Sack;
+        Texture RotateLeft;
+        Texture Flip;
 
         Assets();
+
     public :
         Assets(const Assets &) = delete;
         void operator=(const Assets &) = delete;
@@ -38,6 +42,8 @@ class Assets {
     friend class MainMenu;
     friend class PlayerSettingsScene;
     friend class MainScene;
+    friend class ScoreBoard;
+    friend class DrawZone;
     friend class TraxPieceDisplayer;
     friend class DomPieceDisplayer;
 };

@@ -49,10 +49,7 @@ void PlayerSettingsScene::initButtons(){
     backButton.setActionOnMouseEntered([this](){ this->backButton.fadeInColor(Color::Red); });
     plusButton.setActionOnMouseEntered([this](){ this->plusButton.fadeInColor(Color::Red); });
     minusButton.setActionOnMouseEntered([this](){ this->minusButton.fadeInColor(Color::Red); });
-    submitButton.setActionOnMouseEntered([this](){ 
-      
-      this->submitButton.fadeInColor(Color::Red); 
-    });
+    submitButton.setActionOnMouseEntered([this](){ this->submitButton.fadeInColor(Color::Red); });
 
     // The texts turn white when the mouse leaves the button
     backButton.setActionOnMouseExited([this](){ this->backButton.fadeInColor(Color::White); });
@@ -93,10 +90,7 @@ void PlayerSettingsScene::initButtons(){
         }
       }
 
-      // ? How To Instantiate the Game
-
       if(allGood){
-        // Change the Scene to MainScene(id = 3)
         this->nextScene = 3;
         this->disp = true;
       }
@@ -176,7 +170,14 @@ void PlayerSettingsScene::render(){
   if(disp)
   {
     dispose();
-    if(!disp && nextScene != -1) app.setScene(nextScene, isTraxGame);
+    if(!disp && nextScene != -1){
+      // Make a vector of string containing all names
+      vector<string> names{};
+      for (TextField t : nameFields){
+          names.push_back(t.getText().getString().toAnsiString());
+      }
+      app.setScene(nextScene, isTraxGame, &names);
+    } 
   }
 
   if(dispF != -1) 

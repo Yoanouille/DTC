@@ -5,17 +5,21 @@ using namespace std;
 
 int Button::speed = 20;
 
-Button::Button(App &app) : app{app}, container{},text{},font{Assets::getInstance()->DefaultFont} {}
+Button::Button(App &app) : app{app}, container{}, sprite{nullptr}, text{}, font{Assets::getInstance()->DefaultFont} {}
 
 Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
-    : app{app}, container{containerSize}, text{}, font{font}
+    : app{app}, container{containerSize}, sprite{nullptr}, text{}, font{font}
 {
     if(imageTexture != nullptr){
+        sprite = new Sprite(*imageTexture);
         Vector2u textureSize = imageTexture->getSize();
-        container.setTextureRect(IntRect(0, 0, textureSize.x, textureSize.y));
+        sprite->setScale(textureSize.x/containerSize.x, textureSize.y/containerSize.y);
+        sprite->setPosition(container.getPosition());
+
+    } else {
+        container.setFillColor(Color::Transparent);
     }
     container.setOutlineThickness(5);
-    container.setFillColor(Color::Transparent);
     container.setOutlineColor(Color::Transparent);
 
     setText(text);
@@ -24,6 +28,10 @@ Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &
     this->text.setFillColor({255,255,255,0});
 
     setPosition(position.x,position.y);  
+}
+
+Button::~Button(){
+    if(sprite != nullptr) delete(sprite);
 }
 
 // Text Getter and Setter
@@ -212,5 +220,6 @@ void Button::handleHover(Vector2f mousepos){
  */
 void Button::render(){
     app.draw(container);
-    app.draw(text);
+    if (sprite != nullptr) app.draw(*sprite);
+    if (text.getString() != "") app.draw(text);
 }

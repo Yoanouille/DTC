@@ -12,7 +12,10 @@ Assets::Assets() :
     MainMenuFont{},
     TraxTextureRecto{},
     TraxTextureVerso{},
-    CarcasonneTexture{}
+    CarcasonneTexture{},
+    Sack{},
+    RotateLeft{},
+    Flip{}
 {
     if (!DefaultFont.loadFromFile("resources/font/Arial.ttf"))
         cerr << "Couldn't load DefaultFont." << endl;
@@ -30,6 +33,15 @@ Assets::Assets() :
 
     if (!TraxTextureVerso.loadFromFile("resources/images/traxV.png"))
         cerr << "TraxPiece's Texture Loading Failed : traxR.png" << endl;
+
+    if (!Sack.loadFromFile("resources/images/sack.png"))
+        cerr << "Loading Failed : sack.png" << endl;
+
+    if (!RotateLeft.loadFromFile("resources/images/rotateLeft.png"))
+        cerr << "Loading Failed : rotateLeft.png" << endl;
+
+    if (!Flip.loadFromFile("resources/images/flip.png"))
+        cerr << "Loading Failed : flip.png" << endl;
 }
 
 /**

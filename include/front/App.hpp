@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
@@ -41,7 +42,7 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    void setScene(int i, bool isTraxGame = false);
+    void setScene(int i, bool isTraxGame, std::vector<std::string> *names);
 };
 
 #endif

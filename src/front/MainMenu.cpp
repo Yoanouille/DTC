@@ -69,7 +69,6 @@ void MainMenu::init()
     // Set Action on Click : Change Scene to PlayerSettingsScene depending on the gamemode :
     // Trax will only authorize two players.
 
-    // ? How to make the Scene fade out without any problem ?
     options[0].setActionOnClick([this](){
         this->dispose();
         this->game = 0;
@@ -118,7 +117,7 @@ void MainMenu::render()
     if(disp)
     {
         dispose();
-        if(!disp) app.setScene(2, (game == 1));
+        if(!disp) app.setScene(2, (game == 1), nullptr);
     }
 
     for (Button &b : options)

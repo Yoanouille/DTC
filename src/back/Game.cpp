@@ -9,7 +9,7 @@ Game::~Game()
         delete(p);
 }
 
-void Game::add_player(std::string name)
+void Game::addPlayer(std::string name)
 {
     players.push_back(new Player{name});
     nb_player++;
@@ -23,6 +23,10 @@ Piece &Game::draw()
 Player Game::getCurrentPlayer() const
 {
     return *players[current_player];
+}
+
+const std::vector<Player *> Game::getPlayers() const{
+    return players;
 }
 
 

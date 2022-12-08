@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o
+OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/ScoreBoard.o obj/DrawZone.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o obj/CarcPiece.o
 
@@ -45,7 +45,15 @@ obj/PlayerSettingsScene.o: src/front/PlayerSettingsScene.cpp include/front/Playe
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/App.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp
+obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/Scene.hpp include/front/App.hpp include/front/PieceDisplayer.hpp include/front/TraxPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp include/front/ScoreBoard.hpp include/front/DrawZone.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/ScoreBoard.o: src/front/ScoreBoard.cpp include/front/ScoreBoard.hpp include/front/App.hpp include/back/Game.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/DrawZone.o: src/front/DrawZone.cpp include/front/DrawZone.hpp include/front/App.hpp include/front/Button.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

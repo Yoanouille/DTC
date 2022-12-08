@@ -13,8 +13,9 @@ private:
 
     static int speed;
 
-    // Container : Image will be loaded statically elsewhere.
+    // Container : Image will be loaded elsewhere and used in sprite
     sf::RectangleShape container;
+    sf::Sprite *sprite;
 
     // Button's text
     sf::Text text;
@@ -28,7 +29,8 @@ private:
 public:
     Button(App &app);
     Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position);
-    
+    ~Button();
+
     sf::Text &getText();
     void setText(std::string text);
 

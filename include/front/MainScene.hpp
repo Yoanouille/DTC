@@ -4,11 +4,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "App.hpp"
+#include "ScoreBoard.hpp"
+#include "DrawZone.hpp"
 #include "Scene.hpp"
-#include "front/PieceDisplayer.hpp"
+#include "TextField.hpp"
+#include "PieceDisplayer.hpp"
 #include "back/Game.hpp"
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 class MainScene : public Scene
@@ -16,8 +20,11 @@ class MainScene : public Scene
 private:
     App &app;
 
-    // White rectangle (future scoreboard)
-    sf::RectangleShape scoreBoard;
+    // Scoreboard
+    ScoreBoard scoreBoard;
+
+    // Draw Zone
+    DrawZone drawZone;
 
     // Board of the game
     sf::RectangleShape board;
@@ -68,7 +75,7 @@ private:
     void redrawBG();
 
 public:
-    MainScene(App &app);
+    MainScene(App &app, bool isTraxGame, std::vector<std::string> &names);
     virtual ~MainScene();
 
     void loop_event();
@@ -76,6 +83,8 @@ public:
 
     void dispose();
     void display();
+
+friend class ScoreBoard;
 };
 
 #endif

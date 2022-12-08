@@ -11,15 +11,18 @@ using namespace std;
  * Constructor
  * Initialize some variables, call init()
  */
-MainScene::MainScene(App &app) : 
-    app{app},
-    scoreBoard{}, board{}, scl{75}, off{180, 180}, 
+MainScene::MainScene(App &app, bool isTraxGame, vector<string> &names) : 
+    app{app}, scoreBoard{app}, drawZone{app, isTraxGame},
+    board{}, scl{75}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
     disp{false}, appear{true}, speed1{40}, speed2{3}
 {
     //TODO depend du jeu ! donc arguments au constructeur !
     game = new Domino();
+    for (string s : names)
+        game->addPlayer(s);
+    scoreBoard.setGame(game);
     init();
 }
 
@@ -28,7 +31,7 @@ MainScene::MainScene(App &app) :
  */
 MainScene::~MainScene() 
 {
-    if(game != nullptr) delete game;
+    if(game != nullptr) delete(game);
 }
 
 /**
@@ -36,14 +39,9 @@ MainScene::~MainScene()
  */
 void MainScene::init()
 {
-    // setup the scoreboard
-    scoreBoard.setSize(Vector2f(app.getWidth() / 5, app.getHeight()));
-    scoreBoard.setPosition(Vector2f((app.getWidth() * 6.0) / 5, 0));
-    scoreBoard.setFillColor(Color::White);
-
-    // setup the board
+    // Setup the board
     double dx = (app.getWidth() - scoreBoard.getSize().x);
-    board.setSize(Vector2f(dx * 15.0 / 16, app.getHeight() * 17 / 18));
+    board.setSize(Vector2f((dx * 13.0f) / 15.0f, app.getHeight() * 17 / 18));
     board.setPosition(Vector2f(app.getWidth() / 32.0, app.getHeight() * 38.0 / 36));
     // RGBA format
     Color c{0, 0, 0, 200};
@@ -216,12 +214,9 @@ void MainScene::render()
         p->render(off, board, scl);
     }
     this->redrawBG();
-    app.draw(scoreBoard);
-
-
+    scoreBoard.render();
+    drawZone.render();
 }
-
-
 
 /**
  * When the scene is appearing
