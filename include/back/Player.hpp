@@ -9,6 +9,7 @@ class Player
     private:
         std::string const name;
         int score;
+        static int num;
 
     public:
         Player(std::string n);

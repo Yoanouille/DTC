@@ -25,6 +25,7 @@ bool CarcPiece::connectable(Piece &p, int pDir)
 
 int CarcPiece::getEarnedValue(Piece &p, int pDir) 
 {
+    //! SUREMENT INUTILE
     CarcPiece &p1 = (CarcPiece &)p;
     int col = 0;
     col = border[(direction + pDir + 2)%4][1];
@@ -35,9 +36,15 @@ int CarcPiece::getEarnedValue(Piece &p, int pDir)
 
 void CarcPiece::getConnectColor(int *t) const
 {
+    //! CHANGE POUR METTRE LES COULEUR
+    // for(int i = 0; i < 4; i++)
+    // {
+    //     t[i] = color_dir[i];   
+    // }
+
     for(int i = 0; i < 4; i++)
     {
-        t[i] = color_dir[i];   
+        t[i] = border[i][1];
     }
 }
 
@@ -69,4 +76,18 @@ bool CarcPiece::playOnPiece(int dir, int player)
         play_center = player;
         return true;
     }
+}
+
+void CarcPiece::getPlayPawn(int *t) const
+{
+    for(int i = 0; i < 4; i++)
+    {
+        t[i] = play[i];
+    }
+    t[4] = play_center;
+}
+
+int CarcPiece::getCenter() const
+{
+    return center;
 }
