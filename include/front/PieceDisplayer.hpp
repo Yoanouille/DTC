@@ -21,8 +21,6 @@ public:
     // The Piece inherts rotation() from Shape
     virtual void rotate(bool clockwise) = 0;
 
-    virtual void loop_event() = 0;
-
     // Abstract method that will be overriden.
     virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) = 0;
 };

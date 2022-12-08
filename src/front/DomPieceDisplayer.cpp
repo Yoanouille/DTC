@@ -105,14 +105,8 @@ void DomPieceDisplayer::drawRect(int s)
 
 }
 
-void DomPieceDisplayer::loop_event()
-{
-
-}
-
 void DomPieceDisplayer::rotate(bool clockwise)
 {
     piece.rotate(clockwise);
-
 }
 

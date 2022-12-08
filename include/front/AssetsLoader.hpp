@@ -28,6 +28,7 @@ class Assets {
         Texture Sack;
         Texture RotateLeft;
         Texture Flip;
+        Texture CarcPiece;
 
         Assets();
 
@@ -36,6 +37,7 @@ class Assets {
         void operator=(const Assets &) = delete;
         
         static Assets* getInstance();
+        static sf::Sprite& getCarcPiece(int id);
 
     friend class App;
     friend class Button;
@@ -46,6 +48,7 @@ class Assets {
     friend class DrawZone;
     friend class TraxPieceDisplayer;
     friend class DomPieceDisplayer;
+    friend class CarcPieceDisplayer;
 };
 
 #endif

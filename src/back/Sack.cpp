@@ -7,9 +7,7 @@ using namespace std;
  * It will allocates the Pieces and delete them at the end of a Game
  *
  */
-Sack::Sack() : index{0}, size{0}, sack{}
-{
-}
+Sack::Sack() : index{0}, size{0}, sack{}{}
 
 
 /**
@@ -74,7 +72,79 @@ void Sack::initTrax()
 
 void Sack::initCarcassonne()
 {
-    // TODO
+    CarcPiece *p2 = new CarcPiece{2};
+    CarcPiece *p4 = new CarcPiece{4};
+    CarcPiece *p5 = new CarcPiece{5};
+    CarcPiece *p11 = new CarcPiece{11};
+    CarcPiece *p23 = new CarcPiece{23};
+    CarcPiece *p24 = new CarcPiece{24};
+
+    sack.push_back(p2);
+    sack.push_back(p4);
+    sack.push_back(p5);
+    sack.push_back(p11);
+    sack.push_back(p23);
+    sack.push_back(p24);
+        
+
+    for (int i = 0; i < 2; i++ ){
+        CarcPiece *p1 = new CarcPiece{1};
+        CarcPiece *p6 = new CarcPiece{6};
+        CarcPiece *p8 = new CarcPiece{8};
+        CarcPiece *p10 = new CarcPiece{10};
+        CarcPiece *p12 = new CarcPiece{12};
+        CarcPiece *p13 = new CarcPiece{13};
+
+        sack.push_back(p1);
+        sack.push_back(p6);
+        sack.push_back(p8);
+        sack.push_back(p10);
+        sack.push_back(p12);
+        sack.push_back(p13);
+    }
+
+    for (int i = 0; i < 3; i++){
+        CarcPiece *p3 = new CarcPiece{3};
+        CarcPiece *p7 = new CarcPiece{7};
+        CarcPiece *p9 = new CarcPiece{9};
+        CarcPiece *p14 = new CarcPiece{14};
+        CarcPiece *p16 = new CarcPiece{16};
+        CarcPiece *p17 = new CarcPiece{17};
+        CarcPiece *p18 = new CarcPiece{18};
+        CarcPiece *p19 = new CarcPiece{19};
+
+        sack.push_back(p3);
+        sack.push_back(p7);
+        sack.push_back(p9);
+        sack.push_back(p14);
+        sack.push_back(p16);
+        sack.push_back(p17);
+        sack.push_back(p18);
+        sack.push_back(p19);
+    }
+
+    for(int i = 0; i < 4; i++){
+        CarcPiece *p0 = new CarcPiece{0};
+        CarcPiece *p22 = new CarcPiece{22};
+
+        sack.push_back(p0);
+        sack.push_back(p22);
+    }
+
+    for(int i = 0; i < 5; i++){
+        CarcPiece *p15 = new CarcPiece{15};
+        sack.push_back(p15);
+    }
+
+    for(int i = 0; i < 8; i++){
+        CarcPiece *p20 = new CarcPiece{20};
+        sack.push_back(p20);
+    }
+
+    for(int i = 0; i < 9; i++){
+        CarcPiece *p21 = new CarcPiece{21};
+        sack.push_back(p21);
+    }
 }
 
 bool Sack::isEmpty()
@@ -83,8 +153,8 @@ bool Sack::isEmpty()
 }
 
 void Sack::shuffle()
-{
-    // TODO
+{  
+    random_shuffle(sack.begin(),sack.end());
 }
 
 /**

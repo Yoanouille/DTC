@@ -5,11 +5,13 @@
 
 enum CarcType
 {
+    None = -1,
     Field = 0,
     Town = 1,
-    Road = 2,
-    Abbaye = 3,
-    Crossroad = 4,
+    DownTown = 2,
+    Road = 3,
+    Abbaye = 4,
+    Crossroad = 5
 };
 
 class CarcPiece : public Piece
@@ -28,6 +30,8 @@ class CarcPiece : public Piece
     public:
         CarcPiece(int id);
         ~CarcPiece();
+
+        const int getId() const;
 
         bool connectable(Piece &p, int pDir) override;
         int getEarnedValue(Piece &p, int pDir) override;

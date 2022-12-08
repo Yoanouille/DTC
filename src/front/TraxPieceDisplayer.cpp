@@ -54,40 +54,6 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
         app.draw(*this);
 }
 
-/**
- * Event loop
- */
-void TraxPieceDisplayer::loop_event()
-{
-    // // Set up actions
-    // (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){ 
-    //     this->rotate(false);
-    // });
-
-    // (Controller::getInstance()).bindActionOnKey(Keyboard::Left, [this](){
-    //     this->rotate(true);
-    // });
-
-    // (Controller::getInstance()).bindActionOnKey(Keyboard::Up, [this](){ 
-    //     this->flip(); 
-    // });
-
-    // (Controller::getInstance()).bindActionOnKey(Keyboard::Down, [this](){
-    //      this->flip();
-    // });
-
-    // cout << "Controller set" << endl;
-
-    // // Event loop
-    // Event event;
-    // while (app.pollEvent(event))
-    // {
-    //     if (event.type == Event::EventType::KeyPressed)
-    //         (Controller::getInstance()).makeKeyAction(event.key.code);
-    //     else
-    //         (Controller::getInstance()).makeAction(event);
-    // }
-}
 
 void TraxPieceDisplayer::rotate(bool clockwise)
 {

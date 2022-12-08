@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/ScoreBoard.o obj/DrawZone.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o
+OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/ScoreBoard.o obj/DrawZone.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/CarcPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o obj/CarcPiece.o
 
@@ -74,6 +74,10 @@ obj/TraxPieceDisplayer.o: src/front/TraxPieceDisplayer.cpp include/front/TraxPie
 	$(CCO)
 
 obj/DomPieceDisplayer.o: src/front/DomPieceDisplayer.cpp include/front/DomPieceDisplayer.hpp include/front/PieceDisplayer.hpp include/front/Controller.hpp include/front/AssetsLoader.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
+obj/CarcPieceDisplayer.o: src/front/CarcPieceDisplayer.cpp include/front/CarcPieceDisplayer.hpp include/front/PieceDisplayer.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

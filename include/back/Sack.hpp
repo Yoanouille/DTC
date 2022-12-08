@@ -1,6 +1,8 @@
 #ifndef SACK_H
 #define SACK_H
 
+#include <algorithm>
+#include <random>
 #include <exception>
 #include <vector>
 #include <ostream>
@@ -8,6 +10,7 @@
 #include "Piece.hpp"
 #include "DomPiece.hpp"
 #include "TraxPiece.hpp"
+#include "CarcPiece.hpp"
 
 class Sack
 {

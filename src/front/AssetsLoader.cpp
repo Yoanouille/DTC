@@ -1,4 +1,5 @@
 #include "front/AssetsLoader.hpp"
+using namespace sf;
 
 Assets * Assets::instance = nullptr;
 /**
@@ -15,7 +16,8 @@ Assets::Assets() :
     CarcasonneTexture{},
     Sack{},
     RotateLeft{},
-    Flip{}
+    Flip{},
+    CarcPiece{}
 {
     if (!DefaultFont.loadFromFile("resources/font/Arial.ttf"))
         cerr << "Couldn't load DefaultFont." << endl;
@@ -42,6 +44,9 @@ Assets::Assets() :
 
     if (!Flip.loadFromFile("resources/images/flip.png"))
         cerr << "Loading Failed : flip.png" << endl;
+
+    if (!CarcPiece.loadFromFile("resources/images/CPiece.png"))
+        cerr << "Loading Failed : CPiece.png" << endl;
 }
 
 /**
@@ -52,4 +57,17 @@ Assets* Assets::getInstance(){
     if(instance == nullptr)
         instance = new Assets();
     return instance;
+}
+
+Sprite & Assets::getCarcPiece(int id){
+    // the first tile starts at (16,19) 
+    // Each tile have a size of 89x86
+    // They are spaced by (16x29) blank space
+    int startx = 16 + (id % 5) * (89 +16);
+    int starty = 19 + (id / 5) * (86 + 29);
+
+    Sprite s{getInstance()->CarcPiece};
+    s.setTextureRect({startx,starty, 89,86});
+
+    return s;
 }
