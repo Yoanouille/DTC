@@ -37,6 +37,8 @@ public:
     sf::Color getFillColor();
     void setFillColor(Color c);
 
+    Sprite *getSprite();
+
     sf::FloatRect getGlobalBounds();
     
     void setPosition(float x, float y);

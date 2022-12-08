@@ -20,8 +20,13 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     pieceViewer.setPosition(container.getPosition().x + container.getSize().x *0.5f - pieceViewer.getGlobalBounds().width * 0.5f, container.getPosition().y + container.getSize().x * 0.45f);
 
     rotateLeft.setPosition(container.getPosition().x + rotateLeft.getGlobalBounds().width *0.2f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+
     rotateRight.setPosition(container.getPosition().x + container.getSize().x - rotateRight.getGlobalBounds().width * 1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
-    flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f , container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+    Sprite *sp = rotateRight.getSprite();
+    sp->setScale(-sp->getScale().x, sp->getScale().y);
+    sp->setPosition(rotateRight.getPosition().x + rotateRight.getGlobalBounds().width * 0.85f, rotateRight.getPosition().y);
+
+    flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
 
     sack.setPosition(container.getPosition().x + container.getSize().x * 0.5f - sack.getGlobalBounds().width *0.5f , container.getPosition().y + container.getGlobalBounds().height - sack.getGlobalBounds().height * 1.02f);
 }

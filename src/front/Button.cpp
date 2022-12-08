@@ -10,17 +10,16 @@ Button::Button(App &app) : app{app}, container{}, sprite{nullptr}, text{}, font{
 Button::Button(App &app, sf::Texture* imageTexture, std::string text, sf::Font &font, int fontSize, sf::Vector2f containerSize, sf::Vector2f position)
     : app{app}, container{containerSize}, sprite{nullptr}, text{}, font{font}
 {
+    container.setOutlineThickness(5);
+    container.setOutlineColor(Color::Transparent);
+
     if(imageTexture != nullptr){
         sprite = new Sprite(*imageTexture);
         Vector2u textureSize = imageTexture->getSize();
-        sprite->setScale(textureSize.x/containerSize.x, textureSize.y/containerSize.y);
-        sprite->setPosition(container.getPosition());
-
+        sprite->setScale(containerSize.x / textureSize.x, containerSize.y/textureSize.y);
     } else {
         container.setFillColor(Color::Transparent);
     }
-    container.setOutlineThickness(5);
-    container.setOutlineColor(Color::Transparent);
 
     setText(text);
     this->text.setFont(font);
@@ -52,6 +51,12 @@ void Button::setFillColor(Color c){
     text.setFillColor(c);
 }
 
+Sprite *Button::getSprite()
+{
+    return sprite;
+}
+
+
 FloatRect Button::getGlobalBounds(){
     return container.getGlobalBounds();
 }
@@ -68,6 +73,8 @@ void Button::setPosition(float x, float y){
     FloatRect r = text.getLocalBounds();
     text.setOrigin(r.left + r.width/2.0f ,r.top + r.height/2.0f);
     text.setPosition(x + container.getGlobalBounds().width/2.0f, y + container.getGlobalBounds().height/2.0f);
+
+    if(sprite != nullptr) sprite->setPosition(x,y);
 }
 
 /**
