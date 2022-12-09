@@ -367,6 +367,8 @@ bool CarcPiece::playOnPiece(int dir, int player)
         play_center = player;
         return true;
     }
+
+    return false;
 }
 
 void CarcPiece::getPlayPawn(int *t) const

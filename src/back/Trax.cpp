@@ -46,7 +46,7 @@ void Trax::place(int i, int j, Piece &p)
         if(moveForced.size() != 0)
         {
             int index = 0;
-            for(int k = 0; k < moveForced.size(); k++)
+            for(size_t k = 0; k < moveForced.size(); k++)
             {
                 Pair pai = moveForced[k];
                 if(pai.i == i && pai.j == j) index = k;

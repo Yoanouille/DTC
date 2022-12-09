@@ -264,21 +264,21 @@ void MainScene::redrawBG()
     //rectBG.setOutlineColor(Color::Red);
     //rectBG.setOutlineThickness(3);
    // rectBG.setScale(1, app.getHeight() / vB.y);
-    rectBG.setTextureRect(IntRect{0, 0, app.getWidth() / rectBG.getScale().x , vB.y / rectBG.getScale().y});
+    rectBG.setTextureRect({0, 0, app.getWidth() / rectBG.getScale().x , vB.y / rectBG.getScale().y});
     rectBG.setSize({app.getWidth() / rectBG.getScale().x, vB.y / rectBG.getScale().y});
     app.draw(rectBG);
 
-    rectBG.setTextureRect(IntRect{0, 0, vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setTextureRect({0, 0, vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     rectBG.setSize({vB.x / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     app.draw(rectBG);
 
     rectBG.setPosition(vB.x + bB.x, 0);
-    rectBG.setTextureRect(IntRect{(vB.x + bB.x) / rectBG.getScale().x, 0, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setTextureRect({(vB.x + bB.x) / rectBG.getScale().x, 0, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     app.draw(rectBG);
 
     rectBG.setPosition(0, vB.y + bB.y);
-    rectBG.setTextureRect(IntRect{0, (vB.y + bB.y) / rectBG.getScale().y, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
+    rectBG.setTextureRect({0, (vB.y + bB.y) / rectBG.getScale().y, app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     rectBG.setSize({app.getWidth() / rectBG.getScale().x , app.getHeight() / rectBG.getScale().y});
     app.draw(rectBG);
 

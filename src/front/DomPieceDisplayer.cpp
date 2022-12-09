@@ -42,7 +42,7 @@ void DomPieceDisplayer::drawRect(int s)
     Vector2f dp{1,1};
     s -= 3.0;
     float scl = s / 5.0;
-    rect.setSize({scl - dp.x * 0.5, scl - dp.y * 0.5});
+    rect.setSize({scl - dp.x * 0.5f, scl - dp.y * 0.5f});
     rect.setOutlineThickness(1);
     rect.setOutlineColor({0,0,0,255});
     app.draw(rect);  
@@ -82,19 +82,19 @@ void DomPieceDisplayer::drawRect(int s)
 
         if(i >= 1 && i <= 3)
         {
-            text.setPosition({x + i * scl + dp.x + r.width * 0.5, y + dp.y - r.height * 0.20});
+            text.setPosition({x + i * scl + dp.x + r.width * 0.5f, y + dp.y - r.height * 0.20f});
             text.setString(to_string(piece.getVal(Direction::UP, i - 1)));
             app.draw(text);
 
-            text.setPosition({x + i * scl + dp.x + r.width * 0.5, y  + 4 * scl + dp.y - r.height * 0.20});
+            text.setPosition({x + i * scl + dp.x + r.width * 0.5f, y  + 4 * scl + dp.y - r.height * 0.20f});
             text.setString(to_string(piece.getVal(Direction::DOWN, 3 - i)));
             app.draw(text);  
 
-            text.setPosition({x + dp.x + r.width * 0.5, y  + i * scl + dp.y - r.height * 0.20});
+            text.setPosition({x + dp.x + r.width * 0.5f, y  + i * scl + dp.y - r.height * 0.20f});
             text.setString(to_string(piece.getVal(Direction::LEFT, 3 - i)));
             app.draw(text);
 
-            text.setPosition({x + 4 * scl + dp.x + r.width * 0.5, y  + i * scl + dp.y - r.height * 0.20});
+            text.setPosition({x + 4.0f * scl + dp.x + r.width * 0.5f, y  + i * scl + dp.y - r.height * 0.20f});
             text.setString(to_string(piece.getVal(Direction::RIGHT, i - 1)));
             app.draw(text);          
         }
