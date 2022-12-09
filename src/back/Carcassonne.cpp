@@ -42,6 +42,8 @@ void Carcassonne::searchRoad(int i, int j, Direction d)
         
         CarcPiece *c = (CarcPiece *)(plateau[t.i][t.j]);
 
+        // ! Stocker dans une liste pour vider les pions
+
         nb++;
 
         c->setColor(1);

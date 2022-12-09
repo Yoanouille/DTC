@@ -307,14 +307,16 @@ bool CarcPiece::connectable(Piece &p, int pDir)
 {
     CarcPiece &p1 = (CarcPiece &)p;
     for(int i = 0; i < 3; i++)
-    {
-        border[(direction + pDir + 2)%4][i] == p1.border[((pDir + p1.direction)) %4][2 - i];
-    }
+        if (border[(direction + pDir + 2)%4][i] != p1.border[((pDir + p1.direction)) %4][2 - i])
+            return false;
+
+    return true;
+    
 }
 
 int CarcPiece::getEarnedValue(Piece &p, int pDir) 
 {
-    //! SUREMENT INUTILE
+    //! SUREMENT INUTILE : OK
     CarcPiece &p1 = (CarcPiece &)p;
     int col = 0;
     col = border[(direction + pDir + 2)%4][1];
