@@ -22,10 +22,11 @@ class CarcPiece : public Piece
         int border[4][3];
         int center;
 
-        int play[4];
-        int play_center;
+        int pawn[4];
+        int pawn_center;
 
         int color_dir[4];
+        int bonus;
     
     public:
         CarcPiece(int id);
@@ -40,6 +41,7 @@ class CarcPiece : public Piece
         bool playOnPiece(int dir, int player);
         void getPlayPawn(int *t) const;
         int getCenter() const;
+        void removePawn(int d);
 
 
 };

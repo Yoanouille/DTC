@@ -9,8 +9,15 @@ typedef struct Triple
 {
     int i;
     int j;
-    Direction d;
+    Direction d; 
 } Triple;
+
+typedef struct Container
+{
+    int i;
+    int j;
+    bool pawn[4];
+} Container;
 
 class Carcassonne : public Game
 {
@@ -22,7 +29,7 @@ class Carcassonne : public Game
         ~Carcassonne();
         void place(int i, int j, Piece &p) override;
 
-        void searchRoad(int i, int j, Direction d);
+        int search(int i, int j, Direction d, CarcType type, bool placing);
 
         virtual bool gameOver() override;
 };

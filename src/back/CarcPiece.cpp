@@ -12,7 +12,7 @@ using namespace std;
  * 
  * Notice that between 2 and 12, pieces with even id have a shields (bonus points)
  */
-CarcPiece::CarcPiece(int i) : id{i}, play{-1,-1,-1,-1}, play_center{-1}, color_dir{-1,-1,-1,-1}
+CarcPiece::CarcPiece(int i) : id{i}, pawn{-1,-1,-1,-1}, pawn_center{-1}, color_dir{-1,-1,-1,-1}, bonus{0}
 {
     switch(id){
         case(0): 
@@ -335,7 +335,7 @@ void CarcPiece::getConnectColor(int *t) const
 
     for(int i = 0; i < 4; i++)
     {
-        t[i] = border[i][1];
+        t[i] = border[(i + direction) % 4][1];
     }
 }
 
@@ -357,14 +357,14 @@ string CarcPiece::toString() const
 
 bool CarcPiece::playOnPiece(int dir, int player)
 {
-    if(dir >= 0 && dir <= 4 && play[4] == -1) 
+    if(dir >= 0 && dir <= 4 && pawn[4] == -1) 
     {
-        play[dir] = player;
+        pawn[dir] = player;
         return true;
     }
-    if(dir == 5 && play_center == -1)
+    if(dir == 5 && pawn_center == -1)
     {
-        play_center = player;
+        pawn_center = player;
         return true;
     }
 
@@ -375,12 +375,17 @@ void CarcPiece::getPlayPawn(int *t) const
 {
     for(int i = 0; i < 4; i++)
     {
-        t[i] = play[i];
+        t[i] = pawn[i];
     }
-    t[4] = play_center;
+    t[4] = pawn_center;
 }
 
 int CarcPiece::getCenter() const
 {
     return center;
+}
+
+void CarcPiece::removePawn(int d)
+{
+    pawn[d] = -1;
 }

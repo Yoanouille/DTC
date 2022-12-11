@@ -1,5 +1,6 @@
 #include "back/Carcassonne.hpp"
 #include "back/CarcPiece.hpp"
+#include "back/PlayerCarc.hpp"
 #include <stack>
 
 using namespace std;
@@ -8,6 +9,8 @@ Carcassonne::Carcassonne() {}
 
 Carcassonne::~Carcassonne() {}
 
+//! IL FAUT VERIFIER QUE QUAND ON PLACE IL Y A PERSONNE SUR LE CHEMIN/VILLE/FIELD
+
 void Carcassonne::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
@@ -15,20 +18,29 @@ void Carcassonne::place(int i, int j, Piece &p)
     
     //! PENSER A CLEANCOLOR APRES CHAQUE SEARCH !!!!!!!!!
 
-    //Si la piece a une ville -> parcours ville
-    //    durant le parcouts stocker les pions qui sont dans la ville
-    //    appeler récursivement la ville d'à côté tout en marquant
-    //    on stocke le nombre case visité
-    //    si on detecte une ville connectée au vide on stop tout
-    //    sinon on incrémente comme il faut le score des joueurs et faut vider les pions pour les rendre aux joueurs
+    CarcPiece *c = (CarcPiece *)(plateau[i][j]);
+    int col[4] = {-1,-1,-1,-1};
+    c->getConnectColor(col);
+    for(int d = 0; d < 4; d++)
+    {
+        if(col[d] != None)
+            search(i, j, (Direction)d, (CarcType)col[d], false);
+    }
 
     //Regarder autour si on trouve une abbaye avec un pion et voir si on la ferme
+
 }
 
-void Carcassonne::searchRoad(int i, int j, Direction d)
+//! REFLECHIR POUR ADAPTER AUSSI A FIELD !!!!
+
+//! AJOUTER BOOLEEN POUR DIRE SI BONUS VILLE !
+int Carcassonne::search(int i, int j, Direction d, CarcType type, bool placing)
 {
     vector<int> player_pawn{};
+    player_pawn.resize(nb_player);
     stack<Triple> s;
+
+    vector<Container> v{};
 
     s.push({i, j, d});
 
@@ -39,50 +51,80 @@ void Carcassonne::searchRoad(int i, int j, Direction d)
         if(s.empty()) break;
 
         Triple &t = s.top();
-        
+        Container cont {t.i, t.j, {0,0,0,0}};
         CarcPiece *c = (CarcPiece *)(plateau[t.i][t.j]);
-
-        // ! Stocker dans une liste pour vider les pions
-
         nb++;
-
-        c->setColor(1);
 
         int play_pawn[5] = {-1,-1,-1,-1,-1};
         c->getPlayPawn(play_pawn);
 
-        //! SI C'EST LA FIN D'UNE ROUTE
-        //C'est un cas particulier car la route n'est pas connecté aux autres routes de la piece
-        if(c->getCenter() == Town || c->getCenter() == Crossroad || c->getCenter() == Abbaye)
+        c->setColor(1);
+
+        //! SI ON EST AU BORD !
+        //C'est un cas particulier car le type n'est pas connecté aux autres type de la piece !
+        if((c->getCenter() == Town && type == Road) || c->getCenter() == Crossroad || c->getCenter() == Abbaye)
         {
-            if(d == UP && plateau[t.i - 1][t.j] == nullptr) return;
-            if(d == UP && plateau[t.i - 1][t.j]->getColor() == 0) 
+            if(d == UP && plateau[t.i - 1][t.j] == nullptr)
+            {
+                if(!placing) return 0;
+            }
+            else if(d == UP && plateau[t.i - 1][t.j]->getColor() == 0) 
             {
                 s.push({t.i - 1, t.j, DOWN});
-                if(play_pawn[UP] != -1) player_pawn[play_pawn[UP]]++;
+                if(play_pawn[UP] != -1)
+                {
+                    if(placing) return 0;
+                    player_pawn[play_pawn[UP]]++;
+                    cont.pawn[UP] = true;
+                }
             }
 
-            if(d == DOWN && plateau[t.i + 1][t.j] == nullptr) return;
-            if(d == DOWN && plateau[t.i + 1][t.j]->getColor() == 0) 
+            if(d == DOWN && plateau[t.i + 1][t.j] == nullptr) 
+            {
+                if(!placing) return 0;
+            }
+            else if(d == DOWN && plateau[t.i + 1][t.j]->getColor() == 0) 
             {
                 s.push({t.i + 1, t.j, UP});
-                if(play_pawn[DOWN] != -1) player_pawn[play_pawn[DOWN]]++;
+                if(play_pawn[DOWN] != -1) 
+                {
+                    if(placing) return 0;
+                    player_pawn[play_pawn[DOWN]]++;
+                    cont.pawn[DOWN] = true;
+                }
             }
             
-            if(d == LEFT && plateau[t.i][t.j - 1] == nullptr) return;
-            if(d == LEFT && plateau[t.i][t.j - 1]->getColor() == 0) 
+            if(d == LEFT && plateau[t.i][t.j - 1] == nullptr) 
+            {
+                if(!placing) return 0;
+            }
+            else if(d == LEFT && plateau[t.i][t.j - 1]->getColor() == 0) 
             {
                 s.push({t.i, t.j - 1, RIGHT});
-                if(play_pawn[LEFT] != -1) player_pawn[play_pawn[LEFT]]++;
+                if(play_pawn[LEFT] != -1) 
+                {
+                    if(placing) return 0;
+                    player_pawn[play_pawn[LEFT]]++;
+                    cont.pawn[LEFT] = true;
+                }
             }
             
-            if(d == RIGHT && plateau[t.i][t.j + 1] == nullptr) return;
-            if(d == RIGHT && plateau[t.i][t.j + 1]->getColor() == 0)
+            if(d == RIGHT && plateau[t.i][t.j + 1] == nullptr) 
+            {
+                if(!placing) return 0;
+            }
+            else if(d == RIGHT && plateau[t.i][t.j + 1]->getColor() == 0)
             { 
                 s.push({t.i, t.j + 1, LEFT});
-                if(play_pawn[RIGHT] != -1) player_pawn[play_pawn[RIGHT]]++;
+                if(play_pawn[RIGHT] != -1) 
+                {
+                    if(placing) return 0;
+                    player_pawn[play_pawn[RIGHT]]++;
+                    cont.pawn[RIGHT] = true;
+                }
             }
             
+            v.push_back(cont);
             s.pop();
 
             //On arrete ici l'itération
@@ -95,31 +137,64 @@ void Carcassonne::searchRoad(int i, int j, Direction d)
 
         //On compte les pions
         for(int i = 0; i < 4; i++)
-            if(play_pawn[i] != -1) player_pawn[play_pawn[i]]++;
+        {
+            if(play_pawn[i] != -1 && col[i] == type) 
+            {
+                if(placing) return 0;
+                player_pawn[play_pawn[i]]++;
+                cont.pawn[i] = true;
+            }
+        }
 
-        //On ajoute dans la pile la/les suites de la routes
-        //les suites c'est si la premiere itération
-        if(col[UP] == Road && plateau[t.i - 1][t.j] == nullptr) return;
-        if(col[UP] == Road && plateau[t.i - 1][t.j]->getColor() == 0)
+        //On ajoute dans la pile la/les suites
+        if(col[UP] == type && plateau[t.i - 1][t.j] == nullptr) 
+        {
+            if(!placing) return 0;
+        }
+        else if(col[UP] == type && plateau[t.i - 1][t.j]->getColor() == 0)
             s.push({t.i - 1, t.j, DOWN});
         
-        if(col[DOWN] == Road && plateau[t.i + 1][t.j] == nullptr) return;
-        if(col[DOWN] == Road && plateau[t.i + 1][t.j]->getColor() == 0)
+        if(col[DOWN] == type && plateau[t.i + 1][t.j] == nullptr)
+        {
+            if(!placing) return 0;
+        }
+        else if(col[DOWN] == type && plateau[t.i + 1][t.j]->getColor() == 0)
             s.push({t.i + 1, t.j, UP});
 
-        if(col[LEFT] == Road && plateau[t.i][t.j - 1] == nullptr) return;
-        if(col[LEFT] == Road && plateau[t.i][t.j - 1]->getColor() == 0)
+        if(col[LEFT] == type && plateau[t.i][t.j - 1] == nullptr) 
+        {
+            if(!placing) return 0;
+        }
+        else if(col[LEFT] == type && plateau[t.i][t.j - 1]->getColor() == 0)
             s.push({t.i, t.j - 1, RIGHT});
 
-        if(col[RIGHT] == Road && plateau[t.i][t.j + 1] == nullptr) return;
-        if(col[RIGHT] == Road && plateau[t.i][t.j + 1]->getColor() == 0)
+        if(col[RIGHT] == type && plateau[t.i][t.j + 1] == nullptr) 
+        {
+            if(!placing) return 0;
+        }
+        else if(col[RIGHT] == type && plateau[t.i][t.j + 1]->getColor() == 0)
             s.push({t.i, t.j + 1, LEFT});
         
 
         s.pop();
     }
-
     //Normalement si on est ici, c'est que la route était fini
+    if(placing) return nb;
+
+    //! Enlever les pions des pieces
+    for(Container &c : v)
+    {
+        for(int i = 0; i < 4; i++)
+            if(c.pawn[i])
+                ((CarcPiece *)(plateau[c.i][c.j]))->removePawn(i);
+    }
+
+    //! Redonner aux joueurs leurs pions
+    for(int i = 0; i < nb_player; i++)
+    {
+        ((PlayerCarc *)(players[i]))->addPawn(player_pawn[i]);
+    }
+
     //! ON AJUSTE LES SCORES
     int max = 0;
     for(int i = 0; i < nb_player; i++)
@@ -127,9 +202,13 @@ void Carcassonne::searchRoad(int i, int j, Direction d)
             max = player_pawn[i];
 
     for(int i = 0; i < nb_player; i++)
-        if(player_pawn[i] == max) players[i]->addScore(max);
+        if(player_pawn[i] == max) players[i]->addScore(nb);
+    
+    return nb;
 
 }
+
+
 
 bool Carcassonne::gameOver()
 {

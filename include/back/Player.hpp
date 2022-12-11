@@ -6,7 +6,7 @@
 
 class Player
 {
-    private:
+    protected:
         std::string const name;
         int score;
         static int num;

@@ -4,7 +4,7 @@ SFML=-lsfml-graphics -lsfml-window -lsfml-system
 CCO=$(CC) $(INCL) -c $< -o $@
 
 OBJ_DIR=@mkdir obj -p
-OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/ScoreBoard.o obj/DrawZone.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/CarcPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o
+OBJECTS=obj/Main.o obj/AssetsLoader.o obj/Button.o obj/TextField.o obj/App.o  obj/Scene.o obj/MainMenu.o obj/PlayerSettingsScene.o obj/MainScene.o obj/ScoreBoard.o obj/DrawZone.o obj/PieceDisplayer.o obj/TraxPieceDisplayer.o obj/DomPieceDisplayer.o obj/CarcPieceDisplayer.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Player.o obj/Game.o obj/Trax.o obj/Sack.o obj/Domino.o obj/Controller.o obj/CarcPiece.o obj/Carcassonne.o obj/PlayerCarc.o
 
 TEST_OBJ=obj/Test.o obj/Piece.o obj/DomPiece.o obj/TraxPiece.o obj/Sack.o obj/Game.o obj/Trax.o obj/Player.o obj/CarcPiece.o
 
@@ -110,6 +110,10 @@ obj/Player.o: src/back/Player.cpp include/back/Player.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
+obj/PlayerCarc.o: src/back/PlayerCarc.cpp include/back/PlayerCarc.hpp include/back/Player.hpp
+	$(OBJ_DIR)
+	$(CCO)
+
 obj/Game.o: src/back/Game.cpp include/back/Game.hpp include/back/VecZ.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/Player.hpp include/back/VecZ.tpp include/back/VecZ.hpp
 	$(OBJ_DIR)
 	$(CCO)
@@ -118,7 +122,7 @@ obj/Trax.o: src/back/Trax.cpp include/back/Trax.hpp include/back/Game.hpp includ
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/Carcassonne.o: src/back/Carcassonne.cpp include/back/Carcassonne.hpp include/back/Game.hpp include/back/CarcPiece.hpp include/back/VecZ.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/Player.hpp
+obj/Carcassonne.o: src/back/Carcassonne.cpp include/back/Carcassonne.hpp include/back/Game.hpp include/back/CarcPiece.hpp include/back/VecZ.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/Player.hpp include/back/PlayerCarc.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
