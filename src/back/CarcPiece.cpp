@@ -1,6 +1,7 @@
 #include "back/CarcPiece.hpp"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -12,8 +13,17 @@ using namespace std;
  * 
  * Notice that between 2 and 12, pieces with even id have a shields (bonus points)
  */
-CarcPiece::CarcPiece(int i) : id{i}, pawn{-1,-1,-1,-1}, pawn_center{-1}, color_dir{-1,-1,-1,-1}, bonus{0}
+CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
 {
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            pawn[i][j] = -1;
+            color_border[i][j] = -1;
+        }
+    }
+
     switch(id){
         case(0): 
             for(size_t i = 0; i < 4; i++)
@@ -303,6 +313,11 @@ const int CarcPiece::getId() const{
     return id;
 }
 
+bool CarcPiece::getBonus() const
+{
+    return bonus;
+}
+
 bool CarcPiece::connectable(Piece &p, int pDir)
 {
     CarcPiece &p1 = (CarcPiece &)p;
@@ -314,25 +329,8 @@ bool CarcPiece::connectable(Piece &p, int pDir)
     
 }
 
-int CarcPiece::getEarnedValue(Piece &p, int pDir) 
-{
-    //! SUREMENT INUTILE : OK
-    CarcPiece &p1 = (CarcPiece &)p;
-    int col = 0;
-    col = border[(direction + pDir + 2)%4][1];
-    p1.color_dir[pDir] = col;
-    this->color_dir[(pDir + 2)%4] = col;
-    return 0;
-}
-
 void CarcPiece::getConnectColor(int *t) const
 {
-    //! CHANGE POUR METTRE LES COULEUR
-    // for(int i = 0; i < 4; i++)
-    // {
-    //     t[i] = color_dir[i];   
-    // }
-
     for(int i = 0; i < 4; i++)
     {
         t[i] = border[(i + direction) % 4][1];
@@ -357,9 +355,9 @@ string CarcPiece::toString() const
 
 bool CarcPiece::playOnPiece(int dir, int player)
 {
-    if(dir >= 0 && dir <= 4 && pawn[4] == -1) 
+    if(dir >= 0 && dir <= 4 && pawn[(dir + direction) % 4][1] == -1) 
     {
-        pawn[dir] = player;
+        pawn[(dir + direction) % 4][1] = player;
         return true;
     }
     if(dir == 5 && pawn_center == -1)
@@ -375,7 +373,7 @@ void CarcPiece::getPlayPawn(int *t) const
 {
     for(int i = 0; i < 4; i++)
     {
-        t[i] = pawn[i];
+        t[i] = pawn[(i + direction) % 4][1];
     }
     t[4] = pawn_center;
 }
@@ -387,5 +385,111 @@ int CarcPiece::getCenter() const
 
 void CarcPiece::removePawn(int d)
 {
-    pawn[d] = -1;
+    pawn[(d + direction) % 4][1] = -1;
+}
+
+void CarcPiece::explore(int i, int j, bool cent, CarcType t)
+{
+    if(cent)
+    {
+        color_center = 1;
+        for(int i = 0; i < 4; i++)
+        {
+            if(color_border[i][1] == -1 && border[i][1] == t)
+            {
+                explore(i, 1, false, t);
+            }
+        }
+    } 
+    else 
+    {
+        color_border[i][j] = 1;
+        if(j == 1)
+        {
+            if(color_center == -1 && center == t) explore(0,0,true, t);
+            if(color_border[i][0] == -1 && border[i][0] == t) explore(i, 0, false, t);
+            if(color_border[i][2] == -1 && border[i][2] == t) explore(i, 2, false, t);
+        } else if(j == 0)
+        {
+            if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
+            if(color_border[(i + 1) % 4][2] && border[(i + 1) % 4][2] == t) explore((i + 1) % 4, 2, false, t);
+        } else 
+        {
+            if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
+            if(color_border[(i + 3) % 4][2] && border[(i + 3) % 4][2] == t) explore((i + 3) % 4, 2, false, t);
+        }
+    }
+}
+
+void CarcPiece::cleanColor()
+{
+    color = 0;
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 3; j++)
+            color_border[i][j] = -1;
+    color_center = -1;
+}
+
+void CarcPiece::removeAllPawn()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(color_border[i][j] != -1)
+            {
+                pawn[i][j] = -1;
+            }
+        }
+    }
+    if(color_center == 1) pawn_center = -1;
+}
+
+int CarcPiece::getColor(int i, int j, bool cent) const
+{
+    if(cent) return color_center;
+    return color_border[(i + direction) % 4][j];
+}
+
+int CarcPiece::getType(int i, int j, bool cent) const
+{
+    if(cent) return center;
+    return border[(i + direction) % 4][j];
+}
+
+int CarcPiece::getNbPawn(int *t, int nb_player)
+{
+    int nb = 0;
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(color_border[i][j] == 1 && pawn[i][j] != -1)
+            {
+                color_border[i][j]++;
+                t[pawn[i][j]]++; 
+                nb++;
+            }
+        }
+    }
+    if(color_center == 1 && pawn_center != -1) 
+    {
+        color_center++;
+        nb++;
+    } 
+    return nb;
+}
+
+vector<Pos> CarcPiece::getNextDir()
+{
+    vector<Pos> next_dir{};
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            //! PAS SUR ICI DU (i+3+direction) (peut etre (i+direction) seulement)
+            if(color_border[i][j] != -1) next_dir.push_back({(i + 3 + direction) % 4, j});
+        }
+    }
+    return next_dir;
 }

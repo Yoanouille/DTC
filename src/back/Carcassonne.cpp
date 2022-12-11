@@ -9,31 +9,51 @@ Carcassonne::Carcassonne() {}
 
 Carcassonne::~Carcassonne() {}
 
-//! IL FAUT VERIFIER QUE QUAND ON PLACE IL Y A PERSONNE SUR LE CHEMIN/VILLE/FIELD
+//! Il faut verifier qu'il y a personne d'autres sur la route/ville/plaine
+bool Carcassonne::canPlace(int i, int j, Piece &p)
+{
+    if(!Game::canPlace(i, j, p)) return false;
+    bool flag = false;
+
+    CarcPiece *c = (CarcPiece *)(plateau[i][j]);
+
+    for(int di = 0; di < 4; di++)
+    {
+        for(int dj = 0; dj < 3; dj++)
+        {
+            if(search_bis(i, j, di, dj, CarcType(c->getType(di, dj, false)), true) > 0) flag = true;
+            cleanColor();
+            if(flag) return false;
+        }   
+    }
+    return true;
+}
 
 void Carcassonne::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
     Game::place(i, j, p);
-    
-    //! PENSER A CLEANCOLOR APRES CHAQUE SEARCH !!!!!!!!!
 
     CarcPiece *c = (CarcPiece *)(plateau[i][j]);
-    int col[4] = {-1,-1,-1,-1};
-    c->getConnectColor(col);
-    for(int d = 0; d < 4; d++)
+    
+    for(int di = 0; di < 4; di++)
     {
-        if(col[d] != None)
-            search(i, j, (Direction)d, (CarcType)col[d], false);
+        for(int dj = 0; dj < 3; dj++)
+        {
+            search_bis(i, j, di, dj, CarcType(c->getType(di, dj, false)), false);
+            cleanColor();
+        }   
     }
 
     //Regarder autour si on trouve une abbaye avec un pion et voir si on la ferme
 
 }
 
-//! REFLECHIR POUR ADAPTER AUSSI A FIELD !!!!
+//! REFLECHIR POUR ADAPTER AUSSI A FIELD OU ALORS FAIRE UNE FONCTION A COTE !!!!
 
 //! AJOUTER BOOLEEN POUR DIRE SI BONUS VILLE !
+//? Surement Obsolète maintenant !
+//? Fonction très laide !
 int Carcassonne::search(int i, int j, Direction d, CarcType type, bool placing)
 {
     vector<int> player_pawn{};
@@ -209,6 +229,91 @@ int Carcassonne::search(int i, int j, Direction d, CarcType type, bool placing)
 }
 
 
+typedef struct Elem
+{
+    int i;
+    int j;
+    int di;
+    int dj;
+} Elem;
+
+
+//! TEST d'une autre facon de parcourir plus général mais un peu plus complexe 
+//? Fonction beaucoup plus élégante
+int Carcassonne::search_bis(int i, int j, int di, int dj, CarcType type, bool placing)
+{
+    stack<Elem> s{};
+    s.push({i, j, di, dj});
+
+    int nb;
+
+    int nb_pawn[nb_player];
+    for(int k = 0; k < nb_player; k++)
+        nb_pawn[k] = 0;
+    
+    vector<Pos> v;
+
+    while(true)
+    {
+        if(s.empty()) break;
+        Elem e = s.top();
+        s.pop();
+        CarcPiece *c = (CarcPiece *)(plateau[e.i][e.j]);
+        if(c == nullptr) 
+        {
+            if(!placing) return 0;
+            continue;
+        }
+
+        if(c->getColor(di, dj, false) == 1) continue;
+        if(c->getType(di, dj, false) != type) continue;
+
+        c->explore(di, dj, false, type);
+        if(c->getNbPawn(nb_pawn, nb_player) > 0 && placing) return 0;
+
+        v.push_back({e.i, e.j});
+
+        vector<Pos> next_pos = c->getNextDir();
+        for(Pos &p : next_pos)
+        {
+            int direc = p.i;
+            int opp_direc = (direc + 2) % 4;
+            int opp_dj = 2 - dj;
+
+            if(direc == UP) s.push({e.i - 1, e.j, opp_direc, opp_dj});
+            if(direc == DOWN) s.push({e.i + 1, e.j, opp_direc, opp_dj});
+            if(direc == LEFT) s.push({e.i, e.j - 1, opp_direc, opp_dj});
+            if(direc == RIGHT) s.push({e.i, e.j + 1, opp_direc, opp_dj});
+        }
+
+        nb++;
+        if(c->getBonus()) nb++;
+        
+    }
+
+    if(placing) return nb;
+
+    //! On enlève les pions
+    for(Pos &p : v)
+        ((CarcPiece *)(plateau[p.i][p.j]))->removeAllPawn();
+    
+    //! On redonne les pions
+    for(int i = 0; i < nb_player; i++)
+        ((PlayerCarc *)(players[i]))->addPawn(nb_pawn[i]);
+    
+    //! On update les scores
+    int max = 0;
+    for(int i = 0; i < nb_player; i++)
+        if(nb_pawn[i] > max) 
+            max = nb_pawn[i];
+
+    for(int i = 0; i < nb_player; i++)
+        if(nb_pawn[i] == max) players[i]->addScore(nb);
+    
+    return nb;
+
+
+}
 
 bool Carcassonne::gameOver()
 {

@@ -26,6 +26,11 @@ int Piece::getColor() const
     return color;
 }
 
+int Piece::getEarnedValue(Piece &p, int dir) 
+{
+    return 0;
+}
+
 /**
  * Rotate the Piece following a direction
  * that is clockwise or counterclockwise

@@ -25,7 +25,7 @@ public:
 
     void rotate(bool clockwise);
     virtual bool connectable(Piece &p, int pDir) = 0;
-    virtual int getEarnedValue(Piece &p, int pDir) = 0;
+    virtual int getEarnedValue(Piece &p, int pDir);
     virtual std::string toString() const = 0;
 
     int getDirection() const;
