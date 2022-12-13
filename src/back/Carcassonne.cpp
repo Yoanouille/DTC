@@ -13,11 +13,11 @@ Carcassonne::~Carcassonne() {}
 bool Carcassonne::canPlace(int i, int j, Piece &p)
 {
     if(!Game::canPlace(i, j, p)) return false;
-
-    //! IL FAUT FAIRE CE QUI SUIT SI ON A POSE UN PION, SINON RIEN !!!!!!!!
+    
     bool flag = false;
 
     CarcPiece *c = (CarcPiece *)(plateau[i][j]);
+    if(!c->hasPawn()) return true;
 
     for(int di = 0; di < 4; di++)
     {

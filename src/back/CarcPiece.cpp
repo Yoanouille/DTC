@@ -457,6 +457,25 @@ int CarcPiece::getType(int i, int j, bool cent) const
     return border[(i + direction) % 4][j];
 }
 
+bool CarcPiece::hasPawn()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(pawn[i][j] != -1) return true;
+        }
+    }
+    return (pawn_center != -1);
+}
+
+void CarcPiece::putPawn(int i, int j, bool center, int player)
+{
+    if(center) pawn_center = player;
+    pawn[i][j] = player;
+}
+
+
 int CarcPiece::getNbPawn(int *t, int nb_player)
 {
     int nb = 0;
