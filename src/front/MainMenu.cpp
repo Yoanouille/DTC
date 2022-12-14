@@ -16,7 +16,10 @@ MainMenu::MainMenu(App &app) :
 }
 
 /** Destructor */
-MainMenu::~MainMenu() {}
+MainMenu::~MainMenu() 
+{
+    //! VIRER CE QU'IL Y AURA DANS LE VECTEUR !
+}
 
 /** Initialize the Scene */
 void MainMenu::init()
@@ -88,7 +91,7 @@ void MainMenu::init()
 // Manage event
 void MainMenu::loop_event()
 {
-    Event event;
+    Event event{};
     while (app.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)

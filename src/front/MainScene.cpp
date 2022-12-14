@@ -70,7 +70,7 @@ void MainScene::init()
  */
 void MainScene::loop_event()
 {
-    Event event;
+    Event event{};
     while (app.pollEvent(event))
     {
         // Action on Window Closed Event
