@@ -46,14 +46,15 @@ void Trax::place(int i, int j, Piece &p)
 
         if(moveForced.size() != 0)
         {
-            int index = 0;
+            int index = -1;
             for(size_t k = 0; k < moveForced.size(); k++)
             {
                 Pair pai = moveForced[k];
                 if(pai.i == i && pai.j == j) index = k;
             }
-            moveForced.erase(moveForced.begin() + index);
-        } else 
+            if(index != -1) moveForced.erase(moveForced.begin() + index);
+        }
+        if(moveForced.size() == 0)
         {
             current_player = (current_player + 1)% nb_player;
         }

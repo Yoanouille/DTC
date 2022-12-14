@@ -79,8 +79,6 @@ void TraxPieceDisplayer::rotates(bool clockwise)
         else if((dx && !dy) || (!dx && dy)) dx = !dx;
         this->rotate(-90.0);
     }
-
-    cout << piece.toString() << endl;
 }
 
 Piece &TraxPieceDisplayer::getPiece()

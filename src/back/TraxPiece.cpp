@@ -90,8 +90,6 @@ bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
             dir[i] = tabp[i]->tab[(tabp[i]->direction + i + 2)%4];
         }
     }
-
-    int count = 0;
     
     for(int i = 0; i < 4; i++)
     {
@@ -101,12 +99,12 @@ bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
             {
                 if(dir[j] != -1 && dir[i] == dir[j])
                 {
-                    count++;
+                    return true;
                 }
             }
         }
     }
 
-    return count >= 2;
+    return false;
 
 }
