@@ -68,3 +68,8 @@ void TraxPieceDisplayer::rotate(bool clockwise)
     piece.rotate(clockwise);
     //TODO Rotate image
 }
+
+Piece &TraxPieceDisplayer::getPiece()
+{
+    return piece;
+}

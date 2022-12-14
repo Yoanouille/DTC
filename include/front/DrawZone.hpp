@@ -31,6 +31,8 @@ class DrawZone {
 
         void draw();
 
+        PieceDisplayer *pick();
+
         void render();
 
     friend class MainScene;

@@ -48,7 +48,8 @@ void ScoreBoard::setGame(Game *game){
     for(size_t i = 0; i< game->getPlayers().size() ; i++){
         names.push_back({});
         names[i].setString(game->getPlayers()[i]->getName());
-        names[i].setFillColor(Color::Black);
+        if(i == 0) names[i].setFillColor(Color::Cyan);
+        else names[i].setFillColor(Color::Black);
         names[i].setFont(Assets::getInstance()->DefaultFont);
         names[i].setCharacterSize(30);
         names[i].setPosition({container.getPosition().x + container.getSize().x / 8.0f, vspace });
@@ -69,6 +70,9 @@ void ScoreBoard::setGame(Game *game){
 void ScoreBoard::update(){
     for(size_t i = 0; i < game->getPlayers().size(); i++)
         scores[i].setString(to_string(game->getPlayers()[i]->getScore()));
+    for(size_t i = 0; i < game->getPlayers().size(); i++)
+        names[i].setFillColor(Color::Black);
+    names[game->getCurrentPlayer()].setFillColor(Color::Cyan);
 }
 
 /**

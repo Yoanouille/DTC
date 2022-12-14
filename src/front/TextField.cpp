@@ -123,11 +123,11 @@ bool TextField::fadeIn()
     Color c1 = container.getFillColor();
     Color c2 = container.getOutlineColor();
     Color c3 = text.getFillColor();
-    if(c1.a <= 255 - 20)
+    if(c1.a <= 255 - 10)
     {
-        c1.a += 20;
-        c2.a += 20;
-        c3.a += 20;
+        c1.a += 10;
+        c2.a += 10;
+        c3.a += 10;
         container.setFillColor(c1);
         container.setOutlineColor(c2);
         text.setFillColor(c3);
@@ -140,11 +140,11 @@ bool TextField::fadeOut()
     Color c1 = container.getFillColor();
     Color c2 = container.getOutlineColor();
     Color c3 = text.getFillColor();
-    if(c1.a >= 20)
+    if(c1.a >= 10)
     {
-        c1.a -= 20;
-        c2.a -= 20;
-        c3.a -= 20;
+        c1.a -= 10;
+        c2.a -= 10;
+        c3.a -= 10;
         container.setFillColor(c1);
         container.setOutlineColor(c2);
         text.setFillColor(c3);

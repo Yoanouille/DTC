@@ -1,4 +1,5 @@
 #include "back/DomPiece.hpp"
+#include <iostream>
 using namespace std;
 
 /**
@@ -12,7 +13,7 @@ DomPiece::DomPiece() : tab{}
 {
   for (size_t i = 0; i < 4; i++)
     for (size_t j = 0; j < 3; j++)
-      tab[i][j] = rand() % 2;
+      tab[i][j] = rand() % 6;
 }
 
 /** Destructor */
@@ -46,8 +47,10 @@ bool DomPiece::connectable(Piece &p, int pDir)
 int DomPiece::getEarnedValue(Piece &p, int pDir)
 {
   int sum = 0;
+  cout << (pDir + direction + 2)%4 << " " << ((pDir + ((DomPiece &)p).direction)) % 4 << endl;
   for (int j = 0; j < 3; j++)
   {
+    cout << tab[(pDir + direction + 2)%4][2 - j] << " " << ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j] << endl;
     if (tab[(pDir + direction + 2)%4][2 - j] == ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j])
     {
       sum += tab[(pDir + direction + 2)%4][2 - j];

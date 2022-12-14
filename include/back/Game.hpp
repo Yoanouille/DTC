@@ -24,7 +24,7 @@ class Game
         virtual ~Game();
 
         void addPlayer(std::string);
-        Player getCurrentPlayer() const;
+        int getCurrentPlayer() const;
         const std::vector<Player *> getPlayers() const;
 
         virtual Piece &draw();

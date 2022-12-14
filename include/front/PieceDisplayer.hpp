@@ -18,6 +18,8 @@ public:
     PieceDisplayer(App& app, int x, int y);
     virtual ~PieceDisplayer();
 
+    void setPos(int x, int y);
+
     // The Piece inherts rotation() from Shape
     virtual void rotate(bool clockwise) = 0;
 
@@ -25,5 +27,7 @@ public:
     virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) = 0;
 
     virtual void render(float x, float y, int scl) = 0;
+
+    virtual Piece &getPiece() = 0;
 };
 #endif

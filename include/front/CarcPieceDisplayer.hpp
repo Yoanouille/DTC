@@ -20,5 +20,7 @@ class CarcPieceDisplayer : public PieceDisplayer
         void render(float x, float y, int scl) override;
 
         void rotate(bool clockwise) override;
+        Piece &getPiece() override;
+
 };
 #endif

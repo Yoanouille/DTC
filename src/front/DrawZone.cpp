@@ -100,3 +100,10 @@ void DrawZone::draw(){
     }
     
 }
+
+PieceDisplayer *DrawZone::pick()
+{
+    PieceDisplayer *p = pieceViewer;
+    pieceViewer = nullptr;
+    return p;
+}

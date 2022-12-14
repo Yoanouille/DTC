@@ -3,7 +3,7 @@
 using namespace sf;
 using namespace std;
 
-int Button::speed = 20;
+int Button::speed = 10;
 
 Button::Button(App &app) : app{app}, container{}, sprite{nullptr}, text{}, font{Assets::getInstance()->DefaultFont} {}
 

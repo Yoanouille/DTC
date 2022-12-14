@@ -27,3 +27,8 @@ void CarcPieceDisplayer::render(float x, float y, int scl){
 
     app.draw(*this);
 }
+
+Piece &CarcPieceDisplayer::getPiece() 
+{
+    return piece;
+}

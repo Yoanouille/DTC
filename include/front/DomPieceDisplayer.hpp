@@ -24,5 +24,6 @@ public:
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
     void render(float x, float y, int scl) override;
+    Piece &getPiece() override;
 };
 #endif

@@ -73,6 +73,8 @@ private:
 
     void setup_rect(sf::RectangleShape &r, float x, float y);
     void redrawBG();
+    void drawRectAndPlay();
+    void moveBoard();
 
 public:
     MainScene(App &app, int gamemode, std::vector<std::string> &names);

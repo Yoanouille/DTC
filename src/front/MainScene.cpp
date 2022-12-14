@@ -30,7 +30,6 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
  */
 MainScene::~MainScene() 
 {
-    if(game != nullptr) delete(game);
 }
 
 /**
@@ -110,14 +109,7 @@ void MainScene::loop_event()
     // Right click -> offset
     if (!appear && !disp && Mouse::isButtonPressed(Mouse::Right))
     {
-        if (right_pressed)
-        {
-            Vector2f dv = mouse_coord - old_pos;
-            off += dv;
-        }
-        else
-            right_pressed = true;
-        old_pos = mouse_coord;
+        moveBoard();
     }
     else
     {
@@ -127,42 +119,65 @@ void MainScene::loop_event()
     // Draw a blue rectangle on the Case where the mouse is
     if (board.getGlobalBounds().contains(mouse_coord))
     {
-        Vector2f m = mouse_coord - board.getPosition() - off;
-        if (m.x < 0)
-            m.x -= scl;
-        int x = m.x / scl;
-        if (m.y < 0)
-            m.y -= scl;
-        int y = m.y / scl;
-
-        int x0 = x;
-        int y0 = y;
-
-        x *= scl;
-        y *= scl;
-
-        setup_rect(rect, x, y);
-        // Defining Color::Blue with a different alpha
-        Color c{0, 0, 255, 100};
-
-        rect.setFillColor(c);
-
-        // if click -> add coord to the vector pos
-        if (!left_pressed && Mouse::isButtonPressed(Mouse::Left))
-        {   
-            // ! Faire test si oui ou non on peut placer
-            // ! drawZone.getPieceViewer() (mettre à null après l'avoir pris)
-            // ! setPosition(x,y) avec x,y coord grille
-            // ! pos.push_back(la pieceViewer)
-
-            // left_pressed = true;
-            // DomPiece &p = (DomPiece &)game->draw();
-            // cout << p << endl;
-            // pos.push_back(new DomPieceDisplayer{app, x0, y0, p});
-        }
+        drawRectAndPlay();
     }
     else
         rect.setFillColor(Color::Transparent);
+}
+
+void MainScene::moveBoard()
+{
+    if (right_pressed)
+    {
+        Vector2f dv = mouse_coord - old_pos;
+        off += dv;
+    }
+    else
+        right_pressed = true;
+    old_pos = mouse_coord;
+}
+
+void MainScene::drawRectAndPlay()
+{
+    Vector2f m = mouse_coord - board.getPosition() - off;
+    if (m.x < 0)
+        m.x -= scl;
+    int x = m.x / scl;
+    if (m.y < 0)
+        m.y -= scl;
+    int y = m.y / scl;
+
+    int x0 = x;
+    int y0 = y;
+
+    x *= scl;
+    y *= scl;
+
+    setup_rect(rect, x, y);
+    // Defining Color::Blue with a different alpha
+    Color c{0, 0, 255, 100};
+
+    rect.setFillColor(c);
+
+    if(drawZone.getPieceViewer() != nullptr)
+    {
+        if(app.getGame()->canPlace(y0, x0, drawZone.getPieceViewer()->getPiece()))
+        {
+            if (!left_pressed && Mouse::isButtonPressed(Mouse::Left))
+            {
+                PieceDisplayer *pi = drawZone.pick();
+                pi->setPos(x0, y0);
+                app.getGame()->place(y0, x0, pi->getPiece());
+                pos.push_back(pi);
+                left_pressed = true;
+                scoreBoard.update();
+                if(app.getGame()->gameOver()) 
+                {
+                    app.close();
+                }
+            } else rect.setFillColor({0, 255, 0, 100});
+        } else rect.setFillColor({255, 0, 0, 100});
+    }
 }
 
 /**

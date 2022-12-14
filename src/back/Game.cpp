@@ -20,9 +20,9 @@ Piece &Game::draw()
     return *(s.draw());
 }
 
-Player Game::getCurrentPlayer() const
+int Game::getCurrentPlayer() const
 {
-    return *players[current_player];
+    return current_player;   
 }
 
 const std::vector<Player *> Game::getPlayers() const{

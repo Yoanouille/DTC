@@ -123,3 +123,7 @@ void DomPieceDisplayer::rotate(bool clockwise)
     piece.rotate(clockwise);
 }
 
+Piece &DomPieceDisplayer::getPiece()
+{
+    return piece;
+}
