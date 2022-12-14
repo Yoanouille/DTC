@@ -75,7 +75,7 @@ private:
     void redrawBG();
 
 public:
-    MainScene(App &app, bool isTraxGame, std::vector<std::string> &names);
+    MainScene(App &app, int gamemode, std::vector<std::string> &names);
     virtual ~MainScene();
 
     void loop_event();

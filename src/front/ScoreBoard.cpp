@@ -50,6 +50,7 @@ void ScoreBoard::setGame(Game *game){
         names[i].setString(game->getPlayers()[i]->getName());
         names[i].setFillColor(Color::Black);
         names[i].setFont(Assets::getInstance()->DefaultFont);
+        names[i].setCharacterSize(30);
         names[i].setPosition({container.getPosition().x + container.getSize().x / 8.0f, vspace });
 
         scores.push_back({});

@@ -2,7 +2,7 @@
 
 CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p, Sprite& sprite) : 
     PieceDisplayer(app,x,y), piece{p}, 
-    sprite{Assets::getInstance()->getCarcPiece(p.getId())}
+    sprite{Assets::getInstance()->CarcPieces[p.getId()]}
 {}
 
 CarcPieceDisplayer::~CarcPieceDisplayer(){}
@@ -19,4 +19,11 @@ void CarcPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
         app.draw(*this);
+}
+
+void CarcPieceDisplayer::render(float x, float y, int scl){
+    this->setPosition(x,y);
+    this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
+
+    app.draw(*this);
 }

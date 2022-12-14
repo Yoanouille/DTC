@@ -5,10 +5,10 @@ using namespace std;
 /**
  * Constructor
  */
-PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, bool isTraxGame) : 
+PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, int gamemode) : 
       app{app}, nbPlayers{nbPlayers}, 
       backButton{app, nullptr, "<", Assets::getInstance()->MainMenuFont, 200, {app.getHeight()/7.0f, app.getHeight()/7.0f}, {app.getWidth()/20.0f,app.getHeight()/23.0f}},
-      isTraxGame{isTraxGame},
+      gamemode{gamemode},
       plusButton{app, nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f} , {app.getWidth()/20.0f * 17, app.getHeight()/3.8f}}, 
       minusButton{app, nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{app, nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
@@ -140,7 +140,7 @@ void PlayerSettingsScene::loop_event(){
       backButton.handleClick(mousepos);
       submitButton.handleClick(mousepos);
 
-      if(!isTraxGame)
+      if(gamemode != 1)
       {
         plusButton.handleClick(mousepos);
         minusButton.handleClick(mousepos);
@@ -153,7 +153,7 @@ void PlayerSettingsScene::loop_event(){
   {
     backButton.handleHover(mousepos);
     submitButton.handleHover(mousepos);
-     if(!isTraxGame){
+     if(gamemode != 1){
       plusButton.handleHover(mousepos);
       minusButton.handleHover(mousepos);
     }
@@ -176,7 +176,8 @@ void PlayerSettingsScene::render(){
       for (TextField t : nameFields){
           names.push_back(t.getText().getString().toAnsiString());
       }
-      app.setScene(nextScene, isTraxGame, &names);
+
+      app.setScene(nextScene, gamemode, &names);
     } 
   }
 
@@ -188,7 +189,7 @@ void PlayerSettingsScene::render(){
 
   backButton.render();
 
-  if(!isTraxGame){
+  if(gamemode != 1){
     plusButton.render();
     minusButton.render();
   }

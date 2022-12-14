@@ -26,12 +26,11 @@ Sack::~Sack()
  * @param gamemode The gamemode : 0 = Dom, 1 = Trax, 2 = Carcassonne
 */
 void Sack::fill(int s, int gamemode)
-{
-    size = s;   
+{ 
     switch (gamemode)
     {
     case 0:
-        initDom();
+        initDom(s);
         break;
     case 1:
         initTrax();
@@ -49,8 +48,9 @@ void Sack::fill(int s, int gamemode)
 /**
  * Initializes the Sack for a DomGame
  */
-void Sack::initDom()
+void Sack::initDom(int s)
 {
+    size = s;
     for (int i = 0; i < size; i++)
     {
         DomPiece *d = new DomPiece();
@@ -63,6 +63,7 @@ void Sack::initDom()
  */
 void Sack::initTrax()
 {
+    size = 64;
     for (int i = 0; i < size; i++)
     {
         TraxPiece *t = new TraxPiece{};
@@ -72,6 +73,7 @@ void Sack::initTrax()
 
 void Sack::initCarcassonne()
 {
+    size = 72;
     CarcPiece *p2 = new CarcPiece{2};
     CarcPiece *p4 = new CarcPiece{4};
     CarcPiece *p5 = new CarcPiece{5};
@@ -182,12 +184,4 @@ ostream &operator<<(ostream &out, const Sack &s)
     out << endl;
 
     return out;
-}
-
-/**
- * Exception thrown by the Constructor
- */
-const char *UnknownGamemodeException::what() const throw()
-{
-    return "Unknown Gamemode : It should be a number between 0 and 2.";
 }

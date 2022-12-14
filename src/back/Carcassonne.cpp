@@ -5,7 +5,9 @@
 
 using namespace std;
 
-Carcassonne::Carcassonne() {}
+Carcassonne::Carcassonne() {
+    s.fill(0, 2);
+}
 
 Carcassonne::~Carcassonne() {}
 

@@ -11,6 +11,7 @@
 #include "DomPiece.hpp"
 #include "TraxPiece.hpp"
 #include "CarcPiece.hpp"
+#include "UnknownGamemodeException.hpp"
 
 class Sack
 {
@@ -23,7 +24,7 @@ private:
     void shuffle();
 
     // Initializes the Sacks depending on the gamemode.
-    void initDom();
+    void initDom(int s);
     void initTrax();
     void initCarcassonne();
 
@@ -39,9 +40,4 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const Sack &s);
 };
 
-// Exception used in Sack's constructor
-class UnknownGamemodeException : public std::exception
-{
-    const char *what() const throw();
-};
 #endif

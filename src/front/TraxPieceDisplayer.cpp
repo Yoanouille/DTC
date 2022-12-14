@@ -54,6 +54,13 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
         app.draw(*this);
 }
 
+void TraxPieceDisplayer::render(float x, float y, int scl)
+{
+    this->setPosition(x,y);
+    this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
+
+    app.draw(*this);
+}
 
 void TraxPieceDisplayer::rotate(bool clockwise)
 {

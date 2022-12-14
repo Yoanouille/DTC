@@ -21,6 +21,7 @@ DomPieceDisplayer::DomPieceDisplayer(App &app, int x, int y, DomPiece &p) : Piec
 
 DomPieceDisplayer::~DomPieceDisplayer() {}
 
+
 void DomPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
 {
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
@@ -35,6 +36,18 @@ void DomPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int
         app.draw(*this);
         drawRect(scl);
     }
+}
+
+void DomPieceDisplayer::render(float x, float y, int scl)
+{
+    Vector2f dp{3.0,3.0};
+    this->setPosition(x, y);
+    this->setSize({static_cast<float>(scl - dp.x), static_cast<float>(scl - dp.y)});
+    this->setOutlineColor({0,0,0,255});
+    this->setOutlineThickness(3);
+
+    app.draw(*this);
+    drawRect(scl);
 }
 
 void DomPieceDisplayer::drawRect(int s)

@@ -3,6 +3,10 @@
 #include "front/PlayerSettingsScene.hpp"
 #include "front/MainScene.hpp"
 
+#include "back/Domino.hpp"
+#include "back/Trax.hpp"
+#include "back/Carcassonne.hpp"
+
 #include <iostream>
 
 using namespace sf;
@@ -12,7 +16,9 @@ using namespace std;
  * Constructor
  * Initialize different variables.
  */
-App::App() : width{1280}, height{720}, sc{nullptr}, old_sc{nullptr}, bg{}
+App::App() : width{1280}, height{720}, 
+    sc{nullptr}, old_sc{nullptr}, 
+    game{nullptr}, gamemode{-1}, bg{}
 {  
     init();
 }
@@ -24,6 +30,8 @@ App::~App()
         delete sc;
     if (old_sc != nullptr)
         delete old_sc;
+    if (game != nullptr)
+        delete game;
 }
 
 /**
@@ -100,6 +108,37 @@ int App::getWidth() const
     return width;
 }
 
+void App::initGame(int gamemode){
+    switch(gamemode){
+        case 0:
+            game = new Domino();
+            this->gamemode = 0;
+            break;
+
+        case 1:
+            game = new Trax();
+            this->gamemode = 1;
+            break;
+
+        case 2:
+            game = new Carcassonne();
+            this->gamemode = 2;
+            break;
+
+        default:
+            throw UnknownGamemodeException();
+    }
+}
+
+
+Game *App::getGame(){
+    return game;
+}
+
+int App::getGamemode() const {
+    return gamemode;
+}
+
 /**
  * Set the current scene and store the current scene into old_sc
  * @param i An integer, which identify a scene :
@@ -107,7 +146,7 @@ int App::getWidth() const
  *  2 -> PlayerSettingsScene 
  *  3 -> MainScene
  */
-void App::setScene(int i,bool isTraxGame, vector<string> *names)
+void App::setScene(int i, int gamemode, vector<string> *names)
 {
     switch (i)
     {
@@ -122,14 +161,14 @@ void App::setScene(int i,bool isTraxGame, vector<string> *names)
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new PlayerSettingsScene(*this,2,isTraxGame);
+        sc = new PlayerSettingsScene(*this, 2, gamemode);
         break;
 
     case 3:
         if (old_sc != nullptr)
             delete old_sc;
         old_sc = sc;
-        sc = new MainScene(*this,isTraxGame, *names);
+        sc = new MainScene(*this, gamemode, *names);
         break;
 
     default:

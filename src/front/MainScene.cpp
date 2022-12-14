@@ -11,18 +11,17 @@ using namespace std;
  * Constructor
  * Initialize some variables, call init()
  */
-MainScene::MainScene(App &app, bool isTraxGame, vector<string> &names) : 
-    app{app}, scoreBoard{app}, drawZone{app, isTraxGame},
+MainScene::MainScene(App &app, int gamemode, vector<string> &names) : 
+    app{app}, scoreBoard{app}, drawZone{app, gamemode},
     board{}, scl{75}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
     disp{false}, appear{true}, speed1{40}, speed2{3}
 {
-    //TODO depend du jeu ! donc arguments au constructeur !
-    game = new Domino();
+    app.initGame(gamemode);
     for (string s : names)
-        game->addPlayer(s);
-    scoreBoard.setGame(game);
+        app.getGame()->addPlayer(s);
+    scoreBoard.setGame(app.getGame());
     init();
 }
 
@@ -101,6 +100,10 @@ void MainScene::loop_event()
     if(!Mouse::isButtonPressed(Mouse::Left))
     {
         left_pressed = false;
+    } else {
+        drawZone.sack.handleClick(mouse_coord);
+        drawZone.rotateLeft.handleClick(mouse_coord);
+        drawZone.rotateRight.handleClick(mouse_coord);
     }
 
     // Right click -> offset
@@ -146,10 +149,15 @@ void MainScene::loop_event()
         // if click -> add coord to the vector pos
         if (!left_pressed && Mouse::isButtonPressed(Mouse::Left))
         {   
-            left_pressed = true;
-            DomPiece &p = (DomPiece &)game->draw();
-            cout << p << endl;
-            pos.push_back(new DomPieceDisplayer{app, x0, y0, p});
+            // ! Faire test si oui ou non on peut placer
+            // ! drawZone.getPieceViewer() (mettre à null après l'avoir pris)
+            // ! setPosition(x,y) avec x,y coord grille
+            // ! pos.push_back(la pieceViewer)
+
+            // left_pressed = true;
+            // DomPiece &p = (DomPiece &)game->draw();
+            // cout << p << endl;
+            // pos.push_back(new DomPieceDisplayer{app, x0, y0, p});
         }
     }
     else

@@ -30,7 +30,7 @@ public:
 
     int getDirection() const;
     int getColor() const;
-    void cleanColor();
+    virtual void cleanColor();
     virtual void getConnectColor(int *t) const;
     void setColor(int c);
 

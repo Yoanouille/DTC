@@ -62,7 +62,7 @@ class CarcPiece : public Piece
         bool hasPawn();
         void putPawn(int i, int j, bool cent, int player);
 
-        void cleanColor();
+        void cleanColor() override;
         void removeAllPawn();
         void beginExplore(int i, int j, bool cent, CarcType t);
         std::vector<Pos> getNextDir();

@@ -10,7 +10,7 @@ MainMenu::MainMenu(App &app) :
     Scene{}, 
     app{app}, 
     options{3,Button{app,nullptr,"", Assets::getInstance()->MainMenuFont,70,{app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}}}, 
-    disp{false}, appear{true}, mousepos{}, game{0}
+    disp{false}, appear{true}, mousepos{}, game{-1}
 { 
     init(); 
 }
@@ -117,7 +117,7 @@ void MainMenu::render()
     if(disp)
     {
         dispose();
-        if(!disp) app.setScene(2, (game == 1), nullptr);
+        if(!disp) app.setScene(2, game, nullptr);
     }
 
     for (Button &b : options)

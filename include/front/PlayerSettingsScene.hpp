@@ -16,7 +16,7 @@ class PlayerSettingsScene : public Scene {
 
         Button backButton;
 
-        bool isTraxGame;
+        int gamemode;
         Button plusButton;
         Button minusButton;
 
@@ -40,7 +40,7 @@ class PlayerSettingsScene : public Scene {
         void removePlayer();
 
     public :
-        PlayerSettingsScene(App &app, int nbPlayers, bool isTraxGame);
+        PlayerSettingsScene(App &app, int nbPlayers, int gamemode);
         virtual ~PlayerSettingsScene();
 
         // Manage event

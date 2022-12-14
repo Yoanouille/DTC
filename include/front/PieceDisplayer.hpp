@@ -23,5 +23,7 @@ public:
 
     // Abstract method that will be overriden.
     virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) = 0;
+
+    virtual void render(float x, float y, int scl) = 0;
 };
 #endif

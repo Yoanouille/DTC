@@ -5,6 +5,7 @@
 
 #include "App.hpp"
 #include "Button.hpp"
+#include "PieceDisplayer.hpp"
 
 class DrawZone {
     private:
@@ -15,7 +16,8 @@ class DrawZone {
         sf::RectangleShape container;
         Button sack;
 
-        sf::RectangleShape pieceViewer;
+        sf::RectangleShape r;
+        PieceDisplayer *pieceViewer;
         Button rotateLeft;
         Button rotateRight;
         Button flipButton;
@@ -24,6 +26,13 @@ class DrawZone {
         DrawZone(App &app, bool isTraxGame);
         virtual ~DrawZone();
 
+        App &getApp();
+        PieceDisplayer *getPieceViewer();
+
+        void draw();
+
         void render();
+
+    friend class MainScene;
 };
 #endif

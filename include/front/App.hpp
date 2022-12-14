@@ -7,9 +7,13 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "back/Game.hpp"
+#include "back/UnknownGamemodeException.hpp"
+
 #include "AssetsLoader.hpp"
 #include "Controller.hpp"
 #include "Scene.hpp"
+
 
 // Class that represents the Window
 class App : public sf::RenderWindow
@@ -24,6 +28,11 @@ private:
     Scene *sc;
     // old current Scene
     Scene *old_sc;
+
+    // The Game
+    // ! Free the Game at the end 
+    Game *game;
+    int gamemode;
 
     // Sprite of the background, need image
     sf::Sprite bg;
@@ -42,7 +51,12 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    void setScene(int i, bool isTraxGame, std::vector<std::string> *names);
+    void initGame(int gamemode);
+    Game *getGame();
+    int getGamemode() const;
+
+    void setScene(int i, int gamemode, std::vector<std::string> *names);
+
 };
 
 #endif
