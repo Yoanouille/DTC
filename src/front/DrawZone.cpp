@@ -55,7 +55,10 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     }
 }
 
-DrawZone::~DrawZone(){}
+DrawZone::~DrawZone()
+{
+    if(pieceViewer != nullptr) delete pieceViewer;
+}
 
 /**
  * Rendering function 
