@@ -270,7 +270,7 @@ int Carcassonne::search_bis(int i, int j, int di, int dj, CarcType type, bool pl
         if(c->getColor(di, dj, false) == 1) continue;
         if(c->getType(di, dj, false) != type) continue;
 
-        c->explore(di, dj, false, type);
+        c->beginExplore(di, dj, false, type);
         if(c->getNbPawn(nb_pawn, nb_player) > 0 && placing) return 0;
 
         v.push_back({e.i, e.j});

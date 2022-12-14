@@ -46,7 +46,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 for (size_t j = 0; j < 3; j++) 
                     border[i][j] = Town;
 
-            center = DownTown;
+            center = Town;
             break;
 
         case(3): 
@@ -57,7 +57,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Town;
             }
 
-            center = DownTown;
+            center = Town;
             break;
 
         case(4):
@@ -68,7 +68,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Town;
             }
 
-            center = DownTown;
+            center = Town;
             break;
 
         case(5): 
@@ -80,7 +80,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             }
             
             border[2][1] = Road;
-            center = DownTown;
+            center = Town;
             break;
 
         case(6):
@@ -92,7 +92,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             }
                 
             border[2][1] = Road;
-            center = DownTown;
+            center = Town;
             break;
 
         case(7): 
@@ -103,7 +103,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Field;
             }
 
-            center = None;
+            center = Field;
             break;
 
         case(8): 
@@ -113,7 +113,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[2][j] = Field;
                 border[3][j] = Field;
             }
-            center = None;
+            center = Field;
             break;
 
         case(9):
@@ -126,7 +126,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[2][1] = Road;
             border[3][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(10):
@@ -139,7 +139,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
 
             border[2][1] = Road;
             border[3][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(11): 
@@ -150,7 +150,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Town;
             }
 
-            center = None;
+            center = Town;
             break;
 
         case(12): 
@@ -161,7 +161,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Town;
             }
 
-            center = None;
+            center = Town;
             break;
 
         case(13): 
@@ -172,7 +172,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Field;
             }
 
-            center = None;
+            center = Field;
             break;
 
         case(14): 
@@ -183,7 +183,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Field;
             }
 
-            center = None;
+            center = Field;
             break;
 
         case(15): 
@@ -194,7 +194,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
                 border[3][j] = Field;
             }
 
-            center = None;
+            center = Field;
             break;
 
         case(16): 
@@ -207,7 +207,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[1][1] = Road;
             border[2][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(17): 
@@ -220,7 +220,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[3][1] = Road;
             border[2][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(18):
@@ -247,7 +247,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[3][1] = Road;
             border[1][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(20):
@@ -257,7 +257,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[0][1] = Road;
             border[2][1] = Road;
-            center = None;
+            center = Road;
             break;
 
         case(21):
@@ -267,7 +267,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[1][1] = Road;
             border[2][1] = Road;
-            center = None;
+            center = Road;
             break;
             
         case(22):
@@ -302,7 +302,7 @@ CarcPiece::CarcPiece(int d) : id{d}, pawn_center{-1}, color_center{-1}, bonus{0}
             
             border[3][1] = Road;
             border[1][1] = Road;
-            center = None;
+            center = Road;
             break;
     }
 }
@@ -388,6 +388,11 @@ void CarcPiece::removePawn(int d)
     pawn[(d + direction) % 4][1] = -1;
 }
 
+void CarcPiece::beginExplore(int i, int j, bool cent, CarcType t)
+{
+    explore((i + direction) % 4,j,cent,t);
+}
+
 void CarcPiece::explore(int i, int j, bool cent, CarcType t)
 {
     if(cent)
@@ -416,7 +421,7 @@ void CarcPiece::explore(int i, int j, bool cent, CarcType t)
         } else 
         {
             if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
-            if(color_border[(i + 3) % 4][2] && border[(i + 3) % 4][2] == t) explore((i + 3) % 4, 2, false, t);
+            if(color_border[(i + 3) % 4][0] && border[(i + 3) % 4][0] == t) explore((i + 3) % 4, 0, false, t);
         }
     }
 }
@@ -472,7 +477,7 @@ bool CarcPiece::hasPawn()
 void CarcPiece::putPawn(int i, int j, bool center, int player)
 {
     if(center) pawn_center = player;
-    pawn[i][j] = player;
+    pawn[(i + direction) % 4][j] = player;
 }
 
 
@@ -507,7 +512,8 @@ vector<Pos> CarcPiece::getNextDir()
         for(int j = 0; j < 3; j++)
         {
             //! PAS SUR ICI DU (i+3+direction) (peut etre (i+direction) seulement)
-            if(color_border[i][j] != -1) next_dir.push_back({(i + 3 + direction) % 4, j});
+            // * Checked : normalement ok
+            if(color_border[i][j] != -1) next_dir.push_back({(i + direction + 3) % 4, j});
         }
     }
     return next_dir;

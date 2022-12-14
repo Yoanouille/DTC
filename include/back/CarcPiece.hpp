@@ -7,13 +7,11 @@
 
 enum CarcType
 {
-    None = -1,
     Field = 0,
     Town = 1,
-    DownTown = 2,
-    Road = 3,
-    Abbaye = 4,
-    Crossroad = 5
+    Road = 2,
+    Abbaye = 3,
+    Crossroad = 4
 };
 
 typedef struct Pos
@@ -36,6 +34,9 @@ class CarcPiece : public Piece
         int color_border[4][3];
         int color_center;
         bool bonus;
+
+        // Used by beginExplore
+        void explore(int i, int j, bool cent, CarcType t);
     
     public:
 
@@ -54,16 +55,16 @@ class CarcPiece : public Piece
         void removePawn(int d);
 
 
-        int getColor(int i, int j, bool center) const;
-        int getType(int i, int j, bool center) const;
+        int getColor(int i, int j, bool cent) const;
+        int getType(int i, int j, bool cent) const;
         bool getBonus() const;
         int getNbPawn(int *t, int nb_player);
         bool hasPawn();
-        void putPawn(int i, int j, bool center, int player);
+        void putPawn(int i, int j, bool cent, int player);
 
         void cleanColor();
         void removeAllPawn();
-        void explore(int i, int j, bool cent, CarcType t);
+        void beginExplore(int i, int j, bool cent, CarcType t);
         std::vector<Pos> getNextDir();
 
 
