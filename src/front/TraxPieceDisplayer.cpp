@@ -66,7 +66,6 @@ void TraxPieceDisplayer::render(float x, float y, int scl)
 
 void TraxPieceDisplayer::rotates(bool clockwise)
 {
-    cout << "Tsamere" << endl;
     piece.rotate(clockwise);
     
     if(clockwise){

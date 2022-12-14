@@ -28,10 +28,7 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
 /**
  * Destructor
  */
-MainScene::~MainScene() 
-{
-    if(game != nullptr) delete(game);
-}
+MainScene::~MainScene() {}
 
 /**
  * initialize the scene

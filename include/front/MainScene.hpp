@@ -67,8 +67,6 @@ private:
 
     int speed2;
 
-    Game *game;
-
     void init();
 
     void setup_rect(sf::RectangleShape &r, float x, float y);
