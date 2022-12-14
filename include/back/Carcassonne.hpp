@@ -34,6 +34,7 @@ class Carcassonne : public Game
         int search(int i, int j, Direction d, CarcType type, bool placing);
 
         int search_bis(int i, int j, int di, int dj, CarcType type, bool placing);
+        int search_abbaye(int i, int j);
 
         virtual bool gameOver() override;
 };

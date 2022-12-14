@@ -58,6 +58,8 @@ public:
     void setActionOnMouseExited(const std::function<void()> &action);
     void handleHover(sf::Vector2f mousepos);
 
+    void setClicked(bool b);
+
     void render();
 };
 

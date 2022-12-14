@@ -80,7 +80,7 @@ void App::runApp()
         //Settings for the 30FPS
         float currentTime = clock.restart().asSeconds();
         lastTime += currentTime;
-        if(lastTime >= 1.0 / 30) {
+        if(lastTime >= 1.0 / 60) {
             float fps = 1.f / (lastTime);
             //std::cout << fps << std::endl;
             lastTime = currentTime;

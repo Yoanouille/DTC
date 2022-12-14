@@ -230,3 +230,8 @@ void Button::render(){
     if (sprite != nullptr) app.draw(*sprite);
     if (text.getString() != "") app.draw(text);
 }
+
+void Button::setClicked(bool b)
+{
+    clicked = b;
+}

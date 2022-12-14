@@ -149,6 +149,12 @@ void PlayerSettingsScene::loop_event(){
     }
   }
 
+  if(!Mouse::isButtonPressed(Mouse::Left))
+  {
+    plusButton.setClicked(false);
+    minusButton.setClicked(false);
+  }
+
   if(!appear && !disp)
   {
     backButton.handleHover(mousepos);

@@ -474,6 +474,20 @@ bool CarcPiece::hasPawn()
     return (pawn_center != -1);
 }
 
+Pos CarcPiece::getPosPawn() const
+{
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(pawn[i][j] != -1) return {i, j};
+        }
+    }
+    if(pawn_center != -1) return {4,3};
+    return {-1,-1};
+}
+
+
 void CarcPiece::putPawn(int i, int j, bool center, int player)
 {
     if(center) pawn_center = player;

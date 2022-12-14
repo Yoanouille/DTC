@@ -61,6 +61,7 @@ class CarcPiece : public Piece
         int getNbPawn(int *t, int nb_player);
         bool hasPawn();
         void putPawn(int i, int j, bool cent, int player);
+        Pos getPosPawn() const;
 
         void cleanColor() override;
         void removeAllPawn();
