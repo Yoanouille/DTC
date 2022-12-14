@@ -47,10 +47,8 @@ bool DomPiece::connectable(Piece &p, int pDir)
 int DomPiece::getEarnedValue(Piece &p, int pDir)
 {
   int sum = 0;
-  cout << (pDir + direction + 2)%4 << " " << ((pDir + ((DomPiece &)p).direction)) % 4 << endl;
   for (int j = 0; j < 3; j++)
   {
-    cout << tab[(pDir + direction + 2)%4][2 - j] << " " << ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j] << endl;
     if (tab[(pDir + direction + 2)%4][2 - j] == ((DomPiece &)p).tab[((pDir + ((DomPiece &)p).direction)) % 4][j])
     {
       sum += tab[(pDir + direction + 2)%4][2 - j];

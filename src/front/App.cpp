@@ -32,6 +32,8 @@ App::~App()
         delete old_sc;
     if (game != nullptr)
         delete game;
+        
+    delete Assets::getInstance();
 }
 
 /**

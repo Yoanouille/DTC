@@ -1,4 +1,7 @@
 #include "back/Domino.hpp"
+#include <iostream>
+
+using namespace std;
 
 Domino::Domino() 
 {
@@ -18,5 +21,6 @@ void Domino::place(int i, int j, Piece &p)
 
 bool Domino::gameOver()
 {
+    if(s.isEmpty()) cout << "FIN DE DOMINO !" << endl;
     return s.isEmpty();
 }

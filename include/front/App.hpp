@@ -14,6 +14,11 @@
 #include "Controller.hpp"
 #include "Scene.hpp"
 
+enum Gamemode {
+    DOMINO = 0,
+    TRAX = 1,
+    CARCASSONNE = 2
+};
 
 // Class that represents the Window
 class App : public sf::RenderWindow

@@ -8,7 +8,7 @@ using namespace std;
  * There are 2 kinds of TraxPiece : Recto(Crossroad) and Verso
  * The piece is on Recto by default.
  */
-TraxPiece::TraxPiece() : tab{false, true, false, true}, recto{true}, color_dir{-1,-1,-1,-1} {}
+TraxPiece::TraxPiece() : tab{true, false, true, false}, recto{true}, color_dir{-1,-1,-1,-1} {}
 
 /** Destructor */
 TraxPiece ::~TraxPiece() {}
@@ -40,15 +40,20 @@ void TraxPiece::flip()
     if (recto)
     {
         tab[0] = true;
-        tab[1] = false;
+        tab[1] = true;
+        tab[2] = false;
+        tab[3] = false;
     }
     else
     {
-        tab[0] = false;
-        tab[1] = true;
+        tab[0] = true;
+        tab[1] = false;
+        tab[2] = true;
+        tab[3] = false;
     }
 
     recto = !recto;
+    direction = 0;
 }
 
 /**
@@ -88,7 +93,7 @@ bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
 
     int count = 0;
     
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 4; i++)
     {
         if(dir[i] != -1)
         {

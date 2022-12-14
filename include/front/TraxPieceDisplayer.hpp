@@ -11,6 +11,9 @@ class TraxPieceDisplayer : public PieceDisplayer
 private:
     TraxPiece &piece;
 
+    int dx;
+    int dy;
+
     void setShownSide(bool recto);
 
 public:
@@ -18,7 +21,7 @@ public:
     virtual ~TraxPieceDisplayer();
 
     void flip();
-    void rotate(bool clockwise) override;
+    void rotates(bool clockwise) override;
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
     void render(float x, float y, int scl) override;

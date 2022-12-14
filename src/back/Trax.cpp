@@ -1,6 +1,7 @@
 #include "back/Trax.hpp"
 #include "back/TraxPiece.hpp"
 #include <stack>
+#include <iostream>
 
 using namespace std;
 
@@ -157,7 +158,9 @@ bool Trax::DFS(int color)
 
 bool Trax::gameOver()
 {
+    if(s.isEmpty()) cout << "TRAX VIDE" << endl;
     bool rep = DFS(0) || DFS(1);
     cleanColor();
+    if(rep) cout << "FIN TRAX" << endl;
     return rep;
 }

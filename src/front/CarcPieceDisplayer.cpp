@@ -1,14 +1,27 @@
 #include "front/CarcPieceDisplayer.hpp"
 
 CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p, Sprite& sprite) : 
-    PieceDisplayer(app,x,y), piece{p}, 
-    sprite{Assets::getInstance()->CarcPieces[p.getId()]}
+    PieceDisplayer(app,x,y), piece{p},
+    sprite{Assets::getInstance()->CarcPieces[p.getId()]},
+    dx{0}, dy{0}
 {}
 
 CarcPieceDisplayer::~CarcPieceDisplayer(){}
 
-void CarcPieceDisplayer::rotate(bool clockwise) {
+void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
+    
+    if(clockwise){
+        if((!dx && !dy) || (dx && dy)) dx = !dx;
+        else if((dx && !dy) || (!dx && dy)) dy = !dy;
+
+        this->rotate(90.0);
+    }    
+    else {
+        if((!dx && !dy) || (dx && dy)) dy = !dy;
+        else if((dx && !dy) || (!dx && dy)) dx = !dx;
+        this->rotate(-90.0);
+    }
 }
 
 void CarcPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl){

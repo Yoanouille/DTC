@@ -28,9 +28,7 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
 /**
  * Destructor
  */
-MainScene::~MainScene() 
-{
-}
+MainScene::~MainScene() {}
 
 /**
  * initialize the scene
@@ -81,11 +79,11 @@ void MainScene::loop_event()
         mouse_coord = app.mapPixelToCoords(pos_mouse);
 
 
-
         if (!appear && !disp) {
             drawZone.sack.handleClick(mouse_coord);
             drawZone.rotateLeft.handleClick(mouse_coord);
             drawZone.rotateRight.handleClick(mouse_coord);
+            if(app.getGamemode() == TRAX) drawZone.flipButton.handleClick(mouse_coord);
 
             // Zooming with the mousewheel
             if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
@@ -104,6 +102,7 @@ void MainScene::loop_event()
         drawZone.sack.setClicked(false);
         drawZone.rotateLeft.setClicked(false);
         drawZone.rotateRight.setClicked(false);
+        if (app.getGamemode() == TRAX) drawZone.flipButton.setClicked(false);
     }
 
     // Right click -> offset
