@@ -49,6 +49,7 @@ void TraxPiece::flip()
     }
 
     recto = !recto;
+    direction = 0;
 }
 
 /**

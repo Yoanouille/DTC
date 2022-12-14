@@ -18,8 +18,8 @@ public:
     PieceDisplayer(App& app, int x, int y);
     virtual ~PieceDisplayer();
 
-    // The Piece inherts rotation() from Shape
-    virtual void rotate(bool clockwise) = 0;
+    // The Piece inherts rotate() from Shape
+    virtual void rotates(bool clockwise) = 0;
 
     // Abstract method that will be overriden.
     virtual void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) = 0;

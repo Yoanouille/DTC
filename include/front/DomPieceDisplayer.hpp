@@ -20,7 +20,7 @@ public:
     DomPieceDisplayer(App &app, int x, int y, DomPiece &p);
     virtual ~DomPieceDisplayer();
 
-    void rotate(bool clockwise) override;
+    void rotates(bool clockwise) override;
 
     void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
     void render(float x, float y, int scl) override;

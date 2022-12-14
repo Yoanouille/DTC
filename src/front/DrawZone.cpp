@@ -31,8 +31,6 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     sp->setScale(-sp->getScale().x, sp->getScale().y);
     sp->setPosition(rotateRight.getPosition().x + rotateRight.getGlobalBounds().width * 0.85f, rotateRight.getPosition().y);
 
-    flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
-
     sack.setPosition(container.getPosition().x + container.getSize().x * 0.5f - sack.getGlobalBounds().width *0.5f , container.getPosition().y + container.getGlobalBounds().height - sack.getGlobalBounds().height * 1.02f);
 
     // Setup buttons
@@ -41,20 +39,28 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     });
 
     rotateLeft.setActionOnClick([this]{
-        cout << "coucou 1" << endl;
-        this->getPieceViewer()->rotate(false);
+        this->getPieceViewer()->rotates(false);
     });
 
     rotateRight.setActionOnClick([this]{
-        this->getPieceViewer()->rotate(true);
+        this->getPieceViewer()->rotates(true);
     });
+
+    if(isTraxGame)
+    {
+        flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+        flipButton.setActionOnClick([this]{
+            ((TraxPieceDisplayer *)(this->getPieceViewer()))->flip();
+        });
+    }
 }
 
 DrawZone::~DrawZone(){}
 
 /**
  * Rendering function 
- */void DrawZone::render(){
+ */
+void DrawZone::render(){
     app.draw(container);
     sack.render();
 

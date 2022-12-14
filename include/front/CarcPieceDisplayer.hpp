@@ -12,6 +12,9 @@ class CarcPieceDisplayer : public PieceDisplayer
         CarcPiece &piece;
         sf::Sprite sprite;
 
+        int dx;
+        int dy;
+
     public: 
         CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p, Sprite &sprite);
         virtual ~CarcPieceDisplayer();
@@ -19,6 +22,6 @@ class CarcPieceDisplayer : public PieceDisplayer
         void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;
         void render(float x, float y, int scl) override;
 
-        void rotate(bool clockwise) override;
+        void rotates(bool clockwise) override;
 };
 #endif

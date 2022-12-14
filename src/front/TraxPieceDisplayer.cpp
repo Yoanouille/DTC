@@ -7,7 +7,7 @@ using namespace std;
  * It is private to prevent for creating more than one Controller.
  * This unique Controller is stored in INSTANCE.
  */
-TraxPieceDisplayer::TraxPieceDisplayer(App& app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}
+TraxPieceDisplayer::TraxPieceDisplayer(App& app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}, dx{0}, dy{0}
 {
     setShownSide(true);
 }
@@ -37,8 +37,10 @@ void TraxPieceDisplayer::setShownSide(bool recto){
  * Adapt the view : we have to take the rotation into consideration. 
  */
 void TraxPieceDisplayer::flip(){
-    ((TraxPiece&)piece).flip();
-    setShownSide(((TraxPiece&)piece).isRecto());
+    piece.flip();
+    while(dx != 0 || dy != 0) this->rotates(false);
+
+    setShownSide(piece.isRecto());
 }
 
 /**
@@ -49,6 +51,7 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
     this->setPosition(v + board.getPosition() + off);
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
+    this->setPosition(this->getPosition() + Vector2f{scl * dx, scl * dy});
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
         app.draw(*this);
@@ -56,14 +59,24 @@ void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
 
 void TraxPieceDisplayer::render(float x, float y, int scl)
 {
-    this->setPosition(x,y);
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
-
+    this->setPosition(x + dx * scl, y + dy * scl);
     app.draw(*this);
 }
 
-void TraxPieceDisplayer::rotate(bool clockwise)
+void TraxPieceDisplayer::rotates(bool clockwise)
 {
     piece.rotate(clockwise);
-    //TODO Rotate image
+    
+    if(clockwise){
+        if((!dx && !dy) || (dx && dy)) dx = !dx;
+        else if((dx && !dy) || (!dx && dy)) dy = !dy;
+
+        this->rotate(90.0);
+    }    
+    else {
+        if((!dx && !dy) || (dx && dy)) dy = !dy;
+        else if((dx && !dy) || (!dx && dy)) dx = !dx;
+        this->rotate(-90.0);
+    }
 }
