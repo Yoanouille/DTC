@@ -41,6 +41,7 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     });
 
     rotateLeft.setActionOnClick([this]{
+        cout << "coucou 1" << endl;
         this->getPieceViewer()->rotate(false);
     });
 

@@ -81,29 +81,30 @@ void MainScene::loop_event()
         pos_mouse = Mouse::getPosition(app);
         mouse_coord = app.mapPixelToCoords(pos_mouse);
 
-        // Zooming with the mousewheel
-        if (!appear && !disp && event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
-        {
-            int d = event.mouseWheelScroll.delta;
-            if (d != -1 && d != 1)
-                break;
-            scl += event.mouseWheelScroll.delta;
-        }
 
-        // if (event.type == Event::EventType::KeyPressed){
-        //     (Controller::getInstance()).makeKeyAction(event.key.code);
-        // }
-        // else
-        //     (Controller::getInstance()).makeAction(event);
+
+        if (!appear && !disp) {
+            drawZone.sack.handleClick(mouse_coord);
+            drawZone.rotateLeft.handleClick(mouse_coord);
+            drawZone.rotateRight.handleClick(mouse_coord);
+
+            // Zooming with the mousewheel
+            if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+            {
+                int d = event.mouseWheelScroll.delta;
+                if (d != -1 && d != 1)
+                    break;
+                scl += event.mouseWheelScroll.delta;
+            }
+        }
     }
 
     if(!Mouse::isButtonPressed(Mouse::Left))
     {
         left_pressed = false;
-    } else {
-        drawZone.sack.handleClick(mouse_coord);
-        drawZone.rotateLeft.handleClick(mouse_coord);
-        drawZone.rotateRight.handleClick(mouse_coord);
+        drawZone.sack.setClicked(false);
+        drawZone.rotateLeft.setClicked(false);
+        drawZone.rotateRight.setClicked(false);
     }
 
     // Right click -> offset
