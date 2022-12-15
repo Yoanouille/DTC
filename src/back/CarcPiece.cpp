@@ -395,6 +395,8 @@ void CarcPiece::beginExplore(int i, int j, bool cent, CarcType t)
 
 void CarcPiece::explore(int i, int j, bool cent, CarcType t)
 {
+    //cout << i << " " << j << " " << cent << " " << t << endl;
+    if(color_border[i][j] == 1) return;
     if(cent)
     {
         color_center = 1;

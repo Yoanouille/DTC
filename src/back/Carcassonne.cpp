@@ -16,17 +16,17 @@ bool Carcassonne::canPlace(int i, int j, Piece &p)
 {
     if(!Game::canPlace(i, j, p)) return false;
 
-    CarcPiece *c = (CarcPiece *)(plateau[i][j]);
-    if(!c->hasPawn()) return true;
+    CarcPiece &c = (CarcPiece &)(p);
+    if(!c.hasPawn()) return true;
 
-    Pos po = c->getPosPawn();
+    Pos po = c.getPosPawn();
 
     bool rep = false;
     
     //! Cas du milieu à gérer
     //! Peut être seulement les abbayes
     
-    if(search_bis(i, j, po.i, po.j, CarcType(c->getType(po.i, po.j, false)), true) > 0) rep = false;
+    if(search_bis(i, j, po.i, po.j, CarcType(c.getType(po.i, po.j, false)), true) > 0) rep = false;
     cleanColor();
     return rep;
 }
@@ -37,6 +37,7 @@ void Carcassonne::place(int i, int j, Piece &p)
     Game::place(i, j, p);
 
     CarcPiece *c = (CarcPiece *)(plateau[i][j]);
+    cout << (c == nullptr) << endl;
     
     for(int di = 0; di < 4; di++)
     {
@@ -266,6 +267,7 @@ int Carcassonne::search_bis(int i, int j, int di, int dj, CarcType type, bool pl
             if(!placing) return 0;
             continue;
         }
+
 
         if(c->getColor(di, dj, false) == 1) continue;
         if(c->getType(di, dj, false) != type) continue;
