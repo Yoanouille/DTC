@@ -17,7 +17,7 @@ Assets::Assets() :
     RotateLeft{},
     Flip{},
     CarcPieceTexture{},
-    CarcPieceSize{90}
+    CarcPieceSize{87}
 {
     if (!DefaultFont.loadFromFile("resources/font/Arial.ttf"))
         cerr << "Couldn't load DefaultFont." << endl;
