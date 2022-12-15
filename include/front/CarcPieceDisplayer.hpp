@@ -10,13 +10,12 @@ class CarcPieceDisplayer : public PieceDisplayer
 {
     private:
         CarcPiece &piece;
-        sf::Sprite sprite;
 
         int dx;
         int dy;
 
     public: 
-        CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p, Sprite &sprite);
+        CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p);
         virtual ~CarcPieceDisplayer();
 
         void render(sf::Vector2f &off, sf::RectangleShape &board, int scl) override;

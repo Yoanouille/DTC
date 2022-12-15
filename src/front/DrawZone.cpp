@@ -100,7 +100,7 @@ void DrawZone::draw(){
             break;
 
         case 2 :
-            pieceViewer = new CarcPieceDisplayer(app, 0, 0, (CarcPiece&)(p),Assets::getInstance()->CarcPieces[((CarcPiece &)(p)).getId()]);
+            pieceViewer = new CarcPieceDisplayer(app, 0, 0, (CarcPiece&)(p));
             break;
 
         default :

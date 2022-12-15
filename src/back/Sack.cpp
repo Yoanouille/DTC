@@ -1,5 +1,4 @@
 #include "back/Sack.hpp"
-using namespace std;
 
 /**
  * Constructor
@@ -79,14 +78,12 @@ void Sack::initCarcassonne()
     CarcPiece *p5 = new CarcPiece{5};
     CarcPiece *p11 = new CarcPiece{11};
     CarcPiece *p23 = new CarcPiece{23};
-    CarcPiece *p24 = new CarcPiece{24};
 
     sack.push_back(p2);
     sack.push_back(p4);
     sack.push_back(p5);
     sack.push_back(p11);
     sack.push_back(p23);
-    sack.push_back(p24);
         
 
     for (int i = 0; i < 2; i++ ){
@@ -156,7 +153,8 @@ bool Sack::isEmpty()
 
 void Sack::shuffle()
 {  
-    random_shuffle(sack.begin(),sack.end());
+    auto rng = std::default_random_engine{};
+    std::shuffle(sack.begin(),sack.end(),rng);
 }
 
 /**
@@ -175,13 +173,13 @@ Piece *Sack::draw()
 /**
  * Printing function
  */
-ostream &operator<<(ostream &out, const Sack &s)
+std::ostream &operator<<(std::ostream &out, const Sack &s)
 {
-    out << "==== Sack : " << s.size << " ====" << endl;
-    out << "## Pointed index : " << s.index << endl;
+    out << "==== Sack : " << s.size << " ====" << std::endl;
+    out << "## Pointed index : " << s.index << std::endl;
     for (Piece *p : s.sack)
-        out << *p << endl;
-    out << endl;
+        out << *p << std::endl;
+    out << std::endl;
 
     return out;
 }

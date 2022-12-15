@@ -24,12 +24,11 @@ class Assets {
         Font MainMenuFont;
         Texture TraxTextureRecto;
         Texture TraxTextureVerso;
-        Texture CarcasonneTexture;
         Texture Sack;
         Texture RotateLeft;
         Texture Flip;
         Texture CarcPieceTexture;
-        Sprite CarcPieces[25];
+        int CarcPieceSize;
 
         Assets();
 

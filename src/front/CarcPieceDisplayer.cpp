@@ -1,10 +1,15 @@
 #include "front/CarcPieceDisplayer.hpp"
 
-CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p, Sprite& sprite) : 
+CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) : 
     PieceDisplayer(app,x,y), piece{p},
-    sprite{Assets::getInstance()->CarcPieces[p.getId()]},
     dx{0}, dy{0}
-{}
+{
+    this->setTexture(&Assets::getInstance()->CarcPieceTexture);
+    int startx = 16 + (p.getId() % 5) * (Assets::getInstance()->CarcPieceSize + 15);
+    int starty = 12 + (p.getId() / 5) * (Assets::getInstance()->CarcPieceSize + 30);
+        
+    this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
+}
 
 CarcPieceDisplayer::~CarcPieceDisplayer(){}
 
@@ -28,16 +33,15 @@ void CarcPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
     this->setPosition(v + board.getPosition() + off);
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
-    this->sprite.setScale(scl,scl);
+    this->setPosition(this->getPosition() + Vector2f{scl * dx, scl * dy});
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
         app.draw(*this);
 }
 
 void CarcPieceDisplayer::render(float x, float y, int scl){
-    this->setPosition(x,y);
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
-
+    this->setPosition(x + dx * scl, y + dy * scl);
     app.draw(*this);
 }
 

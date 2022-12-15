@@ -13,11 +13,11 @@ Assets::Assets() :
     MainMenuFont{},
     TraxTextureRecto{},
     TraxTextureVerso{},
-    CarcasonneTexture{},
     Sack{},
     RotateLeft{},
     Flip{},
-    CarcPieces{}
+    CarcPieceTexture{},
+    CarcPieceSize{90}
 {
     if (!DefaultFont.loadFromFile("resources/font/Arial.ttf"))
         cerr << "Couldn't load DefaultFont." << endl;
@@ -47,15 +47,6 @@ Assets::Assets() :
 
     if (!CarcPieceTexture.loadFromFile("resources/images/CPiece.png"))
         cerr << "Loading Failed : CPiece.png" << endl;
-
-    for(int id = 0; id < 25; id++){
-        int startx = 16 + (id % 5) * (89 +16);
-        int starty = 19 + (id / 5) * (86 + 29);
-        
-        Sprite s{CarcPieceTexture};
-        CarcPieces[id] = s;
-        CarcPieces[id].setTextureRect({startx,starty, 89,86});
-    }
 }
 
 /**

@@ -12,7 +12,7 @@ using namespace std;
  * Initialize some variables, call init()
  */
 MainScene::MainScene(App &app, int gamemode, vector<string> &names) : 
-    app{app}, scoreBoard{app}, drawZone{app, gamemode},
+    app{app}, scoreBoard{app}, drawZone{app, gamemode == TRAX},
     board{}, scl{75}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
