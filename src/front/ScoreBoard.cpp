@@ -51,15 +51,26 @@ void ScoreBoard::setGame(Game *game){
         if(i == 0) names[i].setFillColor(Color::Cyan);
         else names[i].setFillColor(Color::Black);
         names[i].setFont(Assets::getInstance()->DefaultFont);
-        names[i].setCharacterSize(30);
+        names[i].setCharacterSize(20);
         names[i].setPosition({container.getPosition().x + container.getSize().x / 8.0f, vspace });
 
         scores.push_back({});
         scores[i].setString(to_string(game->getPlayers()[i]->getScore()));
         scores[i].setFillColor(Color::Black);
         scores[i].setFont(Assets::getInstance()->DefaultFont);
+        scores[i].setCharacterSize(20);
         scores[i].setPosition({container.getPosition().x + container.getSize().x * 0.75f, vspace });
 
+        if (app.getGamemode() == CARCASSONNE){
+            scores[i].setPosition({container.getPosition().x + container.getSize().x * 0.60f, vspace });
+
+            nbPawns.push_back({});
+            nbPawns[i].setString(to_string(((PlayerCarc *)(game->getPlayers()[i]))->getNbPawn()));
+            nbPawns[i].setFillColor(Color::Black);
+            nbPawns[i].setFont(Assets::getInstance()->DefaultFont);
+            nbPawns[i].setCharacterSize(20);
+            nbPawns[i].setPosition({container.getPosition().x + container.getSize().x * 0.80f, vspace });
+        }
         vspace += container.getSize().y / 5.0f;
     }
 }
@@ -73,6 +84,11 @@ void ScoreBoard::update(){
     for(size_t i = 0; i < game->getPlayers().size(); i++)
         names[i].setFillColor(Color::Black);
     names[game->getCurrentPlayer()].setFillColor(Color::Cyan);
+
+    if(app.getGamemode() == CARCASSONNE){
+        for(size_t i = 0; i < game->getPlayers().size(); i++)
+            nbPawns[i].setString(to_string(((PlayerCarc *)(game->getPlayers()[i]))->getNbPawn()));
+    }
 }
 
 /**
@@ -85,5 +101,8 @@ void ScoreBoard::render(){
     for(size_t i = 0; i < names.size() ; i++){
         app.draw(names[i]);
         app.draw(scores[i]);
+
+        if(app.getGamemode() == CARCASSONNE)
+            app.draw(nbPawns[i]);
     }
 }

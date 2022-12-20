@@ -34,7 +34,7 @@ void PlayerSettingsScene::initFields(){
       t.setFillColor({255,255,255,0});
       fieldLabels.push_back(t);
 
-      TextField tf{app, 20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+      TextField tf{app, 15, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
       nameFields.push_back(tf);
       nameFields[i - 1].setOutlineColor(Color::Cyan);
       vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;

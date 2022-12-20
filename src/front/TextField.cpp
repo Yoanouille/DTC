@@ -16,7 +16,7 @@ TextField::TextField(App &app, unsigned int maxSize, Font &font, Vector2f contai
       container{},
       focus{false}
 {
-    container.setSize(Vector2f{containerSize.x * maxSize, containerSize.y});
+    container.setSize(Vector2f{containerSize.x * maxSize * 4.0f / 3.0f, containerSize.y});
     container.setOutlineThickness(3);
     container.setFillColor({255,255,255,0});
     container.setOutlineColor({0,0,0,0});

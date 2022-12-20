@@ -6,6 +6,7 @@
 
 #include "App.hpp"
 #include "back/Game.hpp"
+#include "back/PlayerCarc.hpp"
 
 class ScoreBoard {
     private:
@@ -16,6 +17,8 @@ class ScoreBoard {
 
         std::vector<Text> names;
         std::vector<Text> scores;
+        std::vector<Text> nbPawns;
+    
     public:
         ScoreBoard(App &App);
         virtual ~ScoreBoard();
