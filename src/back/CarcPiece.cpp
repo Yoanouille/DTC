@@ -341,14 +341,14 @@ string CarcPiece::toString() const
 {
     string s{" "};
     for (size_t j = 0; j < 3; j++)
-        s += to_string(border[0][j]) + " ";
+        s += to_string(border[direction][j]) + " ";
     s += "\n";
 
     for (size_t j = 0; j < 3; j++)
-        s += to_string(border[1][2 - j]) + "  " + (j == 1 ? to_string(center) : " ") + "  " + to_string(border[3][j]) + "\n";
+        s += to_string(border[(direction + 1) % 4][2 - j]) + "  " + (j == 1 ? to_string(center) : " ") + "  " + to_string(border[(direction + 3) % 4][j]) + "\n";
     s += " ";
     for (size_t j = 0; j < 3; j++)
-        s += to_string(border[2][2 - j]) + " ";
+        s += to_string(border[(direction + 2) % 4][2 - j]) + " ";
 
   return s;
 }
@@ -393,6 +393,21 @@ void CarcPiece::beginExplore(int i, int j, bool cent, CarcType t)
     explore((i + direction) % 4,j,cent,t);
 }
 
+void CarcPiece::printColor()
+{
+    string s{" "};
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_border[direction][j]) + " ";
+    s += "\n";
+
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_border[(direction + 1) % 4][2 - j]) + "  " + (j == 1 ? to_string(color_center) : " ") + "  " + to_string(color_border[(direction + 3) % 4][j]) + "\n";
+    s += " ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_border[(direction + 2) % 4][2 - j]) + " ";   
+    cout << s << endl; 
+}
+
 void CarcPiece::explore(int i, int j, bool cent, CarcType t)
 {
     //cout << i << " " << j << " " << cent << " " << t << endl;
@@ -400,36 +415,40 @@ void CarcPiece::explore(int i, int j, bool cent, CarcType t)
     if(cent)
     {
         color_center = 1;
+
         for(int i = 0; i < 4; i++)
-        {
-            if(color_border[i][1] == -1 && border[i][1] == t)
-            {
-                explore(i, 1, false, t);
-            }
-        }
+            if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
+
+
     } 
     else 
     {
         color_border[i][j] = 1;
+        if(color_center == -1)
+        {
+            if(center == t) explore(0,0,true,t);
+        }
+
         if(j == 1)
         {
-            if(color_center == -1 && center == t) explore(0,0,true, t);
+            
             if(color_border[i][0] == -1 && border[i][0] == t) explore(i, 0, false, t);
             if(color_border[i][2] == -1 && border[i][2] == t) explore(i, 2, false, t);
         } else if(j == 0)
         {
             if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
-            if(color_border[(i + 1) % 4][2] && border[(i + 1) % 4][2] == t) explore((i + 1) % 4, 2, false, t);
+            if(color_border[(i + 1) % 4][2] == -1 && border[(i + 1) % 4][2] == t) explore((i + 1) % 4, 2, false, t);
         } else 
         {
             if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, false, t);
-            if(color_border[(i + 3) % 4][0] && border[(i + 3) % 4][0] == t) explore((i + 3) % 4, 0, false, t);
+            if(color_border[(i + 3) % 4][0] == -1 && border[(i + 3) % 4][0] == t) explore((i + 3) % 4, 0, false, t);
         }
     }
 }
 
 void CarcPiece::cleanColor()
 {
+    cout << "LAVAGE" << endl;
     color = 0;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 3; j++)
@@ -461,6 +480,7 @@ int CarcPiece::getColor(int i, int j, bool cent) const
 int CarcPiece::getType(int i, int j, bool cent) const
 {
     if(cent) return center;
+    //cout << "type : " << i << " " << j << " " << border[(i + direction) % 4][j] << endl;
     return border[(i + direction) % 4][j];
 }
 
@@ -529,7 +549,11 @@ vector<Pos> CarcPiece::getNextDir()
         {
             //! PAS SUR ICI DU (i+3+direction) (peut etre (i+direction) seulement)
             // * Checked : normalement ok
-            if(color_border[i][j] != -1) next_dir.push_back({(i + direction + 3) % 4, j});
+            if(color_border[i][j] != -1) 
+            {
+                //cout << (i + direction) % 4 << " " << j << endl;
+                next_dir.push_back({(i - direction + 4) % 4, j});
+            }
         }
     }
     return next_dir;

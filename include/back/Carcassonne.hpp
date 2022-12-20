@@ -32,9 +32,7 @@ class Carcassonne : public Game
         bool canPlace(int i, int j, Piece &p) override;
         void place(int i, int j, Piece &p) override;
 
-        int search(int i, int j, Direction d, CarcType type, bool placing);
-
-        int search_bis(int i, int j, int di, int dj, CarcType type, bool placing);
+        int search(int i, int j, int di, int dj, CarcType type, bool placing);
         int search_abbaye(int i, int j);
 
         virtual bool gameOver() override;

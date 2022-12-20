@@ -5,13 +5,14 @@
 #include <iostream>
 #include <vector>
 
+// ! Ajouter Type Plaine/Route et adapter explore
 enum CarcType
 {
     Field = 0,
     Town = 1,
     Road = 2,
     Abbaye = 3,
-    Crossroad = 4
+    Crossroad = 4,
 };
 
 typedef struct Pos
@@ -26,6 +27,9 @@ class CarcPiece : public Piece
         int const id;
 
         int border[4][3];
+
+        // ! Changer explore et ajouter un explore center
+        // int center_border[4][3];
         int center;
 
         int pawn[4][3];
@@ -64,6 +68,7 @@ class CarcPiece : public Piece
         Pos getPosPawn() const;
 
         void cleanColor() override;
+        void printColor();
         void removeAllPawn();
         void beginExplore(int i, int j, bool cent, CarcType t);
         std::vector<Pos> getNextDir();
