@@ -13,10 +13,11 @@ using namespace std;
  */
 MainScene::MainScene(App &app, int gamemode, vector<string> &names) : 
     app{app}, scoreBoard{app}, drawZone{app, gamemode == TRAX},
-    board{}, scl{75}, off{180, 180}, 
+    board{}, scl{150}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
-    disp{false}, appear{true}, speed1{40}, speed2{3}
+    disp{false}, appear{true}, speed1{40}, speed2{3},
+    current_piece{nullptr}
 {
     app.initGame(gamemode);
     for (string s : names)
@@ -28,7 +29,10 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
 /**
  * Destructor
  */
-MainScene::~MainScene() {}
+MainScene::~MainScene() 
+{
+    if(current_piece != nullptr) delete current_piece;
+}
 
 /**
  * initialize the scene
@@ -158,24 +162,56 @@ void MainScene::drawRectAndPlay()
 
     rect.setFillColor(c);
 
-    if(drawZone.getPieceViewer() != nullptr)
+    if(current_piece != nullptr)
+    {
+        if(!left_pressed && Mouse::isButtonPressed(Mouse::Left))
+        {
+            left_pressed == true;
+            current_piece->handleClick(mouse_coord, app.getGame()->getPlayers()[app.getGame()->getCurrentPlayer()], app.getGame()->getCurrentPlayer(), scl);
+
+            x0 = current_piece->getCoord().x;
+            y0 = current_piece->getCoord().y;
+            if(!app.getGame()->canPlace(y0, x0, current_piece->getPiece())) 
+            {
+                cout << "remove handle" << endl;
+                current_piece->removeHandle(app.getGame()->getPlayers()[app.getGame()->getCurrentPlayer()], app.getGame()->getCurrentPlayer());
+                return;
+            }
+            current_piece->nextState();
+
+            place();
+            
+        }
+    }
+    else if(drawZone.getPieceViewer() != nullptr)
     {
         if(app.getGame()->canPlace(y0, x0, drawZone.getPieceViewer()->getPiece()))
         {
             if (!left_pressed && Mouse::isButtonPressed(Mouse::Left))
             {
-                PieceDisplayer *pi = drawZone.pick();
-                pi->setPos(x0, y0);
-                app.getGame()->place(y0, x0, pi->getPiece());
-                pos.push_back(pi);
+                current_piece = drawZone.pick();
+                current_piece->setPos(x0,y0);
+                current_piece->nextState();
+                pos.push_back(current_piece);
                 left_pressed = true;
-                scoreBoard.update();
-                if(app.getGame()->gameOver()) 
-                {
-                    app.close();
-                }
+
+                place();
             } else rect.setFillColor({0, 255, 0, 100});
         } else rect.setFillColor({255, 0, 0, 100});
+    }
+}
+
+void MainScene::place()
+{
+    if(current_piece->isFinalState())
+    {
+        app.getGame()->place(current_piece->getCoord().y, current_piece->getCoord().x, current_piece->getPiece());
+        scoreBoard.update();
+        if(app.getGame()->gameOver()) 
+        {
+            app.close();
+        }
+        current_piece = nullptr;
     }
 }
 
@@ -234,7 +270,7 @@ void MainScene::render()
     // TODO : Generalize it depending on gamemode
     for (PieceDisplayer *p : pos)
     {
-        p->render(off, board, scl);
+        p->render(off, board, scl, mouse_coord);
     }
     this->redrawBG();
     scoreBoard.render();

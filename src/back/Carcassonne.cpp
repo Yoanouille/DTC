@@ -20,7 +20,12 @@ void Carcassonne::addPlayer(std::string name)
 //! Il faut verifier qu'il y a personne d'autres sur la route/ville/plaine
 bool Carcassonne::canPlace(int i, int j, Piece &p)
 {
+
     if(!Game::canPlace(i, j, p)) return false;
+
+    //TODO return true à enlever, seulement pour test
+    // ce qui y a en dessous m'empeche de mettre des pions donc à régler
+    return true;
 
     CarcPiece &c = (CarcPiece &)(p);
     if(!c.hasPawn()) return true;
@@ -51,10 +56,10 @@ void Carcassonne::place(int i, int j, Piece &p)
             // ! Ne faire ça que pour CarcType Road et Town
             if(c->getType(di,dj,false) == Road)
             {
-                cout << "Explore" << endl;
-                cout << "i=" << i << " j=" << j << " di=" << di << " dj=" << dj << endl;
+                //cout << "Explore" << endl;
+                //cout << "i=" << i << " j=" << j << " di=" << di << " dj=" << dj << endl;
                 search(i, j, di, dj, CarcType(c->getType(di, dj, false)), false);
-                cout << endl;
+                //cout << endl;
                 cleanColor();
             }
         }   
@@ -101,8 +106,8 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         }
 
 
-        cout << "i=" << e.i << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
-        cout << c->toString() << endl;
+        //cout << "i=" << e.i << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
+        //cout << c->toString() << endl;
 
         if(c->getColor(e.di, e.dj, false) == 1)
         {
@@ -143,7 +148,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     
 
     if(placing) return nb;
-    cout << type << " " << di << " " << dj << " " << nb <<  endl;
+    //cout << type << " " << di << " " << dj << " " << nb <<  endl;
 
     //! On enlève les pions
     for(Pos &p : v)

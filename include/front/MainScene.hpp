@@ -67,11 +67,14 @@ private:
 
     int speed2;
 
+    PieceDisplayer *current_piece;
+
     void init();
 
     void setup_rect(sf::RectangleShape &r, float x, float y);
     void redrawBG();
     void drawRectAndPlay();
+    void place();
     void moveBoard();
 
 public:

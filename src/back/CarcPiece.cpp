@@ -397,14 +397,14 @@ void CarcPiece::printColor()
 {
     string s{" "};
     for (size_t j = 0; j < 3; j++)
-        s += to_string(color_border[direction][j]) + " ";
+        s += to_string(pawn[direction][j]) + " ";
     s += "\n";
 
     for (size_t j = 0; j < 3; j++)
-        s += to_string(color_border[(direction + 1) % 4][2 - j]) + "  " + (j == 1 ? to_string(color_center) : " ") + "  " + to_string(color_border[(direction + 3) % 4][j]) + "\n";
+        s += to_string(pawn[(direction + 1) % 4][2 - j]) + "  " + (j == 1 ? to_string(pawn_center) : " ") + "  " + to_string(pawn[(direction + 3) % 4][j]) + "\n";
     s += " ";
     for (size_t j = 0; j < 3; j++)
-        s += to_string(color_border[(direction + 2) % 4][2 - j]) + " ";   
+        s += to_string(pawn[(direction + 2) % 4][2 - j]) + " ";   
     cout << s << endl; 
 }
 
@@ -502,7 +502,7 @@ Pos CarcPiece::getPosPawn() const
     {
         for(int j = 0; j < 3; j++)
         {
-            if(pawn[i][j] != -1) return {i, j};
+            if(pawn[i][j] != -1) return {((i - direction + 4) % 4), j};
         }
     }
     if(pawn_center != -1) return {4,3};
@@ -557,4 +557,17 @@ vector<Pos> CarcPiece::getNextDir()
         }
     }
     return next_dir;
+}
+
+void CarcPiece::removeALLPawn()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            pawn[i][j] = -1;
+        }
+    }
+
+    pawn_center = -1;
 }

@@ -22,7 +22,7 @@ DomPieceDisplayer::DomPieceDisplayer(App &app, int x, int y, DomPiece &p) : Piec
 DomPieceDisplayer::~DomPieceDisplayer() {}
 
 
-void DomPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl)
+void DomPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl, sf::Vector2f &mouse)
 {
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
     Vector2f dp{3.0,3.0};
