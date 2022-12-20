@@ -11,6 +11,12 @@ Carcassonne::Carcassonne() {
 
 Carcassonne::~Carcassonne() {}
 
+void Carcassonne::addPlayer(std::string name)
+{
+    players.push_back(new PlayerCarc{name});
+    nb_player++;
+}
+
 //! Il faut verifier qu'il y a personne d'autres sur la route/ville/plaine
 bool Carcassonne::canPlace(int i, int j, Piece &p)
 {

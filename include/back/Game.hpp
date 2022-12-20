@@ -23,7 +23,7 @@ class Game
         Game();
         virtual ~Game();
 
-        void addPlayer(std::string);
+        virtual void addPlayer(std::string);
         int getCurrentPlayer() const;
         const std::vector<Player *> getPlayers() const;
 

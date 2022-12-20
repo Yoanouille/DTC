@@ -3,7 +3,7 @@
 
 #include "Player.hpp"
 
-class PlayerCarc : Player
+class PlayerCarc : public Player
 {
     private:
         int nb_pawn;
