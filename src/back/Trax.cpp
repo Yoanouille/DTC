@@ -63,13 +63,13 @@ void Trax::place(int i, int j, Piece &p)
 
 void Trax::getForcedMove(int i, int j)
 {
-    if(plateau[i - 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i - 1, j)))
+    if(board[i - 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i - 1, j)))
         moveForced.push_back({i-1,j});
-    if(plateau[i + 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i + 1, j)))
+    if(board[i + 1][j] == nullptr && TraxPiece::forcedMove(getNeighboors(i + 1, j)))
         moveForced.push_back({i+1,j});
-    if(plateau[i][j - 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j - 1)))
+    if(board[i][j - 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j - 1)))
         moveForced.push_back({i,j-1});
-    if(plateau[i][j + 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j + 1)))
+    if(board[i][j + 1] == nullptr && TraxPiece::forcedMove(getNeighboors(i, j + 1)))
         moveForced.push_back({i,j+1});
 
 }
@@ -78,17 +78,17 @@ void Trax::getForcedMove(int i, int j)
 vector<TraxPiece *> Trax::getNeighboors(int i, int j)
 {
     vector<TraxPiece *> v;
-    v.push_back((TraxPiece *)plateau[i - 1][j]); //UP
-    v.push_back((TraxPiece *)plateau[i][j - 1]); //LEFT
-    v.push_back((TraxPiece *)plateau[i + 1][j]); //DOWN
-    v.push_back((TraxPiece *)plateau[i][j + 1]); //RIGHT
+    v.push_back((TraxPiece *)board[i - 1][j]); //UP
+    v.push_back((TraxPiece *)board[i][j - 1]); //LEFT
+    v.push_back((TraxPiece *)board[i + 1][j]); //DOWN
+    v.push_back((TraxPiece *)board[i][j + 1]); //RIGHT
 
     return v;
 }
 
 bool Trax::explore(int i, int j, int color, Piece *pre)
 {
-    Piece *p = plateau[i][j];
+    Piece *p = board[i][j];
     if(i < mini) mini = i;
     if(i > maxi) maxi = i;
     if(j < minj) minj = j;
@@ -105,8 +105,8 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::UP] == color)
     {
-        if((pre != plateau[i - 1][j]) && (i - 1 == last_i && j == last_j)) return true;
-        if(plateau[i - 1][j] != nullptr && plateau[i - 1][j]->getColor() == 0)
+        if((pre != board[i - 1][j]) && (i - 1 == last_i && j == last_j)) return true;
+        if(board[i - 1][j] != nullptr && board[i - 1][j]->getColor() == 0)
         {
             rep = explore(i - 1, j, color, p);
         }
@@ -115,8 +115,8 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::DOWN] == color)
     {
-        if((pre != plateau[i + 1][j]) && (i + 1 == last_i && j == last_j)) return true;
-        if(plateau[i + 1][j] != nullptr && plateau[i + 1][j]->getColor() == 0)
+        if((pre != board[i + 1][j]) && (i + 1 == last_i && j == last_j)) return true;
+        if(board[i + 1][j] != nullptr && board[i + 1][j]->getColor() == 0)
         {
             rep = explore(i + 1, j, color, p);
         }
@@ -125,8 +125,8 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::LEFT] == color)
     {
-        if((pre != plateau[i][j - 1]) && (i == last_i && j - 1 == last_j)) return true;
-        if(plateau[i][j - 1] != nullptr && plateau[i][j - 1]->getColor() == 0)
+        if((pre != board[i][j - 1]) && (i == last_i && j - 1 == last_j)) return true;
+        if(board[i][j - 1] != nullptr && board[i][j - 1]->getColor() == 0)
         {
             rep = explore(i, j - 1, color, p);
         }
@@ -135,8 +135,8 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
 
     if(col[Direction::RIGHT] == color)
     {
-        if((pre != plateau[i][j + 1]) && (i == last_i && j + 1 == last_j)) return true;
-        if(plateau[i][j + 1] != nullptr && plateau[i][j + 1]->getColor() == 0)
+        if((pre != board[i][j + 1]) && (i == last_i && j + 1 == last_j)) return true;
+        if(board[i][j + 1] != nullptr && board[i][j + 1]->getColor() == 0)
         {
             rep = explore(i, j + 1, color, p);
         }

@@ -12,13 +12,6 @@ typedef struct Triple
     Direction d; 
 } Triple;
 
-typedef struct Container
-{
-    int i;
-    int j;
-    bool pawn[4];
-} Container;
-
 class Carcassonne : public Game
 {
     private:
@@ -27,13 +20,15 @@ class Carcassonne : public Game
     public:
         Carcassonne();
         ~Carcassonne();
-        void addPlayer(std::string);
+        void addPlayer(std::string name);
 
-        bool canPlace(int i, int j, Piece &p) override;
         void place(int i, int j, Piece &p) override;
 
+        bool canPlacePawn(int i, int j, int di, int dj);
+        void placePawn(int i, int j, int di, int dj, int player);
+
         int search(int i, int j, int di, int dj, CarcType type, bool placing);
-        int search_abbaye(int i, int j);
+        void searchAbbaye(int i, int j);
 
         virtual bool gameOver() override;
 };
