@@ -54,7 +54,7 @@ class CarcPiece : public Piece
         int getColor(int i, int j, bool centArray, bool cent) const;
         CarcType getType(int i, int j, bool centArray, bool cent) const;
         int getPawn() const;
-        int* getPawnCoordinates();
+        Pos getPawnCoordinates();
 
         bool connectable(Piece &p, int pDir) override;
         void getConnectColor(int *t) const override;
@@ -63,6 +63,7 @@ class CarcPiece : public Piece
         bool hasPawn();
         void placePawn(int i, int j, int player);
         void removePawn();
+        void removeAllPawn();
 
         void cleanColor() override;
         //void printColor();

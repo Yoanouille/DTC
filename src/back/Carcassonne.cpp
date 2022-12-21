@@ -44,8 +44,9 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
     // Connectivity test
     if(Game::canPlace(i,j,p)){
         CarcPiece c = (CarcPiece &) p;
+        return true;
         if(c.hasPawn()){
-            return canPlacePawn(i,j, c.getPawnCoordinates()[0],c.getPawnCoordinates()[1]);
+            return canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j);
         }
         return true;
     }
@@ -99,7 +100,7 @@ void Carcassonne::searchAbbaye(int i, int j)
             if(board[i + di][j + di] != nullptr)
                 if(((CarcPiece *)board[i + di][j + di])->getCenter() == Abbaye 
                 && ((CarcPiece *)board[i + di][j + di])->getPawn() != -1 
-                && ((CarcPiece *)board[i + di][j + di])->getPawnCoordinates()[0] == 4)
+                && ((CarcPiece *)board[i + di][j + di])->getPawnCoordinates().i == 4)
                     abbayes.push_back({i+di, j+dj});
         
 
@@ -195,8 +196,8 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         // if(c->getNbPawn(nb_pawn, nb_player) > 0 && placing && !(e.i == i && e.j == j)) return 0;
 
         if (c->getPawn() != -1)
-            if (c->getPawnCoordinates()[0] == e.di
-            && c->getPawnCoordinates()[1] == e.dj) 
+            if (c->getPawnCoordinates().i == e.di
+            && c->getPawnCoordinates().j == e.dj) 
             nb_pawn[i] ++;
         v.push_back({e.i, e.j});
 

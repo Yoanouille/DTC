@@ -485,8 +485,8 @@ CarcType CarcPiece::getType(int i, int j, bool centArray, bool cent) const
 int CarcPiece::getPawn() const { return pawn; }
 
 /** Getter : pawn_coordinates */
-int * CarcPiece::getPawnCoordinates(){
-    return pawn_coordinates;
+Pos CarcPiece::getPawnCoordinates(){
+    return {pawn_coordinates[0], pawn_coordinates[1]};
 }
 
 bool CarcPiece::connectable(Piece &p, int pDir)
@@ -547,11 +547,20 @@ void CarcPiece::placePawn(int i, int j, int player){
 }
 
 /** Remove the pawn on the Piece. */
+//TODO changer ça pour que ça enlève que si c'est colorier
 void CarcPiece::removePawn() {
     pawn = -1;
     pawn_coordinates[0] = -1;
     pawn_coordinates[1] = -1;
 }
+
+/** Remove the pawn on the Piece. */
+void CarcPiece::removeAllPawn() {
+    pawn = -1;
+    pawn_coordinates[0] = -1;
+    pawn_coordinates[1] = -1;
+}
+
 
 /** Check if the Piece has a pawn or not. */
 bool CarcPiece::hasPawn() { return pawn != -1; }

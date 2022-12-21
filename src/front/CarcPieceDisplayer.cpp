@@ -94,37 +94,37 @@ void CarcPieceDisplayer::drawPawn(int s)
     float scl = s / 5.0;
     rect.setSize({scl / 2.0, scl / 2.0});
     if(!piece.hasPawn()) return;
-    Pos p = piece.getPosPawn();
+    Pos p = piece.getPawnCoordinates();
 
     float x = this->getPosition().x - s * dx;
     float y = this->getPosition().y - s * dy;
     if(p.i == 4 && p.j == 3)
     {
-        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setFillColor(color[piece.getPawn()]);
         rect.setPosition(x + scl * 2 + scl / 4.0, y + scl * 2 + scl / 4.0);
         app.draw(rect);   
     }
     else if(p.i == UP)
     {
-        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setFillColor(color[piece.getPawn()]);
         rect.setPosition(x + scl * (p.j + 1) + scl / 4.0, y + scl / 4.0);
         app.draw(rect);
     }
     else if(p.i == DOWN)
     {
-        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setFillColor(color[piece.getPawn()]);
         rect.setPosition(x + scl * (3 - p.j) + scl / 4.0, y + scl * 4 + scl / 4.0);
         app.draw(rect);
     }
     else if(p.i == LEFT)
     {
-        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setFillColor(color[piece.getPawn()]);
         rect.setPosition(x + scl / 4.0, y + (3 - p.j) * scl + scl / 4.0);
         app.draw(rect);
     }
     else if(p.i == RIGHT)
     {
-        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setFillColor(color[piece.getPawn()]);
         rect.setPosition(x + 4 * scl + scl / 4.0, y +  (p.j + 1) * scl + scl / 4.0);
         app.draw(rect);
     }
@@ -202,7 +202,6 @@ bool CarcPieceDisplayer::isFinalState()
 
 void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player, int s) 
 {
-    //TODO Vérifier qu'il peut poser le pion
     if(!this->getGlobalBounds().contains(mouse)) return;
 
     PlayerCarc *pl = (PlayerCarc *)(p);
@@ -226,7 +225,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + dp.y});
         if(rect.getGlobalBounds().contains(mouse)) 
         {
-            piece.putPawn(Direction::UP, i - 1, false, player);
+            piece.placePawn(Direction::UP, i - 1, player);
             //piece.printColor();
             pl->addPawn(-1);
             return;
@@ -235,7 +234,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + 4 * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            piece.putPawn(Direction::DOWN, 3 - i, false, player);
+            piece.placePawn(Direction::DOWN, 3 - i, player);
             pl->addPawn(-1);
             //piece.printColor();
 
@@ -245,7 +244,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            piece.putPawn(Direction::LEFT, 3 - i, false, player);
+            piece.placePawn(Direction::LEFT, 3 - i, player);
             //piece.printColor();
             pl->addPawn(-1);
 
@@ -255,7 +254,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + 4 * scl + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            piece.putPawn(Direction::RIGHT, i - 1, false, player);
+            piece.placePawn(Direction::RIGHT, i - 1, player);
             //piece.printColor();
             pl->addPawn(-1);
 
@@ -266,7 +265,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
     rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
     if(rect.getGlobalBounds().contains(mouse))
     {
-        piece.putPawn(0, 0, true, player);
+        piece.placePawn(4,3, player);
         //piece.printColor();
         pl->addPawn(-1);
 
@@ -278,6 +277,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
 void CarcPieceDisplayer::removeHandle(Player *p, int player) 
 {
     if(piece.hasPawn()) ((PlayerCarc *)p)->addPawn(1);
-    piece.removeALLPawn();
+    piece.removeAllPawn();
 
 }
