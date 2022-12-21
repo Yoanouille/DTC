@@ -19,7 +19,12 @@ class FinalScene : public Scene
         std::vector<Text> texts;
 
         sf::Vector2f mouse_coord;
+        sf::RectangleShape r;
         
+        bool appear;
+        bool disp;
+        bool disp2;
+
         void init();
 
     public:
@@ -28,6 +33,9 @@ class FinalScene : public Scene
 
         void render();
         void loop_event();
+
+        void display();
+        void dispose();
 
 };
 

@@ -6,6 +6,13 @@
 #include "back/Player.hpp"
 #include "back/Sack.hpp"
 
+typedef struct PiecePos
+{
+    Piece *p;
+    int i;
+    int j;
+} PiecePos;
+
 class Game
 {
     protected:
@@ -30,7 +37,8 @@ class Game
         virtual Piece &draw();
         virtual bool canPlace(int, int, Piece &p);
         virtual void place(int, int, Piece &p);
-        Player *getWinner() const;
+        virtual Player *getWinner() const;
+        std::vector<PiecePos> getAllPiece();
 
         virtual bool gameOver() = 0;
 

@@ -77,6 +77,8 @@ private:
     void place();
     void moveBoard();
 
+    void initBoard();
+
 public:
     MainScene(App &app, int gamemode, std::vector<std::string> &names);
     virtual ~MainScene();

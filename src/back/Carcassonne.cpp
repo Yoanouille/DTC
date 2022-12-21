@@ -13,7 +13,7 @@ Carcassonne::Carcassonne() {
     s.fill(0, 2);
     //TODO j'ai enelever la starting tile pour le moment
     //TODO faudra init la liste de piece dans MainScene au début mais si je le laisser là y a des soucis
-    //board[0][0] = s.draw();
+    board[0][0] = s.draw();
 }
 
 /** Destructor : We do nothing */

@@ -1,5 +1,7 @@
 #include "back/Game.hpp"
 
+using namespace std;
+
 Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}
 {}
 
@@ -44,6 +46,7 @@ void Game::cleanColor()
 
 bool Game::canPlace(int i, int j, Piece &p)
 {
+    if(board[i][j] != nullptr) return false;
     if(nb_piece == 0) return true;
     Piece *ph = board[i - 1][j];
     Piece *pb = board[i + 1][j];
@@ -117,6 +120,20 @@ void Game::place(int i, int j, Piece &p)
     players[current_player]->addScore(score);
     //current_player = (current_player + 1) % nb_player;
 
+}
+
+vector<PiecePos> Game::getAllPiece()
+{
+    vector<PiecePos> v{};
+    for(int i = board.get_min(); i <= board.get_max(); i++)
+    {
+        for(int j = board[i].get_min(); j <= board.get_max(); j++)
+        {
+            if(board[i][j] != nullptr)
+                v.push_back({board[i][j], i, j});
+        }
+    }
+    return v;
 }
 
 Player *Game::getWinner() const

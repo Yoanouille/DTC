@@ -1,5 +1,6 @@
 #include "front/MainScene.hpp"
 #include "front/TraxPieceDisplayer.hpp"
+#include "front/CarcPieceDisplayer.hpp"
 #include "front/DomPieceDisplayer.hpp"
 #include "back/Domino.hpp"
 #include "front/AssetsLoader.hpp"
@@ -50,6 +51,8 @@ void MainScene::init()
     rectBG.setTexture(&Assets::getInstance()->MainMenuBackground);
     rectBG.setScale(0.33, 0.33);
 
+    initBoard();
+
 
     // Set up controller
     // Controller & controller = (Controller::getInstance());
@@ -64,6 +67,21 @@ void MainScene::init()
     //         p->rotate(true);
     //     }
     // });
+}
+
+void MainScene::initBoard()
+{
+    int gamemode = app.getGamemode();
+    vector<PiecePos> v = app.getGame()->getAllPiece();
+    for(PiecePos &pi : v)
+    {
+        if(gamemode == DOMINO)
+            pos.push_back(new DomPieceDisplayer(app, pi.j, pi.i, (DomPiece &)(*pi.p)));
+        if(gamemode == TRAX)
+            pos.push_back(new TraxPieceDisplayer(app, pi.j, pi.i, (TraxPiece &)(*pi.p)));
+        if(gamemode == CARCASSONNE)
+            pos.push_back(new CarcPieceDisplayer(app, pi.j, pi.i, (CarcPiece &)(*pi.p)));
+    }
 }
 
 /**
