@@ -18,6 +18,8 @@ class ScoreBoard {
         std::vector<Text> names;
         std::vector<Text> scores;
         std::vector<Text> nbPawns;
+
+        bool appear;
     
     public:
         ScoreBoard(App &App);
@@ -33,6 +35,8 @@ class ScoreBoard {
         
         void update();
         void render();
+
+        void display();
 };
 
 #endif

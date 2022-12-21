@@ -66,7 +66,9 @@ void Carcassonne::place(int i, int j, Piece &p)
     }
 
     searchAbbaye(i,j);
+    current_player = (current_player + 1) % nb_player;
 }
+
 
 /**
  * Look for an Abbaye next to the Piece at (i,j)

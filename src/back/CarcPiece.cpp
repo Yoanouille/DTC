@@ -692,10 +692,6 @@ void CarcPiece::cleanColor()
 //     cout << s << endl; 
 // }
 
-/**
- * ! Should be called after an exploration and before the cleaning.
- * Get the direction towards which we can continue our exploration (on other Pieces)
- */
 vector<Pos> CarcPiece::getNextDir()
 {
     vector<Pos> next_dir{};
