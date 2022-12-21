@@ -67,6 +67,7 @@ void Carcassonne::place(int i, int j, Piece &p)
 
     //Regarder autour si on trouve une abbaye avec un pion et voir si on la ferme
 
+    current_player = (current_player + 1) % nb_player;
 }
 
 typedef struct Elem

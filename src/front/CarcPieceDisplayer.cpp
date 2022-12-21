@@ -1,18 +1,61 @@
 #include "front/CarcPieceDisplayer.hpp"
 #include "back/PlayerCarc.hpp"
 
+
+// hue: 0-360°; sat: 0.f-1.f; val: 0.f-1.f
+sf::Color hsv(int hue, float sat, float val)
+{
+    hue %= 360;
+    while(hue<0) hue += 360;
+
+    if(sat<0.f) sat = 0.f;
+    if(sat>1.f) sat = 1.f;
+
+    if(val<0.f) val = 0.f;
+    if(val>1.f) val = 1.f;
+
+    int h = hue/60;
+    float f = float(hue)/60-h;
+    float p = val*(1.f-sat);
+    float q = val*(1.f-sat*f);
+    float t = val*(1.f-sat*(1-f));
+
+    switch(h)
+    {
+        default:
+        case 0:
+        case 6: return sf::Color(val*255, t*255, p*255);
+        case 1: return sf::Color(q*255, val*255, p*255);
+        case 2: return sf::Color(p*255, val*255, t*255);
+        case 3: return sf::Color(p*255, q*255, val*255);
+        case 4: return sf::Color(t*255, p*255, val*255);
+        case 5: return sf::Color(val*255, p*255, q*255);
+    }
+}
+
+
 CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) : 
     PieceDisplayer(app,x,y), piece{p},
-    dx{0}, dy{0}, rect{}
+    dx{0}, dy{0}, rect{}, color{new Color[app.getGame()->getPlayers().size()]}
 {
     this->setTexture(&Assets::getInstance()->CarcPieceTexture);
     int startx = 16 + (p.getId() % 5) * (Assets::getInstance()->CarcPieceSize + 19);
     int starty = 15 + (p.getId() / 5) * (Assets::getInstance()->CarcPieceSize + 32);
         
     this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
+
+    cout << app.getGame()->getPlayers().size() << endl;
+
+    for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
+    {
+        color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, .5f);
+    }
 }
 
-CarcPieceDisplayer::~CarcPieceDisplayer(){}
+CarcPieceDisplayer::~CarcPieceDisplayer()
+{
+    delete color;
+}
 
 void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
@@ -55,27 +98,33 @@ void CarcPieceDisplayer::drawPawn(int s)
 
     float x = this->getPosition().x - s * dx;
     float y = this->getPosition().y - s * dy;
-    if(p.i == UP)
+    if(p.i == 4 && p.j == 3)
     {
-        rect.setFillColor(Color::Red);
+        rect.setFillColor(color[piece.getNumPawn()]);
+        rect.setPosition(x + scl * 2 + scl / 4.0, y + scl * 2 + scl / 4.0);
+        app.draw(rect);   
+    }
+    else if(p.i == UP)
+    {
+        rect.setFillColor(color[piece.getNumPawn()]);
         rect.setPosition(x + scl * (p.j + 1) + scl / 4.0, y + scl / 4.0);
         app.draw(rect);
     }
-    if(p.i == DOWN)
+    else if(p.i == DOWN)
     {
-        rect.setFillColor(Color::Red);
+        rect.setFillColor(color[piece.getNumPawn()]);
         rect.setPosition(x + scl * (3 - p.j) + scl / 4.0, y + scl * 4 + scl / 4.0);
         app.draw(rect);
     }
-    if(p.i == LEFT)
+    else if(p.i == LEFT)
     {
-        rect.setFillColor(Color::Red);
+        rect.setFillColor(color[piece.getNumPawn()]);
         rect.setPosition(x + scl / 4.0, y + (3 - p.j) * scl + scl / 4.0);
         app.draw(rect);
     }
-    if(p.i == RIGHT)
+    else if(p.i == RIGHT)
     {
-        rect.setFillColor(Color::Red);
+        rect.setFillColor(color[piece.getNumPawn()]);
         rect.setPosition(x + 4 * scl + scl / 4.0, y +  (p.j + 1) * scl + scl / 4.0);
         app.draw(rect);
     }
@@ -117,6 +166,11 @@ void CarcPieceDisplayer::drawRect(Vector2f &mouse, int s)
         app.draw(rect);
         
     }
+
+    rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
+    if(rect.getGlobalBounds().contains(mouse)) rect.setFillColor({0,0,255,255});
+    else rect.setFillColor({0,0,255,100});
+    app.draw(rect);
 
     rect.setFillColor(Color::Transparent);
     rect.setOutlineColor({0,0,0,0});
@@ -173,7 +227,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         if(rect.getGlobalBounds().contains(mouse)) 
         {
             piece.putPawn(Direction::UP, i - 1, false, player);
-            piece.printColor();
+            //piece.printColor();
             pl->addPawn(-1);
             return;
         }
@@ -183,7 +237,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         {
             piece.putPawn(Direction::DOWN, 3 - i, false, player);
             pl->addPawn(-1);
-            piece.printColor();
+            //piece.printColor();
 
             return;
         }
@@ -192,7 +246,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         if(rect.getGlobalBounds().contains(mouse))
         {
             piece.putPawn(Direction::LEFT, 3 - i, false, player);
-            piece.printColor();
+            //piece.printColor();
             pl->addPawn(-1);
 
             return;
@@ -202,11 +256,21 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         if(rect.getGlobalBounds().contains(mouse))
         {
             piece.putPawn(Direction::RIGHT, i - 1, false, player);
-            piece.printColor();
+            //piece.printColor();
             pl->addPawn(-1);
 
             return;
         }
+    }
+
+    rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
+    if(rect.getGlobalBounds().contains(mouse))
+    {
+        piece.putPawn(0, 0, true, player);
+        //piece.printColor();
+        pl->addPawn(-1);
+
+        return;
     }
 
 }

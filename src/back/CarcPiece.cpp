@@ -353,6 +353,18 @@ string CarcPiece::toString() const
   return s;
 }
 
+int  CarcPiece::getNumPawn()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            if(pawn[i][j] != -1) return pawn[i][j];
+        }
+    }
+    return pawn_center;
+}
+
 bool CarcPiece::playOnPiece(int dir, int player)
 {
     if(dir >= 0 && dir <= 4 && pawn[(dir + direction) % 4][1] == -1) 
@@ -513,7 +525,7 @@ Pos CarcPiece::getPosPawn() const
 void CarcPiece::putPawn(int i, int j, bool center, int player)
 {
     if(center) pawn_center = player;
-    pawn[(i + direction) % 4][j] = player;
+    else pawn[(i + direction) % 4][j] = player;
 }
 
 

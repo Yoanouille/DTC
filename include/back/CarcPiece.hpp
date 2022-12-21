@@ -63,6 +63,7 @@ class CarcPiece : public Piece
         int getType(int i, int j, bool cent) const;
         bool getBonus() const;
         int getNbPawn(int *t, int nb_player);
+        int getNumPawn();
         bool hasPawn();
         void putPawn(int i, int j, bool cent, int player);
         Pos getPosPawn() const;
