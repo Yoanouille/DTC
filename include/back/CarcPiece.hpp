@@ -60,9 +60,6 @@ class CarcPiece : public Piece
         void getConnectColor(int *t) const override;
         std::string toString() const override;
 
-        int getColor(int i, int j, bool cent) const;
-        int getType(int i, int j, bool cent) const;
-        bool getBonus() const;
         bool hasPawn();
         void placePawn(int i, int j, int player);
         void removePawn();

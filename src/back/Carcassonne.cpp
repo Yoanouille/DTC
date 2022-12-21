@@ -40,6 +40,19 @@ void Carcassonne::placePawn(int i, int j, int di, int dj, int player)
     if(canPlacePawn(i,j,di,dj)) ((CarcPiece *)(board[i][j]))->placePawn(di,dj,player);
 }
 
+bool Carcassonne::canPlace(int i, int j, Piece &p){
+    // Connectivity test
+    if(Game::canPlace(i,j,p)){
+        CarcPiece c = (CarcPiece &) p;
+        if(c.hasPawn()){
+            return canPlacePawn(i,j, c.getPawnCoordinates()[0],c.getPawnCoordinates()[1]);
+        }
+        return true;
+    }
+
+    return false;
+}
+
 /**
  * Place the Piece and update scores if needed.
  * Only Road, Town, and Abbaye can give points during the Game.
@@ -166,9 +179,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         CarcPiece *c = (CarcPiece *)(board[e.i][e.j]);
         if(c == nullptr) 
         {
-            if(!placing){
-                return 0;
-            }
+            if(!placing) return 0;
             continue;
         }
 
