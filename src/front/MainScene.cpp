@@ -209,7 +209,8 @@ void MainScene::place()
         scoreBoard.update();
         if(app.getGame()->gameOver()) 
         {
-            app.close();
+            app.setScene(4, 0, nullptr);
+            //app.close();
         }
         current_piece = nullptr;
     }

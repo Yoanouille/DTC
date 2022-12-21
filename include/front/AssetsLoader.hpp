@@ -48,6 +48,7 @@ class Assets {
     friend class TraxPieceDisplayer;
     friend class DomPieceDisplayer;
     friend class CarcPieceDisplayer;
+    friend class FinalScene;
 };
 
 #endif

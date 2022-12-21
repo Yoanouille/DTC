@@ -60,6 +60,8 @@ public:
     Game *getGame();
     int getGamemode() const;
 
+    Scene *getOldScene() const;
+
     void setScene(int i, int gamemode, std::vector<std::string> *names);
 
 };

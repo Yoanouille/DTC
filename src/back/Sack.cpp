@@ -49,7 +49,7 @@ void Sack::fill(int s, int gamemode)
  */
 void Sack::initDom(int s)
 {
-    size = s;
+    size = 5;
     for (int i = 0; i < size; i++)
     {
         DomPiece *d = new DomPiece();

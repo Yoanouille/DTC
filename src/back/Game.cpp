@@ -118,3 +118,18 @@ void Game::place(int i, int j, Piece &p)
     //current_player = (current_player + 1) % nb_player;
 
 }
+
+Player *Game::getWinner() const
+{
+    int max = 0;
+    Player *win = nullptr;
+    for(Player *p : players)
+    {
+        if(p->getScore() > max)
+        {
+            max = p->getScore();
+            win = p;
+        }
+    }
+    return win;
+}

@@ -94,6 +94,7 @@ PieceDisplayer *DrawZone::getPieceViewer(){
 }
 
 void DrawZone::draw(){
+    if(pieceViewer != nullptr) return;
     Piece &p = app.getGame()->draw();
     switch(app.getGamemode()){
         case 0 :

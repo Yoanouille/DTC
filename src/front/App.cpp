@@ -2,6 +2,7 @@
 #include "front/MainMenu.hpp"
 #include "front/PlayerSettingsScene.hpp"
 #include "front/MainScene.hpp"
+#include "front/FinalScene.hpp"
 
 #include "back/Domino.hpp"
 #include "back/Trax.hpp"
@@ -48,6 +49,7 @@ void App::init()
     bg.setScale(0.33, 0.33);
 
     sc = new MainMenu(*this);
+    //sc = new FinalScene(*this);
 }
 
 /**
@@ -172,8 +174,19 @@ void App::setScene(int i, int gamemode, vector<string> *names)
         old_sc = sc;
         sc = new MainScene(*this, gamemode, *names);
         break;
+    
+    case 4:
+        if(old_sc != nullptr)
+            delete old_sc;
+        old_sc = sc;
+        sc = new FinalScene(*this);
 
     default:
         break;
     }
+}
+
+Scene *App::getOldScene() const
+{
+    return old_sc;
 }

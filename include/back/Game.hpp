@@ -30,6 +30,7 @@ class Game
         virtual Piece &draw();
         virtual bool canPlace(int, int, Piece &p);
         virtual void place(int, int, Piece &p);
+        Player *getWinner() const;
 
         virtual bool gameOver() = 0;
 
