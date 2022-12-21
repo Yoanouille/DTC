@@ -9,7 +9,7 @@
 class Game
 {
     protected:
-        VecZ<VecZ<Piece *>> plateau; 
+        VecZ<VecZ<Piece *>> board; 
         std::vector<Player *> players;
         Sack s;
 
@@ -23,7 +23,7 @@ class Game
         Game();
         virtual ~Game();
 
-        virtual void addPlayer(std::string);
+        virtual void addPlayer(std::string name);
         int getCurrentPlayer() const;
         const std::vector<Player *> getPlayers() const;
 

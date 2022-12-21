@@ -4,6 +4,7 @@
 #include "back/VecZ.hpp"
 #include "back/Game.hpp"
 #include "back/Trax.hpp"
+#include "back/Carcassonne.hpp"
 
 #include <iostream>
 #include <string>
@@ -82,14 +83,19 @@ void testSack()
     domSack.fill(5,0);
 
     Sack traxSack{};
-    domSack.fill(5,1);
+    domSack.fill(0,1);
+
+    Sack carcSack{};
+    carcSack.fill(0,2);
 
     cout << "---- DomPieces ----" << endl;
     cout << domSack << endl;
     cout << "---- TraxPieces ----" << endl;
     cout << traxSack << endl;
+    cout << "---- CarcPieces ----" << endl;
+    cout << carcSack << endl;
 
-    cout << "==== Unknwown Gamemode Test" << endl;
+    cout << "==== Unknwown Gamemode Test ====" << endl;
     try
     {
         Sack unknown{};
@@ -111,7 +117,7 @@ void testSack()
  * Function Test for VecZ
  * First test with a simple vector
  * Second test with a double vector
-*/
+ */
 void testVecZ()
 {
     cout << "==== VecZ Test ====" << endl;
@@ -136,34 +142,26 @@ void testVecZ()
 
     VecZ<VecZ<int>> v2D;
     for(int i = -10; i <= 10; i++)
-    {
         for(int j = -10; j <= 10; j++)
-        {
             v2D[i][j] = 10 * i + j;
-        }
-    }
+
     for(int i = v2D.get_min(); i <= v2D.get_max(); i++)
-    {
         v2D[i].print();
-    }
-
-
 }
 
-void test_trax_1()
+void testTrax_1()
 {
     Game *g = new Trax();  
     Trax *t = (Trax *)g;
     bool DF = false;
 
-    //Great Joke !
-    g->add_player("Nicoca");
-    g->add_player("Nicola");
+    g->addPlayer("Yoan");
+    g->addPlayer("Nicolas");
 
     Piece &p = g->draw();
     cout << p << endl;
     cout << g->canPlace(0, 0, p) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(0, 0, p);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -172,7 +170,7 @@ void test_trax_1()
     p2.flip();
     cout << p2 << endl;
     cout << g->canPlace(0, -1, p2) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(0, -1, p2);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -182,7 +180,7 @@ void test_trax_1()
     p3.rotate(true);
     cout << p3 << endl;
     cout << g->canPlace(-1, -1, p3) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(-1,-1,p3);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -190,7 +188,7 @@ void test_trax_1()
     Piece &p4 = g->draw();
     cout << p4 << endl;
     cout << g->canPlace(-1, 0, p4) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(-1, 0, p4);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -201,7 +199,7 @@ void test_trax_1()
     p5.rotate(false);
     cout << p5 << endl;
     cout << g->canPlace(-1, 1, p5) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(-1, 1, p5);
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
@@ -211,26 +209,23 @@ void test_trax_1()
     p6.rotate(false);
     cout << p6 << endl;
     cout << g->canPlace(0, 1, p6) << endl;
-    cout << g->getCurrentPlayer().getName() << endl;
+    cout << g->getPlayers()[g->getCurrentPlayer()]->getName() << endl;
     g->place(0, 1, p6);
-
-
 
     DF =  t->DFS(1);
     cout << "DFS : " << DF << endl;
 
-
     delete g; 
 }
 
-void test_trax_2()
+void testTrax_2()
 {
     Game *g = new Trax();
     Trax *t = (Trax *)g;
     bool DF = false;
 
-    g->add_player("Nicoca");
-    g->add_player("Nicola");
+    g->addPlayer("Nicolas");
+    g->addPlayer("Yoan");
 
     for(int i = 0; i < 8; i++)
     {
@@ -242,8 +237,32 @@ void test_trax_2()
         cout << "DFS : " << DF << endl;
     }
 
+    delete g;
+}
 
+void testCarcassonne()
+{
+    Game *g = new Carcassonne();  
+    Carcassonne *t = (Carcassonne *)g;
 
+    g->addPlayer("Yoan");
+    g->addPlayer("Nicolas");
+
+    cout << "==== First Piece drawn ====" << endl;
+    Piece &p = g->draw();
+    cout << p << endl;
+
+    cout << "==== Can place at (0,1) ? ====" << endl;
+    cout << boolalpha << t->canPlace(0,1,p) << endl;
+    cout << "==== Place the Piece at (0,1) ====" << endl;
+    // TODO : the Score hasn't changed
+    cout << "==== Place a pawn ====" << endl;
+
+    cout << "==== Can place at (0,0) ? ====" << endl;
+    // TODO : Can't place here bcs there is the first piece.
+    cout << boolalpha << t->canPlace(0,0,p) << endl;
+
+    delete g;
 }
 
 /**
@@ -251,26 +270,31 @@ void test_trax_2()
  */
 int main()
 {
-    // string request{};
-    // while (request.size() == 0 || request != "quit")
-    // {
-    //     cout << "Enter a test" << endl;
-    //     cin >> request;
+    string request{};
+    while (request.size() == 0 || request != "quit")
+    {
+        cout << "Enter a test" << endl;
+        cin >> request;
 
-    //     if (request == "dom")
-    //         testDomPiece();
-    //     else if (request == "trax")
-    //         testTraxPiece();
-    //     else if (request == "sack")
-    //         testSack();
-    //     else if(request == "vecz")
-    //         testVecZ();
-    //     else if (request != "quit")
-    //         cout << "Unknown Test. Please try again" << endl;
+        if (request == "dom")
+            testDomPiece();
+        else if (request == "trax")
+            testTraxPiece();
+        else if (request == "sack")
+            testSack();
+        else if (request == "vecz")
+            testVecZ();
+        else if (request == "trax1")
+            testTrax_1();
+        else if (request == "trax2")
+            testTrax_2();
+        else if (request == "carc")
+            testCarcassonne();
+        else if (request != "quit")
+            cout << "Unknown Test. Please try again" << endl;
 
-    //     cout << endl;
-    // }
-    test_trax_1();
+        cout << endl;
+    }
 
     return EXIT_SUCCESS;
 }

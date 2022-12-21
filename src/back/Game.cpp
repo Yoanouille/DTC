@@ -1,6 +1,6 @@
 #include "back/Game.hpp"
 
-Game::Game() : plateau{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}
+Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}
 {}
 
 Game::~Game()
@@ -32,12 +32,12 @@ const std::vector<Player *> Game::getPlayers() const{
 
 void Game::cleanColor()
 {
-    for(int i = plateau.get_min(); i <= plateau.get_max(); i++)
+    for(int i = board.get_min(); i <= board.get_max(); i++)
     {
-        for(int j = plateau[i].get_min(); j <= plateau[i].get_max(); j++)
+        for(int j = board[i].get_min(); j <= board[i].get_max(); j++)
         {
-            if(plateau[i][j] != nullptr)
-                plateau[i][j]->cleanColor();
+            if(board[i][j] != nullptr)
+                board[i][j]->cleanColor();
         }
     }
 }
@@ -45,10 +45,10 @@ void Game::cleanColor()
 bool Game::canPlace(int i, int j, Piece &p)
 {
     if(nb_piece == 0) return true;
-    Piece *ph = plateau[i - 1][j];
-    Piece *pb = plateau[i + 1][j];
-    Piece *pg = plateau[i][j - 1];
-    Piece *pd = plateau[i][j + 1];
+    Piece *ph = board[i - 1][j];
+    Piece *pb = board[i + 1][j];
+    Piece *pg = board[i][j - 1];
+    Piece *pd = board[i][j + 1];
 
     bool flag = false;
 
@@ -84,15 +84,15 @@ void Game::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
 
-    plateau[i][j] = &p;
+    board[i][j] = &p;
     nb_piece++;
 
     int score = 0;
 
-    Piece *ph = plateau[i - 1][j];
-    Piece *pb = plateau[i + 1][j];
-    Piece *pg = plateau[i][j - 1];
-    Piece *pd = plateau[i][j + 1];
+    Piece *ph = board[i - 1][j];
+    Piece *pb = board[i + 1][j];
+    Piece *pg = board[i][j - 1];
+    Piece *pd = board[i][j + 1];
 
     if(ph != nullptr) 
     {

@@ -20,9 +20,11 @@ Sack::~Sack()
 }
 
 /**
- * fill the sack corresponding on the gamemodes
+ * Fill the sack corresponding on the gamemodes.
+ * 
  * @param size The size of the Sack
  * @param gamemode The gamemode : 0 = Dom, 1 = Trax, 2 = Carcassonne
+ * @throws UnknownGamemodeException - When gamemode is not between 0 and 2
 */
 void Sack::fill(int s, int gamemode)
 { 
@@ -36,7 +38,6 @@ void Sack::fill(int s, int gamemode)
         break;
     case 2:
         initCarcassonne();
-        shuffle();
         break;
     default:
         throw UnknownGamemodeException();
@@ -44,9 +45,7 @@ void Sack::fill(int s, int gamemode)
     }
 }
 
-/**
- * Initializes the Sack for a DomGame
- */
+/** Initializes the Sack for a Domino Game */
 void Sack::initDom(int s)
 {
     size = 5;
@@ -57,9 +56,7 @@ void Sack::initDom(int s)
     }
 }
 
-/**
- * Initializes the Sack for a TraxGame
- */
+/** Initializes the Sack for a Trax Game */
 void Sack::initTrax()
 {
     size = 64;
@@ -70,15 +67,18 @@ void Sack::initTrax()
     }
 }
 
+/** Initialize the Sack for a Carcassonne Game*/
 void Sack::initCarcassonne()
 {
-    size = 72;
+    size = 73;
+    CarcPiece *p24 = new CarcPiece{24};
     CarcPiece *p2 = new CarcPiece{2};
     CarcPiece *p4 = new CarcPiece{4};
     CarcPiece *p5 = new CarcPiece{5};
     CarcPiece *p11 = new CarcPiece{11};
     CarcPiece *p23 = new CarcPiece{23};
 
+    sack.push_back(p24);
     sack.push_back(p2);
     sack.push_back(p4);
     sack.push_back(p5);
@@ -144,17 +144,22 @@ void Sack::initCarcassonne()
         CarcPiece *p21 = new CarcPiece{21};
         sack.push_back(p21);
     }
+
+    shuffle();
 }
 
-bool Sack::isEmpty()
-{
-    return index >= size;
-}
+/** Check if the sack is empty */
+bool Sack::isEmpty() { return index >= size; }
 
+/** 
+ * ! Only used for Carcassonne
+ * Shuffle the Pieces starting from index 1.
+ * 0 will always be the starting Piece. 
+ */
 void Sack::shuffle()
 {  
-    auto rng = std::default_random_engine{};
-    std::shuffle(sack.begin(),sack.end(),rng);
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(sack.begin() + 1,sack.end(),std::default_random_engine{seed});
 }
 
 /**
