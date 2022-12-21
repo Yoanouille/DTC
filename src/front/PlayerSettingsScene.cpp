@@ -105,7 +105,7 @@ void PlayerSettingsScene::addPlayer(){
   t.setPosition({app.getWidth()/3.5f, vSpace});
   fieldLabels.push_back(t);
 
-  TextField tf{app, 20, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+  TextField tf{app, 15, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
   nameFields.push_back(tf);
 
   vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;

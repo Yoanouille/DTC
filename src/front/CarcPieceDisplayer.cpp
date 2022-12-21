@@ -48,7 +48,7 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
 
     for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
     {
-        color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, .5f);
+        color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
     }
 }
 
