@@ -11,7 +11,9 @@ using namespace std;
  */
 Carcassonne::Carcassonne() { 
     s.fill(0, 2);
-    board[0][0] = s.draw();
+    //TODO j'ai enelever la starting tile pour le moment
+    //TODO faudra init la liste de piece dans MainScene au début mais si je le laisser là y a des soucis
+    //board[0][0] = s.draw();
 }
 
 /** Destructor : We do nothing */
@@ -29,6 +31,7 @@ void Carcassonne::addPlayer(std::string name)
 
 bool Carcassonne::canPlacePawn(int i, int j, int di, int dj)
 {
+    //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
     return search(i, j, di, dj, CarcType(((CarcPiece *)board[i][j])->getType(di, dj, false, false)), true) == -1;
 }
 
@@ -44,6 +47,7 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
     // Connectivity test
     if(Game::canPlace(i,j,p)){
         CarcPiece c = (CarcPiece &) p;
+        //TODO : enlever de return true, mais comme ça je peux test
         return true;
         if(c.hasPawn()){
             return canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j);
