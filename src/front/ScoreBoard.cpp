@@ -3,11 +3,11 @@
 /**
  * Constructor 
  */
-ScoreBoard::ScoreBoard(App &app) : app{app}, game{nullptr}, container{}
+ScoreBoard::ScoreBoard(App &app) : app{app}, game{nullptr}, container{}, appear{true}
 {
     // Setup the container
     container.setSize(Vector2f(app.getWidth() / 6.0f, (app.getHeight() / 3.0f)));
-    container.setPosition(Vector2f((app.getWidth() * 4.0) / 5.0f, app.getHeight()/20.0f));
+    container.setPosition(Vector2f((app.getWidth() * 10.0) / 5.0f, app.getHeight() * -10.f /20.0f));
     container.setFillColor(Color::White);
 
     // The texts are initialized in setGame()
@@ -97,6 +97,7 @@ void ScoreBoard::update(){
 void ScoreBoard::render(){
     app.draw(container);
 
+    if(appear) display();
     // Draw the text
     for(size_t i = 0; i < names.size() ; i++){
         app.draw(names[i]);
@@ -105,4 +106,37 @@ void ScoreBoard::render(){
         if(app.getGamemode() == CARCASSONNE)
             app.draw(nbPawns[i]);
     }
+}
+
+void ScoreBoard::display()
+{
+    float x = container.getPosition().x;
+    float y = container.getPosition().y;
+    bool flag = false; 
+    if(x > (app.getWidth() * 4.0) / 5.0f) 
+    {
+        x -= (app.getWidth() * 4.0) / (5.0f * 200.f);
+        flag = true;
+    } else x = (app.getWidth() * 4.0) / 5.0f;
+    if(y < (app.getHeight()) / 20.0f) 
+    {
+        y +=  app.getHeight()/(20.0f * 20.f);
+        flag = true;
+    } else y = app.getHeight() / 20.0f;
+    appear = flag;
+
+    container.setPosition(x,y);
+    float vspace = container.getSize().y / 10.0f;
+    for(size_t i = 0; i< game->getPlayers().size() ; i++)
+    {
+        names[i].setPosition({container.getPosition().x + container.getSize().x / 8.0f, vspace + y });
+        scores[i].setPosition({container.getPosition().x + container.getSize().x * 0.75f, vspace  + y});
+        if (app.getGamemode() == CARCASSONNE)
+        {
+            scores[i].setPosition({container.getPosition().x + container.getSize().x * 0.60f, vspace + y});
+            nbPawns[i].setPosition({container.getPosition().x + container.getSize().x * 0.80f, vspace + y});
+        }
+        vspace += container.getSize().y / 5.0f;
+    }
+
 }

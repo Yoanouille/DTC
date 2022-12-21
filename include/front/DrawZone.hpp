@@ -22,6 +22,8 @@ class DrawZone {
         Button rotateRight;
         Button flipButton;
 
+        bool appear;
+
     public: 
         DrawZone(App &app, bool isTraxGame);
         virtual ~DrawZone();
@@ -34,6 +36,8 @@ class DrawZone {
         PieceDisplayer *pick();
 
         void render();
+
+        void display();
 
     friend class MainScene;
 };

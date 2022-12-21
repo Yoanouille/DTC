@@ -16,9 +16,10 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     pieceViewer{nullptr},
     rotateLeft{app, &Assets::getInstance()->RotateLeft, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f}, {}},
     rotateRight{app, &Assets::getInstance()->RotateLeft, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f}, {}},
-    flipButton{app, &Assets::getInstance()->Flip, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f},{}}
+    flipButton{app, &Assets::getInstance()->Flip, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f},{}},
+    appear{true}
 {
-    container.setPosition(Vector2f((app.getWidth() * 4.0f) / 5.0f, app.getHeight() * 0.45f));
+    container.setPosition(Vector2f((app.getWidth() * 4.0f) * 2.5f / 5.0f, app.getHeight() * 2.5f * 0.45f));
     container.setFillColor(Color::White);
 
     r.setFillColor(Color::Black);
@@ -67,8 +68,12 @@ DrawZone::~DrawZone()
  * Rendering function 
  */
 void DrawZone::render(){
+    if(appear)
+        display();
+
     app.draw(container);
     sack.render();
+
 
     if(pieceViewer != nullptr)
         pieceViewer->render(r.getPosition().x, r.getPosition().y, r.getSize().x);
@@ -115,4 +120,43 @@ PieceDisplayer *DrawZone::pick()
     PieceDisplayer *p = pieceViewer;
     pieceViewer = nullptr;
     return p;
+}
+
+void DrawZone::display()
+{
+    float x = container.getPosition().x;
+    float y = container.getPosition().y;
+    bool flag = false; 
+
+    if(x > (app.getWidth() * 4.0f) / 5.0f) 
+    {
+        x -= (app.getWidth() * 4.0f) / (5.0f * 100.f);
+        flag = true;
+    } else 
+    {
+        x = (app.getWidth() * 4.0f) / 5.0f;
+    }
+    if(y >  app.getHeight() * 0.45f ) 
+    {
+        y -=  (app.getHeight() * 0.45f) / 100.f;
+        flag = true;
+    } else {
+        y = app.getHeight() * 0.45f;
+    }
+    appear = flag;
+
+    container.setPosition(x,y);
+    r.setPosition(container.getPosition().x + container.getSize().x *0.5f - r.getGlobalBounds().width * 0.5f, container.getPosition().y + container.getSize().x * 0.45f);
+    rotateLeft.setPosition(container.getPosition().x + rotateLeft.getGlobalBounds().width *0.2f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+
+    rotateRight.setPosition(container.getPosition().x + container.getSize().x - rotateRight.getGlobalBounds().width * 1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+    Sprite *sp = rotateRight.getSprite();
+    sp->setPosition(rotateRight.getPosition().x + rotateRight.getGlobalBounds().width * 0.85f, rotateRight.getPosition().y);
+
+    sack.setPosition(container.getPosition().x + container.getSize().x * 0.5f - sack.getGlobalBounds().width *0.5f , container.getPosition().y + container.getGlobalBounds().height - sack.getGlobalBounds().height * 1.02f);
+    if(isTraxGame)
+    {
+        flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+    }
+
 }
