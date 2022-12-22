@@ -484,6 +484,23 @@ CarcType CarcPiece::getType(int i, int j, bool centArray, bool cent) const
 /** Getter : pawn */
 int CarcPiece::getPawn() const { return pawn; }
 
+/** 
+ *  Getter : number of Pawn.
+ *  0 if not marked ot no pawn.
+ *  1 Otherwise 
+ */
+int CarcPiece::getNbPawn() const{
+    if(pawn != -1)
+        return isPawnMarked();
+
+    return 0;
+}
+
+/** Check if the pawn is Marked. */
+bool CarcPiece::isPawnMarked() const {
+    return (pawn_coordinates[0] == 4 && color_center == 1) || (color_border[pawn_coordinates[0]][pawn_coordinates[1]] == 1);
+}
+
 /** Getter : pawn_coordinates */
 Pos CarcPiece::getPawnCoordinates(){
     return {pawn_coordinates[0], pawn_coordinates[1]};
@@ -547,11 +564,14 @@ void CarcPiece::placePawn(int i, int j, int player){
 }
 
 /** Remove the pawn on the Piece. */
-//TODO changer ça pour que ça enlève que si c'est colorier
 void CarcPiece::removePawn() {
-    pawn = -1;
-    pawn_coordinates[0] = -1;
-    pawn_coordinates[1] = -1;
+    if ((pawn_coordinates[0] != 4 && color_border[pawn_coordinates[0]][pawn_coordinates[1]] == 1)
+        || (pawn_coordinates[0] == 4 && color_center == 1))
+    {
+        pawn = -1;
+        pawn_coordinates[0] = -1;
+        pawn_coordinates[1] = -1;
+    }
 }
 
 /** Remove the pawn on the Piece. */

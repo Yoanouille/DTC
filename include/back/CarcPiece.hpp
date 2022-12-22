@@ -54,6 +54,8 @@ class CarcPiece : public Piece
         int getColor(int i, int j, bool centArray, bool cent) const;
         CarcType getType(int i, int j, bool centArray, bool cent) const;
         int getPawn() const;
+        int getNbPawn() const;
+        bool isPawnMarked() const;
         Pos getPawnCoordinates();
 
         bool connectable(Piece &p, int pDir) override;

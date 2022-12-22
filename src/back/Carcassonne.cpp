@@ -11,9 +11,8 @@ using namespace std;
  */
 Carcassonne::Carcassonne() { 
     s.fill(0, 2);
-    //TODO j'ai enelever la starting tile pour le moment
-    //TODO faudra init la liste de piece dans MainScene au début mais si je le laisser là y a des soucis
     board[0][0] = s.draw();
+    nb_piece++;
 }
 
 /** Destructor : We do nothing */
@@ -29,10 +28,18 @@ void Carcassonne::addPlayer(std::string name)
     nb_player++;
 }
 
-bool Carcassonne::canPlacePawn(int i, int j, int di, int dj)
+/**
+ * Check if a pawn can be placed on a piece at (i,j)
+ * @param i The line
+ * @param j The column
+ * @param p The Piece 
+ * @param di the side of the Piece
+ * @param dj the index of the element in the di-th array of the Piece
+ */
+bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
 {
     //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
-    return search(i, j, di, dj, CarcType(((CarcPiece *)board[i][j])->getType(di, dj, false, false)), true) == -1;
+    return search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, false), true) == -1;
 }
 
 /**
@@ -40,7 +47,8 @@ bool Carcassonne::canPlacePawn(int i, int j, int di, int dj)
  */
 void Carcassonne::placePawn(int i, int j, int di, int dj, int player)
 {
-    if(canPlacePawn(i,j,di,dj)) ((CarcPiece *)(board[i][j]))->placePawn(di,dj,player);
+    if(canPlacePawn(i, j, di, dj, *((CarcPiece *)(board[i][j])))) 
+        ((CarcPiece *)(board[i][j]))->placePawn(di,dj,player);
 }
 
 bool Carcassonne::canPlace(int i, int j, Piece &p){
@@ -48,9 +56,9 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
     if(Game::canPlace(i,j,p)){
         CarcPiece c = (CarcPiece &) p;
         //TODO : enlever de return true, mais comme ça je peux test
-        return true;
+        //return true;
         if(c.hasPawn()){
-            return canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j);
+            return canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j, p);
         }
         return true;
     }
@@ -197,12 +205,11 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         c->beginExplore(e.di, e.dj, false, type);
         //c->printColor();
     
-        // if(c->getNbPawn(nb_pawn, nb_player) > 0 && placing && !(e.i == i && e.j == j)) return 0;
+        if(c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;
 
         if (c->getPawn() != -1)
-            if (c->getPawnCoordinates().i == e.di
-            && c->getPawnCoordinates().j == e.dj) 
-            nb_pawn[i] ++;
+                if (c-> isPawnMarked())
+                    nb_pawn[i] ++;
         v.push_back({e.i, e.j});
 
         // Get all the possibly connected pieces
@@ -230,18 +237,10 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     
     // We get here only if the stack is empty i.e we've finished the exploration
 
-    if(placing)
-    {
-        // Counting the number of pawns in the area
-        int count;
-        for(int i : nb_pawn)
-            count += i;
-
-        if (count >= 1) return -1;
-        return nb;
-    } 
+    // If we are looking for placing the Piece, we stop here
+    if(placing) return nb;
+    
     //cout << type << " " << di << " " << dj << " " << nb <<  endl;
-
 
     // Remove the pawn on the pieces
     for(Pos &p : v){

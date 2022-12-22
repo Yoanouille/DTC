@@ -286,7 +286,6 @@ void MainScene::render()
     app.draw(rect);
 
     // Draw all the Pieces
-    // TODO : Generalize it depending on gamemode
     for (PieceDisplayer *p : pos)
     {
         p->render(off, board, scl, mouse_coord);

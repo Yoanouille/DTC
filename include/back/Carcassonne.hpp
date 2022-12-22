@@ -22,10 +22,10 @@ class Carcassonne : public Game
         ~Carcassonne();
         void addPlayer(std::string name);
 
-        bool canPlace(int i, int j, Piece &p);
+        bool canPlace(int i, int j, Piece &p) override;
         void place(int i, int j, Piece &p) override;
 
-        bool canPlacePawn(int i, int j, int di, int dj);
+        bool canPlacePawn(int i, int j, int di, int dj, Piece &p);
         void placePawn(int i, int j, int di, int dj, int player);
 
         int search(int i, int j, int di, int dj, CarcType type, bool placing);
