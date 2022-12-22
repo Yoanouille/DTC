@@ -3,24 +3,22 @@
 
 using namespace std;
 
-Domino::Domino() 
-{
-    s.fill(20, 0);
-}
+/** Constructor */
+Domino::Domino() { s.fill(20, 0); }
 
-Domino::~Domino()
-{
+/** Destructor */
+Domino::~Domino() {}
 
-}
-
+/** Overriden function */
 void Domino::place(int i, int j, Piece &p)
 {
     Game::place(i, j, p);
     current_player = (current_player + 1) % nb_player;
 }
 
+/** Overriden function */
 bool Domino::gameOver()
 {
-    if(s.isEmpty()) cout << "FIN DE DOMINO !" << endl;
+    if(s.isEmpty()) cout << "END OF THE GAME!" << endl;
     return s.isEmpty();
 }

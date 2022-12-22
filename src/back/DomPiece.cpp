@@ -6,8 +6,9 @@ using namespace std;
  * Constructor
  *
  * allocates an array of array with size 4*3
- * fills it with random values from 0 to 4
- * (The random generation may be changed in a near future).
+ * fills it with random values from 0 to 5
+ * 
+ * ? Extension : Make our own distribution of values
  */
 DomPiece::DomPiece() : tab{}
 {
@@ -18,6 +19,11 @@ DomPiece::DomPiece() : tab{}
 
 /** Destructor */
 DomPiece::~DomPiece() {}
+
+/** Getter : tab[(dir + direction)%4][i]*/
+int DomPiece::getVal(int dir, int i) { 
+  return tab[(dir + direction)%4][i]; 
+}
 
 /**
  * Test if the current Piece can be connected to a given one.
@@ -81,9 +87,4 @@ string DomPiece::toString() const
     s += to_string(tab[2][2 - j]) + " ";
 
   return s;
-}
-
-int DomPiece::getVal(int dir, int i)
-{
-  return tab[(dir + direction)%4][i];
 }

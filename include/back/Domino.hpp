@@ -5,9 +5,6 @@
 
 class Domino : public Game
 {
-    private:
-
-
     public:
         Domino();
         ~Domino();
