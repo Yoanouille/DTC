@@ -38,9 +38,8 @@ void Carcassonne::addPlayer(std::string name)
  */
 bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
 {
-    //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
     board[i][j] = &p;
-    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, false), true);
+    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true, di==4);
     cleanColor();
     board[i][j] = nullptr;
     return (s != -1);
@@ -88,11 +87,11 @@ void Carcassonne::place(int i, int j, Piece &p)
     {
         for(int dj = 0; dj < 3; dj++)
         {
-            if(c->getType(di, dj, false,false) == Road || c->getType(di, dj, false, false) == Town)
+            if(c->getType(di, dj, false,false) == Road || c->getType(di, dj, false, di == 4) == Town)
             {
-                cout << "EXPLORE " << c->getType(di, dj, false,false) << endl;
+                cout << "EXPLORE " << c->getType(di, dj, false, di == 4) << endl;
                 // Search removes the pawns so it's ok to iterate over all subcases.
-                search(i, j, di, dj, CarcType(c->getType(di, dj, false, false)), false);
+                search(i, j, di, dj, CarcType(c->getType(di, dj, false,  di == 4)), false, di == 4);
                 cleanColor();
             }
         }   
@@ -163,9 +162,11 @@ typedef struct Elem
  * @param dj The index of the element in the di-th subarray
  * @param type The type we are checking
  * @param placing A boolean that is true if we currently want to place the Piece
+ * @param cent A boolean that is true if we are handling the central subcase.
+ * 
  * @return The points gained at the end of the exploration
  */
-int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing)
+int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing, bool cent)
 {
     // Initialize the stack and push the first element
     stack<Elem> s{};
@@ -206,12 +207,12 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 
         // If the subcase[di][dj] of the Piece at (i,j) is aleady marked we do nothing and pop the next element
         // Same if the type of the subcase[di][dj] of the Piece is the type we're proceeding
-        if(c->getColor(e.di, e.dj, false, false) == 1) continue;
-        if(c->getType(e.di, e.dj, false, false) != type) continue;
+        if(c->getColor(e.di, e.dj, false, cent) == 1) continue;
+        if(c->getType(e.di, e.dj, false, cent) != type) continue;
 
         cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
         // Exploration inside the Piece
-        c->beginExplore(e.di, e.dj, false, type);
+        c->beginExplore(e.di, e.dj, cent, type);
         //c->printColor();
     
         if(c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;

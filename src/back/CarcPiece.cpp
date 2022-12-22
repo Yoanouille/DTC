@@ -607,12 +607,13 @@ void CarcPiece::beginExplore(int i, int j, bool cent, CarcType t)
 void CarcPiece::explore(int i, int j, CarcType t)
 {
     // If the subcase is already marked then we do nothing.
-    if(color_border[i][j] == 1) return;
+    if(color_border[i][j] == 1 || border[i][j] != t) return;
 
     // Else we mark it and we explore the center and the neighbours.
     // If the subcase is in a corner, we have to explore its neighbour in the adjacent array.
     color_border[i][j] = 1;
-    exploreCenter(i,j,false,t);
+
+    if (color_center_border[i][j] == -1 && center_border[i][j] == t) exploreCenter(i,j,false,t);
 
     if(j == 1) 
     {
@@ -644,17 +645,16 @@ void CarcPiece::explore(int i, int j, CarcType t)
 void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
 {
     // If we treat the center and it is already marked then we do nothing
-    if (cent && color_center == 1) return;
+    if (cent && (color_center == 1 || center != t)) return;
 
     // If the subcase is already marked then we do nothing.
-    if(color_center_border[i][j] == 1) return;
+    if(color_center_border[i][j] == 1 || center_border[i][j] != t) return;
     
     // If we're exploring the center
     // Mark it and explore all the subcases in the center_border that has the type t
     if(cent)
     {
         color_center = 1;
-
         for(int di = 0; i < 4; i++)
             if(color_center_border[di][1] == -1 && border[di][1] == t) exploreCenter(di, 1, false, t);
     } 
@@ -685,7 +685,7 @@ void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
             if(color_center_border[(i + 3) % 4][0] == -1 && center_border[(i + 3) % 4][0] == t) exploreCenter((i + 3) % 4, 0, false, t);
         }
 
-        explore(i,j,t);
+        if(color_border[i][j] == -1 && border[i][j] == t) explore(i,j,t);
     }
 }
 

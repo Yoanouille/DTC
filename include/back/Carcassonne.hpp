@@ -28,7 +28,7 @@ class Carcassonne : public Game
         bool canPlacePawn(int i, int j, int di, int dj, Piece &p);
         void placePawn(int i, int j, int di, int dj, int player);
 
-        int search(int i, int j, int di, int dj, CarcType type, bool placing);
+        int search(int i, int j, int di, int dj, CarcType type, bool placing, bool cent);
         void searchAbbaye(int i, int j);
 
         virtual bool gameOver() override;
