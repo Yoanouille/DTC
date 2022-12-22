@@ -128,7 +128,7 @@ void Carcassonne::searchAbbaye(int i, int j)
         int count = 0;
         for(int di = -1; di <= 1; di++)
             for (int dj = -1; dj <= 1; dj++)
-                if(di != 0 || dj != 0 && board[i + di][j + di] != nullptr)
+                if((di != 0 || dj) != 0 && board[i + di][j + di] != nullptr)
                     count ++;
         if (count == 8)
         {
