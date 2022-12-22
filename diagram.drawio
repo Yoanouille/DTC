@@ -112,7 +112,7 @@
                 <mxCell id="58" value="+ getNextDir() : vector&lt;Pos&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3RVoRIsLSyqrtPsKRKoU-13">
                     <mxGeometry y="372" width="291" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="233" value="+ getNextDir() : vector&lt;Pos&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3RVoRIsLSyqrtPsKRKoU-13">
+                <mxCell id="233" value="+ Pawn handling methods" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3RVoRIsLSyqrtPsKRKoU-13">
                     <mxGeometry y="398" width="291" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="3RVoRIsLSyqrtPsKRKoU-25" value="Game" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#FF3333;" parent="1" vertex="1">
