@@ -138,7 +138,7 @@ vector<PiecePos> Game::getAllPiece()
 
 Player *Game::getWinner() const
 {
-    int max = 0;
+    int max = -1;
     Player *win = nullptr;
     for(Player *p : players)
     {

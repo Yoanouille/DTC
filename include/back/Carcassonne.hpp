@@ -5,13 +5,6 @@
 #include <iostream>
 #include <vector>
 
-typedef struct Triple
-{
-    int i;
-    int j;
-    Direction d; 
-} Triple;
-
 class Carcassonne : public Game
 {
     private:
@@ -26,9 +19,8 @@ class Carcassonne : public Game
         void place(int i, int j, Piece &p) override;
 
         bool canPlacePawn(int i, int j, int di, int dj, Piece &p);
-        void placePawn(int i, int j, int di, int dj, int player);
-
-        int search(int i, int j, int di, int dj, CarcType type, bool placing, bool cent);
+        
+        int search(int i, int j, int di, int dj, CarcType type, bool placing);
         void searchAbbaye(int i, int j);
 
         virtual bool gameOver() override;

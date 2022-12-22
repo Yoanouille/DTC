@@ -33,6 +33,8 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
 MainScene::~MainScene() 
 {
     if(current_piece != nullptr) delete current_piece;
+    for(PieceDisplayer *p : pos)
+        delete p;
 }
 
 /**

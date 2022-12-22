@@ -496,7 +496,10 @@ int CarcPiece::getNbPawn() const{
 
 /** Check if the pawn is Marked. */
 bool CarcPiece::isPawnMarked() const {
-    return (pawn_coordinates[0] == 4 && color_center == 1) || (color_border[pawn_coordinates[0]][pawn_coordinates[1]] == 1);
+    //if(pawn_coordinates[0] != 4) cout << "MARKED " << border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] << " " << (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]]) << endl; 
+    //else cout << "MARKED " << center << " " << color_center << endl; 
+    if(pawn_coordinates[0] == 4) return color_center == 1;
+    else return (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] == 1);
 }
 
 /** Getter : pawn_coordinates */
@@ -601,8 +604,7 @@ void CarcPiece::placePawn(int i, int j, int player){
 
 /** Remove the pawn on the Piece. */
 void CarcPiece::removePawn() {
-    if ((pawn_coordinates[0] != 4 && color_border[pawn_coordinates[0]][pawn_coordinates[1]] == 1)
-        || (pawn_coordinates[0] == 4 && color_center == 1))
+    if(hasPawn() && isPawnMarked())
     {
         pawn = -1;
         pawn_coordinates[0] = -1;
@@ -662,13 +664,15 @@ void CarcPiece::explore(int i, int j, CarcType t)
     else if(j == 0) 
     {
         if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, t);
-        if(color_border[(i + 1) % 4][2] == -1 && border[(i + 1) % 4][2] == t) explore((i + 1) % 4, 2, t);
+        if(t == Field)
+            if(color_border[(i + 1) % 4][2] == -1 && border[(i + 1) % 4][2] == t) explore((i + 1) % 4, 2, t);
     } 
 
     else 
     {
         if(color_border[i][1] == -1 && border[i][1] == t) explore(i, 1, t);
-        if(color_border[(i + 3) % 4][0] == -1 && border[(i + 3) % 4][0] == t) explore((i + 3) % 4, 0, t);
+        if(t == Field)
+            if(color_border[(i + 3) % 4][0] == -1 && border[(i + 3) % 4][0] == t) explore((i + 3) % 4, 0, t);
     }
 }
 
@@ -686,7 +690,7 @@ void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
     if (cent && (color_center == 1 || center != t)) return;
 
     // If the subcase is already marked then we do nothing.
-    if(color_center_border[i][j] == 1 || center_border[i][j] != t) return;
+    if(!cent && (color_center_border[i][j] == 1 || center_border[i][j] != t)) return;
     
     // If we're exploring the center
     // Mark it and explore all the subcases in the center_border that has the type t
@@ -695,7 +699,8 @@ void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
         color_center = 1;
 
         for(int di = 0; di < 4; di++)
-            if(color_center_border[di][1] == -1 && border[di][1] == t) exploreCenter(di, 1, false, t);
+            for(int dj = 0; dj < 3; dj++) 
+                if(color_center_border[di][dj] == -1 && border[di][dj] == t) exploreCenter(di, dj, false, t);
     } 
     
     // If we are exploring a subcase in the center_border
