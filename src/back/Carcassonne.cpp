@@ -39,7 +39,11 @@ void Carcassonne::addPlayer(std::string name)
 bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
 {
     //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
-    return search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, false), true) == -1;
+    board[i][j] = &p;
+    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, false), true);
+    cleanColor();
+    board[i][j] = nullptr;
+    return (s != -1);
 }
 
 /**
@@ -58,7 +62,9 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
         //TODO : enlever de return true, mais comme ça je peux test
         //return true;
         if(c.hasPawn()){
-            return canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j, p);
+            bool b = canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j, p);
+            cout << b << endl;
+            return b;
         }
         return true;
     }
@@ -84,6 +90,7 @@ void Carcassonne::place(int i, int j, Piece &p)
         {
             if(c->getType(di, dj, false,false) == Road || c->getType(di, dj, false, false) == Town)
             {
+                cout << "EXPLORE " << c->getType(di, dj, false,false) << endl;
                 // Search removes the pawns so it's ok to iterate over all subcases.
                 search(i, j, di, dj, CarcType(c->getType(di, dj, false, false)), false);
                 cleanColor();
@@ -196,11 +203,13 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
             continue;
         }
 
+
         // If the subcase[di][dj] of the Piece at (i,j) is aleady marked we do nothing and pop the next element
         // Same if the type of the subcase[di][dj] of the Piece is the type we're proceeding
         if(c->getColor(e.di, e.dj, false, false) == 1) continue;
         if(c->getType(e.di, e.dj, false, false) != type) continue;
 
+        cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
         // Exploration inside the Piece
         c->beginExplore(e.di, e.dj, false, type);
         //c->printColor();
@@ -217,7 +226,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         vector<Pos> next_pos = c->getNextDir();
         for(Pos &p : next_pos)
         {
-            //cout << type << " " << "ndi=" << p.i << " " << "ndj=" << p.j << endl;
+            cout << type << " " << "ndi=" << p.i << " " << "ndj=" << p.j << endl;
             int direc = p.i;
             int opp_direc = (direc + 2) % 4;
             int opp_dj = 2 - dj;
@@ -234,11 +243,16 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         nb++;
         if(c->getBonus()) nb++;
     }
+
+    cout << "Sort de BOUCLE" << endl;
     
     // We get here only if the stack is empty i.e we've finished the exploration
 
     // If we are looking for placing the Piece, we stop here
-    if(placing) return nb;
+    if(placing) {
+        cout << "JE RENVOIE " << nb << endl;
+        return nb;
+    }
     
     //cout << type << " " << di << " " << dj << " " << nb <<  endl;
 
