@@ -248,10 +248,8 @@ CarcPiece::CarcPiece(int d) :
                 border[2][j] = Town;
                 border[3][j] = Field;
 
-                center_border[0][j] = Town;
-                center_border[1][j] = Field;
-                center_border[2][j] = Town;
-                center_border[3][j] = Field;
+                for(size_t i = 0; i < 4; i++)
+                    center_border[i][j] = Field;
             }
 
             center = Field;
@@ -287,7 +285,7 @@ CarcPiece::CarcPiece(int d) :
             
             border[1][1] = Road;
             border[2][1] = Road;
-            center_border[1][3] = Field;
+            center_border[1][2] = Field;
             center_border[2][0] = Field;
             
             center = Field;
@@ -380,7 +378,7 @@ CarcPiece::CarcPiece(int d) :
             border[1][1] = Road;
             border[2][1] = Road;
             center_border[1][1] = Road;
-            center_border[1][2] = Road;
+            center_border[1][0] = Road;
             center_border[2][1] = Road;
             center_border[2][2] = Road;
             center = Field;
