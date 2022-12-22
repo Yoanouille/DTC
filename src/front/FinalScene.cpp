@@ -48,9 +48,9 @@ void FinalScene::init()
     texts[0].setFont(Assets::getInstance()->MainMenuFont);
     texts[0].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
     texts[0].setPosition(app.getWidth() / 2, app.getHeight() / 8);
+    int x = 1;
     for(size_t i = 0; i < app.getGame()->getPlayers().size(); i++)
     {
-        int x = 1;
         if(app.getGame()->getPlayers()[i] != p)
         {
             texts.push_back({});
@@ -60,8 +60,8 @@ void FinalScene::init()
             texts[x].setFont(Assets::getInstance()->MainMenuFont);
             texts[x].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
             texts[x].setPosition(app.getWidth() / 2, (x + 1) * app.getHeight() / 8);
+            x++;
         }
-        x++;
     }
 }
 

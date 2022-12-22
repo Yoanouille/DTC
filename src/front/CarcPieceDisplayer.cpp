@@ -265,6 +265,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
     rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
     if(rect.getGlobalBounds().contains(mouse))
     {
+        //Can't Pos on Crossroad
+        if(piece.getType(0,0,false, true) == Crossroad) return;
         piece.placePawn(4,3, player);
         //piece.printColor();
         pl->addPawn(-1);

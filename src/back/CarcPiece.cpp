@@ -496,8 +496,8 @@ int CarcPiece::getNbPawn() const{
 
 /** Check if the pawn is Marked. */
 bool CarcPiece::isPawnMarked() const {
-    if(pawn_coordinates[0] != 4) cout << "MARKED " << border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] << " " << (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]]) << endl; 
-    else cout << "MARKED " << center << " " << color_center << endl; 
+    //if(pawn_coordinates[0] != 4) cout << "MARKED " << border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] << " " << (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]]) << endl; 
+    //else cout << "MARKED " << center << " " << color_center << endl; 
     if(pawn_coordinates[0] == 4) return color_center == 1;
     else return (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] == 1);
 }

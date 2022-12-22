@@ -157,6 +157,12 @@ void App::setScene(int i, int gamemode, vector<string> *names)
     case 1:
         if (old_sc != nullptr)
             delete old_sc;
+        if(game != nullptr)
+        {
+            delete game;
+            game = nullptr;
+        }
+        
         old_sc = sc;
         sc = new MainMenu(*this);
         break;

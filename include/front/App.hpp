@@ -35,7 +35,6 @@ private:
     Scene *old_sc;
 
     // The Game
-    // ! Free the Game at the end 
     Game *game;
     int gamemode;
 

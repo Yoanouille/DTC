@@ -30,6 +30,8 @@ class Trax : public Game
 
         std::vector<Pair> moveForced;
 
+        int last_player;
+
         bool explore(int i, int j, int col, Piece *pre);
 
         //MANQUE COUP FORCE
@@ -51,7 +53,10 @@ class Trax : public Game
         bool canPlace(int i, int j, Piece &p) override;
         void place(int i, int j, Piece &p) override;
 
+        Player *getWinner() const;
         virtual bool gameOver();
+
+
 
 };
 

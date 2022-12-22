@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}
+Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}, last_player{0}
 {
     s.fill(8*8, 1);
 }
@@ -38,6 +38,7 @@ void Trax::place(int i, int j, Piece &p)
 {
     if(canPlace(i, j, p))
     {
+        last_player = current_player;
         Game::place(i, j, p);
         last_i = i;
         last_j = j;
@@ -155,6 +156,11 @@ bool Trax::DFS(int color)
 
     return explore(last_i, last_j, color, nullptr);
 
+}
+
+Player *Trax::getWinner() const
+{
+    return players[last_player];
 }
 
 bool Trax::gameOver()

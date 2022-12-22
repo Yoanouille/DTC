@@ -38,8 +38,8 @@ void Carcassonne::addPlayer(std::string name)
  */
 bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
 {
-    //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
-    cout << "CANPLACE" << endl;
+    //cout << "CANPLACE" << endl;
+    if(((CarcPiece &) p).getType(di, dj, false, di == 4) == Abbaye) return true;
     board[i][j] = &p;
     int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true);
     cleanColor();
@@ -51,8 +51,6 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
     // Connectivity test
     if(Game::canPlace(i,j,p)){
         CarcPiece c = (CarcPiece &) p;
-        //TODO : enlever de return true, mais comme ça je peux test
-        //return true;
         if(c.hasPawn()){
             bool b = canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j, p);
             cout << b << endl;
@@ -90,7 +88,7 @@ void Carcassonne::place(int i, int j, Piece &p)
         }   
     }
 
-    //searchAbbaye(i,j);
+    searchAbbaye(i,j);
     current_player = (current_player + 1) % nb_player;
 }
 
@@ -120,13 +118,13 @@ void Carcassonne::searchAbbaye(int i, int j)
         int count = 0;
         for(int di = -1; di <= 1; di++)
             for (int dj = -1; dj <= 1; dj++)
-                if((di != 0 || dj) != 0 && board[i + di][j + di] != nullptr)
+                if((di != 0 || dj != 0) && board[i + di][j + di] != nullptr)
                     count ++;
         if (count == 8)
         {
             players[((CarcPiece *)board[p.i][p.j])->getPawn()]->addScore(9);
             ((PlayerCarc *)players[((CarcPiece *)board[p.i][p.j])->getPawn()])->addPawn(1);
-            ((CarcPiece *)board[p.i][p.j])->removePawn();
+            ((CarcPiece *)board[p.i][p.j])->removeAllPawn();
         }
     }
 }
@@ -199,19 +197,19 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 
         // If the subcase[di][dj] of the Piece at (i,j) is aleady marked we do nothing and pop the next element
         // Same if the type of the subcase[di][dj] of the Piece is the type we're proceeding
-        cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
-        cout << "Color : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
-        cout << "Type : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
+        //cout << "Color : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
+        //cout << "Type : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
 
 
         if(c->getColor(e.di, e.dj, false, e.di == 4) == 1) continue;
         if(c->getType(e.di, e.dj, false, e.di == 4) != type) continue;
 
-        cout << c->toString() << endl;
+        cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
+        //cout << c->toString() << endl;
         // Exploration inside the Piece
         c->beginExplore(e.di, e.dj, e.di == 4, type);
 
-        cout << c->printColor() << endl;
+        //cout << c->printColor() << endl;
         //c->printColor();
     
         if(c->hasPawn() && c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;
@@ -224,7 +222,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         vector<Pos> next_pos = c->getNextDir();
         for(Pos &p : next_pos)
         {
-            cout << type << " " << "ndi=" << p.i << " " << "ndj=" << p.j << endl;
+            //cout << type << " " << "ndi=" << p.i << " " << "ndj=" << p.j << endl;
             int direc = p.i;
             int opp_direc = (direc + 2) % 4;
             int opp_dj = 2 - p.j;
@@ -242,16 +240,17 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         if(c->getBonus()) nb++;
     }
 
-    cout << "Sort de BOUCLE" << endl;
+    //cout << "Sort de BOUCLE" << endl;
     
     // We get here only if the stack is empty i.e we've finished the exploration
 
     // If we are looking for placing the Piece, we stop here
     if(placing) {
-        cout << "JE RENVOIE " << nb << endl;
+        //cout << "JE RENVOIE " << nb << endl;
         return nb;
     }
     
+    cout << "Score : " << nb << endl;
     //cout << type << " " << di << " " << dj << " " << nb <<  endl;
 
     // Remove the pawn on the pieces
@@ -273,6 +272,9 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     // max = 0 mean that no pawn has been placed and so we do nothing
     if(max == 0) return nb;
 
+    //Special Score for Town !
+    if(type == Town && nb != 2) nb *= 2;
+
     for(int i = 0; i < nb_player; i++)
         if(nb_pawn[i] == max) players[i]->addScore(nb);
     
@@ -283,5 +285,17 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 bool Carcassonne::gameOver()
 {
     //Plus de cartes et ensuite calculer le reste des points
+
+    //Algo Final !
+
+    /*
+    Pour chaque ville FINI, chercher des pions sur les environs/sur les plaines
+        stocker les coor des villes fini
+        on parcourt la ville et on stocke chaque piece
+        pour chaque piece on parcourt les plaines et on stocke les pions
+        et on add les points
+    Celui qui a le plus de pions -> ajoute 4 points
+    */
+
     return false;
 }
