@@ -41,19 +41,10 @@ bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
     //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
     cout << "CANPLACE" << endl;
     board[i][j] = &p;
-    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true, di==4);
+    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true);
     cleanColor();
     board[i][j] = nullptr;
     return (s != -1);
-}
-
-/**
- * Place a pawn on a Piece 
- */
-void Carcassonne::placePawn(int i, int j, int di, int dj, int player)
-{
-    if(canPlacePawn(i, j, di, dj, *((CarcPiece *)(board[i][j])))) 
-        ((CarcPiece *)(board[i][j]))->placePawn(di,dj,player);
 }
 
 bool Carcassonne::canPlace(int i, int j, Piece &p){
@@ -93,7 +84,7 @@ void Carcassonne::place(int i, int j, Piece &p)
             {
                 cout << "EXPLORE " << c->getType(di, dj, false, di == 4) << endl;
                 // Search removes the pawns so it's ok to iterate over all subcases.
-                search(i, j, di, dj, CarcType(c->getType(di, dj, false,  di == 4)), false, di == 4);
+                search(i, j, di, dj, CarcType(c->getType(di, dj, false,  di == 4)), false);
                 cleanColor();
             }
         }   
@@ -168,7 +159,7 @@ typedef struct Elem
  * 
  * @return The points gained at the end of the exploration
  */
-int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing, bool cent)
+int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing)
 {
     // Initialize the stack and push the first element
     stack<Elem> s{};
@@ -206,27 +197,26 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
             continue;
         }
 
-
-        cout << c->printColor() << endl;
-
         // If the subcase[di][dj] of the Piece at (i,j) is aleady marked we do nothing and pop the next element
         // Same if the type of the subcase[di][dj] of the Piece is the type we're proceeding
-        if(c->getColor(e.di, e.dj, false, cent) == 1) continue;
-        if(c->getType(e.di, e.dj, false, cent) != type) continue;
-
         cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
+        cout << "Color : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
+        cout << "Type : " << c->getColor(e.di, e.dj, false, e.di == 4) << endl;
+
+
+        if(c->getColor(e.di, e.dj, false, e.di == 4) == 1) continue;
+        if(c->getType(e.di, e.dj, false, e.di == 4) != type) continue;
+
         cout << c->toString() << endl;
         // Exploration inside the Piece
-        c->beginExplore(e.di, e.dj, false, type);
+        c->beginExplore(e.di, e.dj, e.di == 4, type);
 
         cout << c->printColor() << endl;
         //c->printColor();
     
-        if(c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;
+        if(c->hasPawn() && c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;
 
-        if (c->getPawn() != -1)
-                if (c-> isPawnMarked())
-                    nb_pawn[i] ++;
+        if (c->hasPawn() && c->isPawnMarked()) nb_pawn[c->getPawn()] ++;
         v.push_back({e.i, e.j});
 
         // Get all the possibly connected pieces
@@ -237,7 +227,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
             cout << type << " " << "ndi=" << p.i << " " << "ndj=" << p.j << endl;
             int direc = p.i;
             int opp_direc = (direc + 2) % 4;
-            int opp_dj = 2 - dj;
+            int opp_dj = 2 - p.j;
 
             if(direc == UP) s.push({e.i - 1, e.j, opp_direc, opp_dj});
             if(direc == DOWN) s.push({e.i + 1, e.j, opp_direc, opp_dj});
