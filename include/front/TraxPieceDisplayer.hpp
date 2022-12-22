@@ -4,7 +4,6 @@
 #include "back/TraxPiece.hpp"
 #include "AssetsLoader.hpp"
 #include "PieceDisplayer.hpp"
-#include "Controller.hpp"
 
 class TraxPieceDisplayer : public PieceDisplayer
 {

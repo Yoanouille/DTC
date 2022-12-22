@@ -54,21 +54,6 @@ void MainScene::init()
     rectBG.setScale(0.33, 0.33);
 
     initBoard();
-
-
-    // Set up controller
-    // Controller & controller = (Controller::getInstance());
-    // controller.bindActionOnKey(Keyboard::Left, [this](){ 
-    //     for(PieceDisplayer * p : this->pos){
-    //         p->rotate(true);
-    //     }
-    // });
-
-    // controller.bindActionOnKey(Keyboard::Right, [this](){
-    //     for(PieceDisplayer * p : this->pos){
-    //         p->rotate(true);
-    //     }
-    // });
 }
 
 void MainScene::initBoard()
