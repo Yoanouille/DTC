@@ -39,6 +39,7 @@ void Carcassonne::addPlayer(std::string name)
 bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
 {
     //TODO CHANGER cette horreur                           ici (mettre en argument la piece en plus !)
+    cout << "CANPLACE" << endl;
     board[i][j] = &p;
     int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, false), true);
     cleanColor();
@@ -98,7 +99,7 @@ void Carcassonne::place(int i, int j, Piece &p)
         }   
     }
 
-    searchAbbaye(i,j);
+    //searchAbbaye(i,j);
     current_player = (current_player + 1) % nb_player;
 }
 
@@ -204,14 +205,19 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         }
 
 
+        cout << c->printColor() << endl;
+
         // If the subcase[di][dj] of the Piece at (i,j) is aleady marked we do nothing and pop the next element
         // Same if the type of the subcase[di][dj] of the Piece is the type we're proceeding
         if(c->getColor(e.di, e.dj, false, false) == 1) continue;
         if(c->getType(e.di, e.dj, false, false) != type) continue;
 
         cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
+        cout << c->toString() << endl;
         // Exploration inside the Piece
         c->beginExplore(e.di, e.dj, false, type);
+
+        cout << c->printColor() << endl;
         //c->printColor();
     
         if(c->isPawnMarked() && placing && !(e.i == i && e.j == j)) return -1;

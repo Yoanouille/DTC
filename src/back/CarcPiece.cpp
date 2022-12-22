@@ -520,31 +520,69 @@ void CarcPiece::getConnectColor(int *t) const
         t[i] = border[(i + direction) % 4][1];
 }
 
+/*
+  aaa
+  aaa
+aa   aa
+aa a aa
+aa   aa
+  aaa
+  aaa
+
+*/
+
 string CarcPiece::toString() const
 {
-//     string s{"  "};
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(border[direction][j]) + " ";
-//     s += "\n  ";
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(center_border[direction][j]) + " ";
-//     s += "\n";
+    string s{"  "};
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(border[direction][j]) + " ";
+    s += "\n  ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(center_border[direction][j]) + " ";
+    s += "\n";
 
-//     for (size_t j = 0; j < 3; j++){
-//         s += to_string(border[(direction + 1) % 4][2 - j]) + to_string(center_border[(direction + 1) % 4][2 - j]) + "  ";
-//         s += (j == 1 ? to_string(center) : " ") + "  ";
-//         s += to_string(border[(direction + 3) % 4][j]) + to_string(border[(direction + 3) % 4][j]) + "\n";
-//     }
-//     s += "  ";
+    for (size_t j = 0; j < 3; j++){
+        s += to_string(border[(direction + 1) % 4][2 - j]) + to_string(center_border[(direction + 1) % 4][2 - j]) + "  ";
+        s += (j == 1 ? to_string(center) : " ") + "  ";
+        s += to_string(border[(direction + 3) % 4][j]) + to_string(border[(direction + 3) % 4][j]) + "\n";
+    }
+    s += "  ";
 
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(center_border[(direction + 2) % 4][2 - j]) + " ";
-//     s += "\n  ";
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(border[(direction + 2) % 4][2 - j]) + " ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(center_border[(direction + 2) % 4][2 - j]) + " ";
+    s += "\n  ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(border[(direction + 2) % 4][2 - j]) + " ";
 
-//   return s;
-    return to_string(id) + " ";
+
+  return s;
+    //return to_string(id) + " ";
+}
+
+string CarcPiece::printColor() const
+{
+    string s{"  "};
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_border[direction][j]) + " ";
+    s += "\n  ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_center_border[direction][j]) + " ";
+    s += "\n";
+
+    for (size_t j = 0; j < 3; j++){
+        s += to_string(color_border[(direction + 1) % 4][2 - j]) + to_string(color_center_border[(direction + 1) % 4][2 - j]) + "  ";
+        s += (j == 1 ? to_string(color_center) : " ") + "  ";
+        s += to_string(color_border[(direction + 3) % 4][j]) + to_string(color_border[(direction + 3) % 4][j]) + "\n";
+    }
+    s += "  ";
+
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_center_border[(direction + 2) % 4][2 - j]) + " ";
+    s += "\n  ";
+    for (size_t j = 0; j < 3; j++)
+        s += to_string(color_border[(direction + 2) % 4][2 - j]) + " ";
+    
+    return s;
 }
 
 /**
@@ -612,7 +650,7 @@ void CarcPiece::explore(int i, int j, CarcType t)
     // Else we mark it and we explore the center and the neighbours.
     // If the subcase is in a corner, we have to explore its neighbour in the adjacent array.
     color_border[i][j] = 1;
-    exploreCenter(i,j,false,t);
+    if(center_border[i][j] == t && color_center_border[i][j] == -1) exploreCenter(i,j,false,t);
 
     if(j == 1) 
     {
@@ -655,7 +693,7 @@ void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
     {
         color_center = 1;
 
-        for(int di = 0; i < 4; i++)
+        for(int di = 0; di < 4; di++)
             if(color_center_border[di][1] == -1 && border[di][1] == t) exploreCenter(di, 1, false, t);
     } 
     
@@ -685,7 +723,7 @@ void CarcPiece::exploreCenter(int i, int j, bool cent, CarcType t)
             if(color_center_border[(i + 3) % 4][0] == -1 && center_border[(i + 3) % 4][0] == t) exploreCenter((i + 3) % 4, 0, false, t);
         }
 
-        explore(i,j,t);
+        if(border[i][j] == t && color_border[i][j] == -1) explore(i,j,t);
     }
 }
 
