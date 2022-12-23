@@ -3,8 +3,6 @@
 
 // For rand() method
 #include <cstdlib>
-
-// For building string to print
 #include <string>
 
 #include "Piece.hpp"
@@ -18,11 +16,13 @@ private:
 public:
     DomPiece();
     virtual ~DomPiece();
+
+    // Getters
+    int getVal(int dir, int i);
+
+    // Overriden methods from Piece
     bool connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
-
-    int getVal(int dir, int i);
-
 };
 #endif

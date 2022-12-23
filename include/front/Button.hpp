@@ -6,6 +6,7 @@
 
 #include "App.hpp"
 #include "AssetsLoader.hpp"
+#include <functional>
 
 class Button :  public sf::Transformable {
 private:

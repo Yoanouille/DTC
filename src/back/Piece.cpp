@@ -1,11 +1,8 @@
 #include "back/Piece.hpp"
 using namespace std;
 
-
-Piece::Piece() : direction{0}, color{0}
-{
-    
-}
+/** Constructor */
+Piece::Piece() : direction{0}, color{0} {}
 
 /**
  * Destructor
@@ -16,20 +13,14 @@ Piece::Piece() : direction{0}, color{0}
  */
 Piece::~Piece() {}
 
-int Piece::getDirection() const
-{
-    return direction;
-}
+/** Getter : direction */
+int Piece::getDirection() const { return direction; }
 
-int Piece::getColor() const
-{
-    return color;
-}
+/** Getter : color */
+int Piece::getColor() const { return color; }
 
-int Piece::getEarnedValue(Piece &p, int dir) 
-{
-    return 0;
-}
+
+int Piece::getEarnedValue(Piece &p, int dir) { return 0; }
 
 /**
  * Rotate the Piece following a direction
@@ -45,19 +36,13 @@ void Piece::rotate(bool clockwise)
         direction = (direction + 3) % 4;
 }
 
-void Piece::getConnectColor(int *t) const
-{
-}
+void Piece::getConnectColor(int *t) const {}
 
-void Piece::setColor(int c)
-{
-    color = c;
-}
+/** Setter color */
+void Piece::setColor(int c) { color = c; }
 
-void Piece::cleanColor()
-{
-    color = 0;
-}
+/** Clean the color */
+void Piece::cleanColor() { color = 0; }
 
 /**
  * Printing function

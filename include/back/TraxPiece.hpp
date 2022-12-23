@@ -1,7 +1,6 @@
 #ifndef TRAXPIECE_H
 #define TRAXPIECE_H
 
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -21,14 +20,15 @@ public:
     virtual ~TraxPiece();
 
     bool isRecto() const;
+    void flip();
+
+    // Overriden methods from Piece
     bool connectable(Piece &p, int pDir) override;
     int getEarnedValue(Piece &p, int pDir) override;
     std::string toString() const override;
-
     void getConnectColor(int *t) const override;
-    static bool forcedMove(std::vector<TraxPiece *> tabp);
 
-    void flip();
+    static bool forcedMove(std::vector<TraxPiece *> tabp);
 };
 
 #endif

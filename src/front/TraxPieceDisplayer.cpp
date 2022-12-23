@@ -2,11 +2,7 @@
 using namespace sf;
 using namespace std;
 
-/**
- * Constructor
- * It is private to prevent for creating more than one Controller.
- * This unique Controller is stored in INSTANCE.
- */
+/** Constructor */
 TraxPieceDisplayer::TraxPieceDisplayer(App& app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}, dx{0}, dy{0}
 {
     setShownSide(true);

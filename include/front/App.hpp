@@ -11,7 +11,6 @@
 #include "back/UnknownGamemodeException.hpp"
 
 #include "AssetsLoader.hpp"
-#include "Controller.hpp"
 #include "Scene.hpp"
 
 enum Gamemode {

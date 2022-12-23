@@ -1,7 +1,5 @@
 #include "back/TraxPiece.hpp"
 using namespace std;
-#include <iostream>
-#include <vector>
 
 /**
  * Constructor
@@ -13,24 +11,8 @@ TraxPiece::TraxPiece() : tab{true, false, true, false}, recto{true}, color_dir{-
 /** Destructor */
 TraxPiece ::~TraxPiece() {}
 
-/** Getter */
+/** Getter : recto*/
 bool TraxPiece::isRecto() const { return recto; }
-
-/** Overriden function */
-bool TraxPiece::connectable(Piece &p, int pDir)
-{
-    return tab[(direction + pDir + 2)%4] == ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction)) %4];
-}
-
-/** Overriden function*/
-int TraxPiece::getEarnedValue(Piece &p, int pDir) { 
-    TraxPiece &p1 = (TraxPiece &)p;
-    int col = 0;
-    if(tab[(direction + pDir + 2)%4]) col = 1;
-    p1.color_dir[pDir] = col;
-    this->color_dir[(pDir + 2)%4] = col;
-    return 0; 
-}
 
 /**
  * Flip the TraxPiece
@@ -56,6 +38,22 @@ void TraxPiece::flip()
     direction = 0;
 }
 
+/** Overriden function */
+bool TraxPiece::connectable(Piece &p, int pDir)
+{
+    return tab[(direction + pDir + 2)%4] == ((TraxPiece &)p).tab[((pDir + ((TraxPiece &)p).direction)) %4];
+}
+
+/** Overriden function*/
+int TraxPiece::getEarnedValue(Piece &p, int pDir) { 
+    TraxPiece &p1 = (TraxPiece &)p;
+    int col = 0;
+    if(tab[(direction + pDir + 2)%4]) col = 1;
+    p1.color_dir[pDir] = col;
+    this->color_dir[(pDir + 2)%4] = col;
+    return 0; 
+}
+
 /**
  * toString method
  * create the following string
@@ -74,9 +72,7 @@ string TraxPiece::toString() const
 void TraxPiece::getConnectColor(int *t) const
 {
     for(int i = 0; i < 4; i++)
-    {
         t[i] = color_dir[i];   
-    }
 }
 
 bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
@@ -84,24 +80,16 @@ bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
     int dir[4] = {-1,-1,-1,-1};
 
     for(int i = 0; i < 4; i++)
-    {
         if(tabp[i] != nullptr)
-        {
             dir[i] = tabp[i]->tab[(tabp[i]->direction + i + 2)%4];
-        }
-    }
     
     for(int i = 0; i < 4; i++)
     {
         if(dir[i] != -1)
         {
             for(int j = i + 1; j < 4; j++)
-            {
                 if(dir[j] != -1 && dir[i] == dir[j])
-                {
                     return true;
-                }
-            }
         }
     }
 
