@@ -70,7 +70,7 @@ void Sack::initTrax()
 /** Initialize the Sack for a Carcassonne Game*/
 void Sack::initCarcassonne(int perm)
 {
-    size = 73;
+    size = 36;
     CarcPiece *p24 = new CarcPiece{24};
     CarcPiece *p2 = new CarcPiece{2};
     CarcPiece *p4 = new CarcPiece{4};

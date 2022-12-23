@@ -16,7 +16,7 @@ class CarcPieceDisplayer : public PieceDisplayer
 
         sf::RectangleShape rect;
 
-        sf::Color *color;
+        sf::Color color[4];
 
         void drawRect(sf::Vector2f &mouse, int scl);
         void drawPawn(int scl);

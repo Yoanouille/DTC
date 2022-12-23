@@ -166,7 +166,13 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     stack<Elem> s{};
     s.push({i, j, di, dj});
 
-    if(finalField) pawn_player = {};
+    if(finalField) 
+    {
+        pawn_player = {};
+        pawn_player.resize(nb_player);
+        for(int i = 0; i < nb_player; i++)
+            pawn_player[i] = 0;
+    }
 
     // nb is used to count the points gained at the end of the exploration
     // counting points is equivalent to counting the number of tiles(of some type) that are connected.
@@ -264,6 +270,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 
     if(final && type == Field) 
     {
+        //cout << "HEYEYEYE" << endl;
         for(size_t ii = 0; ii < nb_player; ii++)
         {
             pawn_player[ii]+= nb_pawn[ii];
@@ -273,6 +280,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 
     if(finalField)
     {
+        //cout << "i=" << i << " j=" << j << " nb=" << nb << endl;
         for(Pos &p : v)
         {
             CarcPiece *c = (CarcPiece *)board[p.i][p.j];
@@ -283,6 +291,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
                     CarcType t = c->getType(dii, djj, false, false);
                     if(t == Field) 
                     {
+                        //cout << "BEGIN SEARCH" << endl;
                         search(p.i, p.j, dii, djj, Field, false, true, false, false);
                     }
                 }
@@ -393,7 +402,7 @@ void Carcassonne::finalSearchField()
                         {
                             if(search(i, j, di, dj, c->getType(di, dj, false, false), false, false, true, false) > 0)
                             {
-
+                                //cout << "BLABLA" << endl;
                                 // Updating the scores 
                                 // We give the points to the players that have the maximum number of pawn
                                 int max = 0;
@@ -429,9 +438,10 @@ bool Carcassonne::gameOver()
     //Plus de cartes et ensuite calculer le reste des points
     if(!s.isEmpty()) return false;
     //Algo Final !
-
+    //cout << "FIN CARC -> DEBUT GALERE" << endl;
     searchFinalTownAndRoadAndAbbaye();
     cleanColor();
+    //cout << "HEY" << endl;
     finalSearchField();
 
     return true;

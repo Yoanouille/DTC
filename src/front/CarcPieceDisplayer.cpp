@@ -1,6 +1,7 @@
 #include "front/CarcPieceDisplayer.hpp"
 #include "back/PlayerCarc.hpp"
 
+using namespace sf;
 
 // hue: 0-360°; sat: 0.f-1.f; val: 0.f-1.f
 sf::Color hsv(int hue, float sat, float val)
@@ -36,7 +37,7 @@ sf::Color hsv(int hue, float sat, float val)
 
 CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) : 
     PieceDisplayer(app,x,y), piece{p},
-    dx{0}, dy{0}, rect{}, color{new Color[app.getGame()->getPlayers().size()]}
+    dx{0}, dy{0}, rect{}, color{Color::Red, Color::Green, Color::Yellow, Color::Blue}
 {
     if(p.hasPawn()) state = 2;
     this->setTexture(&Assets::getInstance()->CarcPieceTexture);
@@ -45,10 +46,10 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
         
     this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
 
-    for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
-    {
-        color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
-    }
+    // for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
+    // {
+    //     color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
+    // }
 
     int dir = p.getDirection();
 
@@ -63,7 +64,7 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
 
 CarcPieceDisplayer::~CarcPieceDisplayer()
 {
-    delete color;
+    //delete color;
 }
 
 void CarcPieceDisplayer::rotates(bool clockwise) {
