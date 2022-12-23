@@ -27,13 +27,15 @@ private:
     // Initializes the Sacks depending on the gamemode.
     void initDom(int s);
     void initTrax();
-    void initCarcassonne();
+    void initCarcassonne(int perm);
+
+    void permut(int perm);
 
 public:
     Sack();
     virtual ~Sack();
 
-    void fill(int size, int gamemode);
+    void fill(int size, int gamemode, int perm);
     bool isEmpty();
 
     Piece *draw();

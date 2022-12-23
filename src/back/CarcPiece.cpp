@@ -775,3 +775,15 @@ vector<Pos> CarcPiece::getNextDir()
 
     return next_dir;
 }
+
+void CarcPiece::cleanColorField()
+{
+    color = 0;
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 3; j++){
+            if(border[i][j] == Field) color_border[i][j] = -1;
+            if(center_border[i][j] == Field) color_center_border[i][j] = -1;
+        }
+    }
+    if(center == Field) color_center = -1;   
+}

@@ -26,7 +26,7 @@ Sack::~Sack()
  * @param gamemode The gamemode : 0 = Dom, 1 = Trax, 2 = Carcassonne
  * @throws UnknownGamemodeException - When gamemode is not between 0 and 2
 */
-void Sack::fill(int s, int gamemode)
+void Sack::fill(int s, int gamemode, int perm)
 { 
     switch (gamemode)
     {
@@ -37,7 +37,7 @@ void Sack::fill(int s, int gamemode)
         initTrax();
         break;
     case 2:
-        initCarcassonne();
+        initCarcassonne(perm);
         break;
     default:
         throw UnknownGamemodeException();
@@ -68,7 +68,7 @@ void Sack::initTrax()
 }
 
 /** Initialize the Sack for a Carcassonne Game*/
-void Sack::initCarcassonne()
+void Sack::initCarcassonne(int perm)
 {
     size = 73;
     CarcPiece *p24 = new CarcPiece{24};
@@ -145,7 +145,37 @@ void Sack::initCarcassonne()
         sack.push_back(p21);
     }
 
-    shuffle();
+    if(perm == 0) shuffle();
+    else permut(perm);
+}
+
+void Sack::permut(int perm)
+{
+    //int p[72];
+    // for(int i = 0; i < 72; i++)
+    // {
+    //     p[i] = i+1;
+    // }
+    // for(int i = 0; i < 72; i++)
+    // {
+    //     int j = (rand() % (72 - i)) + i;
+    //     int tmp = p[i];
+    //     p[i] = p[j];
+    //     p[j] = tmp;
+    // }
+    // for(int i = 0; i < 72; i++)
+    // {
+    //     std::cout << p[i] << " ";
+    // }
+    // std::cout << std::endl;
+    int p[] = {0, 56, 4, 40, 29, 54, 36, 2, 50, 8, 20, 71, 59, 63, 53, 1, 26, 69, 39, 11, 44, 28, 30, 3, 61, 13, 27, 57, 41, 32, 17, 6, 68, 55, 43, 58, 34, 38, 12, 60, 9, 46, 15, 64, 14, 65, 23, 45, 42, 18, 16, 70, 19, 31, 37, 25, 62, 52, 33, 67, 51, 49, 66, 5, 24, 47, 21, 48, 10, 7, 35, 22};
+    for(int i = 0; i < 72; i++)
+    {
+        int j = p[i];
+        Piece *pie = sack[i];
+        sack[i] = sack[j];
+        sack[j] = pie;
+    }
 }
 
 /** Check if the sack is empty */

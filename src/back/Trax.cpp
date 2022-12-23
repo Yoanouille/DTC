@@ -7,7 +7,7 @@ using namespace std;
 
 Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}, last_player{0}
 {
-    s.fill(8*8, 1);
+    s.fill(8*8, 1, 0);
 }
 
 Trax::~Trax()

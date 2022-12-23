@@ -182,6 +182,7 @@ void PlayerSettingsScene::render(){
       for (TextField t : nameFields){
           names.push_back(t.getText().getString().toAnsiString());
       }
+      app.initGame(gamemode, 0);
 
       app.setScene(nextScene, gamemode, &names);
     } 

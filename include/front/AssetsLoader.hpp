@@ -27,6 +27,7 @@ class Assets {
         Texture Sack;
         Texture RotateLeft;
         Texture Flip;
+        Texture Pass;
         Texture CarcPieceTexture;
         int CarcPieceSize;
 
@@ -49,6 +50,7 @@ class Assets {
     friend class DomPieceDisplayer;
     friend class CarcPieceDisplayer;
     friend class FinalScene;
+    friend class ChooseScene;
 };
 
 #endif

@@ -69,6 +69,7 @@ class CarcPiece : public Piece
         void removeAllPawn();
 
         void cleanColor() override;
+        void cleanColorField();
         //void printColor();
 
         void beginExplore(int i, int j, bool cent, CarcType t);

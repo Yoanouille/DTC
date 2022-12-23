@@ -17,6 +17,14 @@ void Game::addPlayer(std::string name)
     nb_player++;
 }
 
+void Game::pass()
+{
+    current_player ++;
+    current_player = current_player % nb_player;
+
+}
+
+
 Piece &Game::draw()
 {
     return *(s.draw());

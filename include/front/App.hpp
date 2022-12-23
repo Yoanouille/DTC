@@ -50,12 +50,12 @@ public:
     virtual ~App();
 
     // launch the event loop and the render loop
-    void runApp();
+    void runApp(int i);
 
     int getHeight() const;
     int getWidth() const;
 
-    void initGame(int gamemode);
+    void initGame(int gamemode, int perm);
     Game *getGame();
     int getGamemode() const;
 

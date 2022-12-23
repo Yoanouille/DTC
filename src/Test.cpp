@@ -80,13 +80,13 @@ void testTraxPiece()
 void testSack()
 {
     Sack domSack{};
-    domSack.fill(5,0);
+    domSack.fill(5,0,0);
 
     Sack traxSack{};
-    domSack.fill(0,1);
+    domSack.fill(0,1,0);
 
     Sack carcSack{};
-    carcSack.fill(0,2);
+    carcSack.fill(0,2,0);
 
     cout << "---- DomPieces ----" << endl;
     cout << domSack << endl;
@@ -99,7 +99,7 @@ void testSack()
     try
     {
         Sack unknown{};
-        unknown.fill(5,3);
+        unknown.fill(5,3,0);
         cout << " Failure" << endl;
     }
     catch (UnknownGamemodeException &e)
@@ -242,7 +242,7 @@ void testTrax_2()
 
 void testCarcassonne()
 {
-    Game *g = new Carcassonne();  
+    Game *g = new Carcassonne(0);  
     Carcassonne *t = (Carcassonne *)g;
 
     g->addPlayer("Yoan");

@@ -9,8 +9,9 @@ using namespace std;
  * Constructor :
  * We initialize the sack and we place the first Piece on the board.
  */
-Carcassonne::Carcassonne() { 
-    s.fill(0, 2);
+Carcassonne::Carcassonne(int perm) : pawn_player{}
+{ 
+    s.fill(0, 2, perm);
     board[0][0] = s.draw();
     nb_piece++;
 }
@@ -41,7 +42,7 @@ bool Carcassonne::canPlacePawn(int i, int j, int di, int dj, Piece &p)
     //cout << "CANPLACE" << endl;
     if(((CarcPiece &) p).getType(di, dj, false, di == 4) == Abbaye) return true;
     board[i][j] = &p;
-    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true);
+    int s = search(i, j, di, dj, ((CarcPiece &) p).getType(di, dj, false, di == 4), true, false, false, false);
     cleanColor();
     board[i][j] = nullptr;
     return (s != -1);
@@ -53,7 +54,7 @@ bool Carcassonne::canPlace(int i, int j, Piece &p){
         CarcPiece c = (CarcPiece &) p;
         if(c.hasPawn()){
             bool b = canPlacePawn(i,j, c.getPawnCoordinates().i,c.getPawnCoordinates().j, p);
-            cout << b << endl;
+            //cout << b << endl;
             return b;
         }
         return true;
@@ -80,9 +81,9 @@ void Carcassonne::place(int i, int j, Piece &p)
         {
             if(c->getType(di, dj, false,false) == Road || c->getType(di, dj, false, di == 4) == Town)
             {
-                cout << "EXPLORE " << c->getType(di, dj, false, di == 4) << endl;
+                //cout << "EXPLORE " << c->getType(di, dj, false, di == 4) << endl;
                 // Search removes the pawns so it's ok to iterate over all subcases.
-                search(i, j, di, dj, CarcType(c->getType(di, dj, false,  di == 4)), false);
+                search(i, j, di, dj, CarcType(c->getType(di, dj, false,  di == 4)), false, false, false, true);
                 cleanColor();
             }
         }   
@@ -106,11 +107,13 @@ void Carcassonne::searchAbbaye(int i, int j)
     vector<Pos> abbayes{};
     for(int di = -1; di <= 1; di++)
         for (int dj = -1; dj <= 1; dj++)
-            if(board[i + di][j + di] != nullptr)
-                if(((CarcPiece *)board[i + di][j + di])->getCenter() == Abbaye 
-                && ((CarcPiece *)board[i + di][j + di])->getPawn() != -1 
-                && ((CarcPiece *)board[i + di][j + di])->getPawnCoordinates().i == 4)
+            if(board[i + di][j + dj] != nullptr)
+                if(((CarcPiece *)board[i + di][j + dj])->getCenter() == Abbaye 
+                && ((CarcPiece *)board[i + di][j + dj])->hasPawn()
+                && ((CarcPiece *)board[i + di][j + dj])->getPawnCoordinates().i == 4)
+                {
                     abbayes.push_back({i+di, j+dj});
+                }
         
 
     // Give points to all players that have the Abbaye surrounded and give the pawns back
@@ -118,7 +121,7 @@ void Carcassonne::searchAbbaye(int i, int j)
         int count = 0;
         for(int di = -1; di <= 1; di++)
             for (int dj = -1; dj <= 1; dj++)
-                if((di != 0 || dj != 0) && board[i + di][j + di] != nullptr)
+                if((di != 0 || dj != 0) && board[p.i + di][p.j + dj] != nullptr)
                     count ++;
         if (count == 8)
         {
@@ -157,11 +160,13 @@ typedef struct Elem
  * 
  * @return The points gained at the end of the exploration
  */
-int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing)
+int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placing, bool final, bool finalField, bool remove)
 {
     // Initialize the stack and push the first element
     stack<Elem> s{};
     s.push({i, j, di, dj});
+
+    if(finalField) pawn_player = {};
 
     // nb is used to count the points gained at the end of the exploration
     // counting points is equivalent to counting the number of tiles(of some type) that are connected.
@@ -191,6 +196,8 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         CarcPiece *c = (CarcPiece *)(board[e.i][e.j]);
         if(c == nullptr) 
         {
+            if(final) continue;
+            if(finalField) return 0;
             if(!placing) return 0;
             continue;
         }
@@ -204,7 +211,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         if(c->getColor(e.di, e.dj, false, e.di == 4) == 1) continue;
         if(c->getType(e.di, e.dj, false, e.di == 4) != type) continue;
 
-        cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
+        //cout << "i=" << e.i  << " j=" << e.j << " di=" << e.di << " dj=" << e.dj << endl;
         //cout << c->toString() << endl;
         // Exploration inside the Piece
         c->beginExplore(e.di, e.dj, e.di == 4, type);
@@ -250,17 +257,52 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
         return nb;
     }
     
-    cout << "Score : " << nb << endl;
+    //cout << "Score : " << nb << endl;
     //cout << type << " " << di << " " << dj << " " << nb <<  endl;
 
-    // Remove the pawn on the pieces
-    for(Pos &p : v){
-        ((CarcPiece *)(board[p.i][p.j]))->removePawn();
+    int score = 0;
+
+    if(final && type == Field) 
+    {
+        for(size_t ii = 0; ii < nb_player; ii++)
+        {
+            pawn_player[ii]+= nb_pawn[ii];
+        }
+        return 0;
     }
 
-    // Give the pawn back to their owners
-    for(int i = 0; i < nb_player; i++)
-        ((PlayerCarc *)(players[i]))->addPawn(nb_pawn[i]);
+    if(finalField)
+    {
+        for(Pos &p : v)
+        {
+            CarcPiece *c = (CarcPiece *)board[p.i][p.j];
+            for(int dii = 0; dii < 4; dii++)
+            {
+                for(int djj = 0; djj < 3; djj++)
+                {
+                    CarcType t = c->getType(dii, djj, false, false);
+                    if(t == Field) 
+                    {
+                        search(p.i, p.j, dii, djj, Field, false, true, false, false);
+                    }
+                }
+            }
+        }
+
+        return nb;
+    }
+
+    if(remove)
+    {
+        // Remove the pawn on the pieces
+        for(Pos &p : v){
+            ((CarcPiece *)(board[p.i][p.j]))->removePawn();
+        }
+
+        // Give the pawn back to their owners
+        for(int i = 0; i < nb_player; i++)
+            ((PlayerCarc *)(players[i]))->addPawn(nb_pawn[i]);
+    }
     
     // Updating the scores 
     // We give the points to the players that have the maximum number of pawn
@@ -273,29 +315,136 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     if(max == 0) return nb;
 
     //Special Score for Town !
-    if(type == Town && nb != 2) nb *= 2;
+    if(!final && type == Town && nb != 2) nb *= 2;
 
     for(int i = 0; i < nb_player; i++)
-        if(nb_pawn[i] == max) players[i]->addScore(nb);
-    
+    {
+        if(nb_pawn[i] == max)
+        {
+            players[i]->addScore(nb);
+        }
+    }
     return nb;
 }
+
+void Carcassonne::searchFinalTownAndRoadAndAbbaye()
+{
+    for(int i = board.get_min(); i <= board.get_max(); i++)
+    {
+        for(int j = board[i].get_min(); j <= board[i].get_max(); j++)
+        {
+            if(board[i][j] != nullptr)
+            {
+                CarcPiece *c = (CarcPiece *)(board[i][j]);
+                if(c->hasPawn())
+                {
+                    Pos p = c->getPawnCoordinates();
+                    if(c->getType(p.i, p.j, false, p.i == 4) == Town || c->getType(p.i, p.j, false, p.i == 4) == Road)
+                    {
+                        search(i, j, p.i, p.j, c->getType(p.i, p.j, false, p.i == 4), false, true, false, true);
+                    } if(p.i == 4 && c->getType(p.i, p.j, false, true) == Abbaye)
+                    {
+                        finalSearchAbbaye(i, j);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Carcassonne::finalSearchAbbaye(int i, int j)
+{
+    int player = ((CarcPiece *)(board[i][j]))->getPawn();
+    int count = 0;
+    for(int di = -1; di <= 1; di++)
+    {
+        for(int dj = -1; dj <= 1; dj++)
+        {
+            CarcPiece *c = ((CarcPiece *)(board[di][dj]));
+            if(c != nullptr) count++;
+        }
+    }
+    players[player]->addScore(count);
+    ((CarcPiece *)(board[i][j]))->removeAllPawn();
+}
+
+void Carcassonne::finalSearchField()
+{
+    /**
+     * On cherche les villes ferme 
+     * dans ses villes ferme, on explore les paines tout autour
+     * puis on stocke les pion dans pawn_player
+     * 
+    */
+
+    for(int i = board.get_min(); i <= board.get_max(); i++)
+    {
+        for(int j = board[i].get_min(); j <= board[i].get_max(); j++)
+        {
+            if(board[i][j] != nullptr)
+            {
+                CarcPiece *c = (CarcPiece *)(board[i][j]);
+
+                for(int di = 0; di < 4; di++)
+                {
+                    for(int dj = 0; dj < 3; dj++)
+                    {
+                        if(c->getType(di, dj, false, false) == Town)
+                        {
+                            if(search(i, j, di, dj, c->getType(di, dj, false, false), false, false, true, false) > 0)
+                            {
+
+                                // Updating the scores 
+                                // We give the points to the players that have the maximum number of pawn
+                                int max = 0;
+                                for(int i = 0; i < nb_player; i++)
+                                    if(pawn_player[i] > max) 
+                                        max = pawn_player[i];
+
+                                if(max != 0)
+                                {
+                                    for(int i = 0; i < nb_player; i++)
+                                    {
+                                        if(pawn_player[i] == max)
+                                        {
+                                            players[i]->addScore(4);
+                                        }
+                                    }
+                                }
+                            }
+
+                            cleanField();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 // TODO : Faire en dernier 
 bool Carcassonne::gameOver()
 {
     //Plus de cartes et ensuite calculer le reste des points
-
+    if(!s.isEmpty()) return false;
     //Algo Final !
 
-    /*
-    Pour chaque ville FINI, chercher des pions sur les environs/sur les plaines
-        stocker les coor des villes fini
-        on parcourt la ville et on stocke chaque piece
-        pour chaque piece on parcourt les plaines et on stocke les pions
-        et on add les points
-    Celui qui a le plus de pions -> ajoute 4 points
-    */
+    searchFinalTownAndRoadAndAbbaye();
+    cleanColor();
+    finalSearchField();
 
-    return false;
+    return true;
+}
+
+void Carcassonne::cleanField()
+{
+    for(int i = board.get_min(); i <= board.get_max(); i++)
+    {
+        for(int j = board[i].get_min(); j <= board[i].get_max(); j++)
+        {
+            if(board[i][j] != nullptr)
+                ((CarcPiece *)board[i][j])->cleanColorField();
+        }
+    }
 }

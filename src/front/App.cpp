@@ -3,6 +3,7 @@
 #include "front/PlayerSettingsScene.hpp"
 #include "front/MainScene.hpp"
 #include "front/FinalScene.hpp"
+#include "front/ChooseScene.hpp"
 
 #include "back/Domino.hpp"
 #include "back/Trax.hpp"
@@ -74,10 +75,17 @@ void App::render()
 /**
  * Launch the 2 main loop (event and render)
  */
-void App::runApp()
+void App::runApp(int i)
 {
     sf::Clock clock;
     float lastTime = 0;
+
+    if(i != 0)
+    {
+        delete sc;
+        sc = new ChooseScene(*this);
+    }
+
    
     while (this->isOpen())
     {
@@ -85,7 +93,7 @@ void App::runApp()
         float currentTime = clock.restart().asSeconds();
         lastTime += currentTime;
         if(lastTime >= 1.0 / 60) {
-            float fps = 1.f / (lastTime);
+            //float fps = 1.f / (lastTime);
             //std::cout << fps << std::endl;
             lastTime = currentTime;
             loop_event();
@@ -112,7 +120,7 @@ int App::getWidth() const
     return width;
 }
 
-void App::initGame(int gamemode){
+void App::initGame(int gamemode, int perm){
     switch(gamemode){
         case 0:
             game = new Domino();
@@ -125,7 +133,7 @@ void App::initGame(int gamemode){
             break;
 
         case 2:
-            game = new Carcassonne();
+            game = new Carcassonne(perm);
             this->gamemode = 2;
             break;
 

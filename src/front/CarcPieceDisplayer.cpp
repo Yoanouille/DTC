@@ -38,17 +38,26 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
     PieceDisplayer(app,x,y), piece{p},
     dx{0}, dy{0}, rect{}, color{new Color[app.getGame()->getPlayers().size()]}
 {
+    if(p.hasPawn()) state = 2;
     this->setTexture(&Assets::getInstance()->CarcPieceTexture);
     int startx = 16 + (p.getId() % 5) * (Assets::getInstance()->CarcPieceSize + 19);
     int starty = 15 + (p.getId() / 5) * (Assets::getInstance()->CarcPieceSize + 32);
         
     this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
 
-    cout << app.getGame()->getPlayers().size() << endl;
-
     for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
     {
         color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
+    }
+
+    int dir = p.getDirection();
+
+    for(int i = 0; i < dir; i++)
+    {
+        if((!dx && !dy) || (dx && dy)) dx = !dx;
+        else if((dx && !dy) || (!dx && dy)) dy = !dy;
+
+        this->rotate(90.0);
     }
 }
 
@@ -59,6 +68,7 @@ CarcPieceDisplayer::~CarcPieceDisplayer()
 
 void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
+    cout << "piece->rotate(" << (clockwise ? "true" : "false") << ");" << endl;
     
     if(clockwise){
         if((!dx && !dy) || (dx && dy)) dx = !dx;
@@ -225,6 +235,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + dp.y});
         if(rect.getGlobalBounds().contains(mouse)) 
         {
+            cout << "piece->placePawn(" << Direction::UP << ", " << i - 1 << ", " << player << ");" << endl;
+            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::UP, i - 1, player);
             //piece.printColor();
             pl->addPawn(-1);
@@ -234,6 +246,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + 4 * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
+            cout << "piece->placePawn(" << Direction::DOWN << ", " << 3 - i << ", " << player << ");" << endl;
+            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::DOWN, 3 - i, player);
             pl->addPawn(-1);
             //piece.printColor();
@@ -244,6 +258,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
+            cout << "piece->placePawn(" << Direction::LEFT << ", " << 3 - i << ", " << player << ");" << endl;
+            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::LEFT, 3 - i, player);
             //piece.printColor();
             pl->addPawn(-1);
@@ -254,6 +270,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + 4 * scl + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
+            cout << "piece->placePawn(" << Direction::RIGHT << ", " << i - 1 << ", " << player << ");" << endl;
+            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::RIGHT, i - 1, player);
             //piece.printColor();
             pl->addPawn(-1);
@@ -267,6 +285,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
     {
         //Can't Pos on Crossroad
         if(piece.getType(0,0,false, true) == Crossroad) return;
+        cout << "piece->placePawn(" << 4 << ", " << 3 << ", " << player << ");" << endl;
+        cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
         piece.placePawn(4,3, player);
         //piece.printColor();
         pl->addPawn(-1);

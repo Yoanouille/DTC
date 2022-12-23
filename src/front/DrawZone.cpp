@@ -17,6 +17,7 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     rotateLeft{app, &Assets::getInstance()->RotateLeft, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f}, {}},
     rotateRight{app, &Assets::getInstance()->RotateLeft, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f}, {}},
     flipButton{app, &Assets::getInstance()->Flip, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f},{}},
+    passButton{app, &Assets::getInstance()->Pass, "", Assets::getInstance()->DefaultFont, 0, {container.getSize().x/4.0f, container.getSize().x/4.0f},{}},
     appear{true}
 {
     container.setPosition(Vector2f((app.getWidth() * 4.0f) * 2.5f / 5.0f, app.getHeight() * 2.5f * 0.45f));
@@ -56,6 +57,17 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
             if(this->getPieceViewer() != nullptr)
                 ((TraxPieceDisplayer *)(this->getPieceViewer()))->flip();
         });
+    } else {
+        passButton.setPosition(rotateRight.getPosition().x - passButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+        passButton.setActionOnClick([this]{
+            cout << "coucou" << endl;
+            if(this->getPieceViewer() != nullptr)
+            {
+                this->app.getGame()->pass();
+                delete this->pick();
+            }
+
+        });
     }
 }
 
@@ -83,6 +95,7 @@ void DrawZone::render(){
     rotateLeft.render();
     rotateRight.render();
     if(isTraxGame) flipButton.render();
+    else passButton.render();
 }
 
 App &DrawZone::getApp(){
@@ -96,6 +109,7 @@ PieceDisplayer *DrawZone::getPieceViewer(){
 void DrawZone::draw(){
     if(pieceViewer != nullptr) return;
     Piece &p = app.getGame()->draw();
+    cout << "piece = (CarcPiece *)(&app.getGame()->draw());" << endl;
     switch(app.getGamemode()){
         case 0 :
             pieceViewer = new DomPieceDisplayer(app, 0, 0, (DomPiece&)(p));
@@ -158,6 +172,9 @@ void DrawZone::display()
     if(isTraxGame)
     {
         flipButton.setPosition(rotateRight.getPosition().x - flipButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
+    } else 
+    {
+        passButton.setPosition(rotateRight.getPosition().x - passButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);   
     }
 
 }

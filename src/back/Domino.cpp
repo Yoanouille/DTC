@@ -5,7 +5,7 @@ using namespace std;
 
 Domino::Domino() 
 {
-    s.fill(20, 0);
+    s.fill(20, 0, 0);
 }
 
 Domino::~Domino()

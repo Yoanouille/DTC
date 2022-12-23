@@ -16,6 +16,7 @@ Assets::Assets() :
     Sack{},
     RotateLeft{},
     Flip{},
+    Pass{},
     CarcPieceTexture{},
     CarcPieceSize{86}
 {
@@ -47,6 +48,9 @@ Assets::Assets() :
 
     if (!CarcPieceTexture.loadFromFile("resources/images/CPiece.png"))
         cerr << "Loading Failed : CPiece.png" << endl;
+        
+    if(!Pass.loadFromFile("resources/images/red-cross.png"))
+        cerr << "Loading Failed : red-cross.png" << endl;
 }
 
 /**

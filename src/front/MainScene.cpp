@@ -20,7 +20,6 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
     disp{false}, appear{true}, speed1{40}, speed2{3},
     current_piece{nullptr}
 {
-    app.initGame(gamemode);
     for (string s : names)
         app.getGame()->addPlayer(s);
     scoreBoard.setGame(app.getGame());
@@ -108,6 +107,7 @@ void MainScene::loop_event()
             drawZone.rotateLeft.handleClick(mouse_coord);
             drawZone.rotateRight.handleClick(mouse_coord);
             if(app.getGamemode() == TRAX) drawZone.flipButton.handleClick(mouse_coord);
+            else drawZone.passButton.handleClick(mouse_coord);
 
             // Zooming with the mousewheel
             if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
@@ -126,6 +126,7 @@ void MainScene::loop_event()
         drawZone.sack.setClicked(false);
         drawZone.rotateLeft.setClicked(false);
         drawZone.rotateRight.setClicked(false);
+        drawZone.passButton.setClicked(false);
         if (app.getGamemode() == TRAX) drawZone.flipButton.setClicked(false);
     }
 
@@ -193,7 +194,7 @@ void MainScene::drawRectAndPlay()
             y0 = current_piece->getCoord().y;
             if(!app.getGame()->canPlace(y0, x0, current_piece->getPiece())) 
             {
-                cout << "remove handle" << endl;
+                //cout << "remove handle" << endl;
                 current_piece->removeHandle(app.getGame()->getPlayers()[app.getGame()->getCurrentPlayer()], app.getGame()->getCurrentPlayer());
                 return;
             }
@@ -225,6 +226,7 @@ void MainScene::place()
 {
     if(current_piece->isFinalState())
     {
+        cout << "app.getGame()->place(" << current_piece->getCoord().y << ", " << current_piece->getCoord().x << ", " << "*piece)" << ";" << endl;
         app.getGame()->place(current_piece->getCoord().y, current_piece->getCoord().x, current_piece->getPiece());
         scoreBoard.update();
         if(app.getGame()->gameOver()) 
@@ -293,6 +295,7 @@ void MainScene::render()
         p->render(off, board, scl, mouse_coord);
     }
     this->redrawBG();
+    scoreBoard.update();
     scoreBoard.render();
     drawZone.render();
 }

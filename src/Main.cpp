@@ -1,9 +1,12 @@
 #include "front/App.hpp"
 
-int main()
+int main(int argc, char **argv)
 {
+    
     App app{};
-    app.runApp();
+    if(argc == 1) 
+        app.runApp(0);
+    else app.runApp(1);
     
     return EXIT_SUCCESS;
 }

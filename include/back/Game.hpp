@@ -40,6 +40,8 @@ class Game
         virtual Player *getWinner() const;
         std::vector<PiecePos> getAllPiece();
 
+        virtual void pass();
+
         virtual bool gameOver() = 0;
 
 

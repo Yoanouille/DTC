@@ -21,6 +21,7 @@ class DrawZone {
         Button rotateLeft;
         Button rotateRight;
         Button flipButton;
+        Button passButton;
 
         bool appear;
 
