@@ -16,10 +16,10 @@ Trax::~Trax()
 bool Trax::canPlace(int i, int j, Piece &p)
 {
     if(!Game::canPlace(i, j, p)) return false;
-    if(i > index_max_i && i - index_min_i > 8) return false;
-    if(j > index_max_j && j - index_min_j > 8) return false;
-    if(i < index_min_i && index_max_i - i > 8) return false;
-    if(j < index_min_j && index_max_j - j > 8) return false;
+    if(i > index_max_i && i - index_min_i >= 8) return false;
+    if(j > index_max_j && j - index_min_j >= 8) return false;
+    if(i < index_min_i && index_max_i - i >= 8) return false;
+    if(j < index_min_j && index_max_j - j >= 8) return false;
 
     if(moveForced.size() != 0)
     {
@@ -42,6 +42,10 @@ void Trax::place(int i, int j, Piece &p)
         Game::place(i, j, p);
         last_i = i;
         last_j = j;
+        if(i < index_min_i) index_min_i = i;
+        if(j < index_min_j) index_min_j = j;
+        if(i > index_max_i) index_max_i = i;
+        if(j > index_max_j) index_max_j = j;
 
         getForcedMove(i, j);
 
@@ -95,8 +99,18 @@ bool Trax::explore(int i, int j, int color, Piece *pre)
     if(j < minj) minj = j;
     if(j > maxj) maxj = j;
 
-    if(maxi - mini >= 7) return true;
-    if(maxj - minj >= 7) return true;
+    TraxPiece *t = (TraxPiece *)p;
+    TraxPiece *t2 = (TraxPiece *)board[last_i][last_j];
+    if(maxi - mini >= 7) 
+    {
+        if(t->getType(UP) == color && board[i - 1][j] == nullptr && t2->getType(DOWN) == color && board[last_i + 1][last_j] == nullptr) return true;
+        if(t->getType(DOWN) == color && board[i + 1][j] == nullptr && t2->getType(UP) == color && board[last_i - 1][last_j] == nullptr) return true;
+    }
+    if(maxj - minj >= 7)
+    {
+        if(t->getType(LEFT) == color && board[i][j - 1] == nullptr && t2->getType(RIGHT) == color && board[last_i][last_j + 1] == nullptr) return true;
+        if(t->getType(RIGHT) == color && board[i][j + 1] == nullptr && t2->getType(LEFT) == color && board[last_i][last_j - 1] == nullptr) return true;
+    }
 
     p->setColor(1);
     int col[4];

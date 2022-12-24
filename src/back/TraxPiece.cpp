@@ -75,6 +75,11 @@ void TraxPiece::getConnectColor(int *t) const
         t[i] = color_dir[i];   
 }
 
+bool TraxPiece::getType(int dir)
+{
+    return tab[(dir + direction) % 4];
+}
+
 bool TraxPiece::forcedMove(vector<TraxPiece *> tabp)
 {
     int dir[4] = {-1,-1,-1,-1};

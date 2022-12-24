@@ -12,7 +12,7 @@ TARGET=main
 TTARGET=test
 
 all: $(TARGET)
-	./$(TARGET) test
+	./$(TARGET)
 
 memory: $(TARGET) $(OBJECTS)
 	valgrind ./$(TARGET)
