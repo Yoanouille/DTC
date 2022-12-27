@@ -301,7 +301,7 @@ void ChooseScene::sit2()
 
     // Place the Abbaye with a pawn in its center
     CarcPiece *piece = (CarcPiece *)(&app.getGame()->draw());
-    piece->placePawn(4, 4, 0);
+    piece->placePawn(4, 3, 0);
     ((PlayerCarc *)(app.getGame()->getPlayers()[0]))->addPawn(-1);
     app.getGame()->place(1, 0, *piece);
 
