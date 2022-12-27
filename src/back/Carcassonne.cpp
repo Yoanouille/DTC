@@ -9,9 +9,9 @@ using namespace std;
  * Constructor :
  * We initialize the sack and we place the first Piece on the board.
  */
-Carcassonne::Carcassonne(int perm) : pawn_player{}
+Carcassonne::Carcassonne(int size, int perm) : pawn_player{}
 { 
-    s.fill(0, 2, perm);
+    s.fill(size, 2, perm);
     board[0][0] = s.draw();
     nb_piece++;
 }

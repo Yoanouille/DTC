@@ -12,7 +12,7 @@ class Carcassonne : public Game
         std::vector<int> pawn_player;
 
     public:
-        Carcassonne(int perm);
+        Carcassonne(int size, int perm);
         ~Carcassonne();
         void addPlayer(std::string name);
 

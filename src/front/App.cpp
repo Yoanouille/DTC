@@ -120,10 +120,10 @@ int App::getWidth() const
     return width;
 }
 
-void App::initGame(int gamemode, int perm){
+void App::initGame(int gamemode, int size, int perm){
     switch(gamemode){
         case 0:
-            game = new Domino();
+            game = new Domino(size);
             this->gamemode = 0;
             break;
 
@@ -133,7 +133,7 @@ void App::initGame(int gamemode, int perm){
             break;
 
         case 2:
-            game = new Carcassonne(perm);
+            game = new Carcassonne(size, perm);
             this->gamemode = 2;
             break;
 

@@ -27,7 +27,7 @@ private:
     // Initializes the Sacks depending on the gamemode.
     void initDom(int s);
     void initTrax();
-    void initCarcassonne(int perm);
+    void initCarcassonne(int size, int perm);
 
     void permut(int perm);
 

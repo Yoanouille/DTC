@@ -15,6 +15,7 @@ PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, int gamemode) 
       vSpace{50.0f}, fieldLabels{}, nameFields{},
       mousepos{}, appear{true}, disp{false}, dispF{-1}, nextScene{-1}
 { 
+
   initFields(); 
   initButtons();
 }
@@ -182,8 +183,21 @@ void PlayerSettingsScene::render(){
       for (TextField t : nameFields){
           names.push_back(t.getText().getString().toAnsiString());
       }
-      app.initGame(gamemode, 0);
 
+      switch(gamemode){
+        case DOMINO:
+          app.initGame(gamemode, 5, 0);
+          break;
+
+        case TRAX: 
+          app.initGame(gamemode, 64, 0);
+          break;
+
+        case CARCASSONNE :
+          app.initGame(gamemode, 72, 0);
+          break;
+      }
+      
       app.setScene(nextScene, gamemode, &names);
     } 
   }

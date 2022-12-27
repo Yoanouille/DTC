@@ -37,7 +37,7 @@ void Sack::fill(int s, int gamemode, int perm)
         initTrax();
         break;
     case 2:
-        initCarcassonne(perm);
+        initCarcassonne(s,perm);
         break;
     default:
         throw UnknownGamemodeException();
@@ -48,7 +48,7 @@ void Sack::fill(int s, int gamemode, int perm)
 /** Initializes the Sack for a Domino Game */
 void Sack::initDom(int s)
 {
-    size = 5;
+    size = s;
     for (int i = 0; i < size; i++)
     {
         DomPiece *d = new DomPiece();
@@ -68,9 +68,10 @@ void Sack::initTrax()
 }
 
 /** Initialize the Sack for a Carcassonne Game*/
-void Sack::initCarcassonne(int perm)
+void Sack::initCarcassonne(int size,int perm)
 {
-    size = 36;
+    this->size = size;
+
     CarcPiece *p24 = new CarcPiece{24};
     CarcPiece *p2 = new CarcPiece{2};
     CarcPiece *p4 = new CarcPiece{4};
@@ -168,11 +169,7 @@ void Sack::permut(int perm)
     //     std::cout << p[i] << " ";
     // }
     // std::cout << std::endl;
-    std::vector<int> p;
-    if (perm == 1) 
-        p = {0, 56, 4, 40, 29, 54, 36, 2, 50, 8, 20, 71, 59, 63, 53, 1, 26, 69, 39, 11, 44, 28, 30, 3, 61, 13, 27, 57, 41, 32, 17, 6, 68, 55, 43, 58, 34, 38, 12, 60, 9, 46, 15, 64, 14, 65, 23, 45, 42, 18, 16, 70, 19, 31, 37, 25, 62, 52, 33, 67, 51, 49, 66, 5, 24, 47, 21, 48, 10, 7, 35, 22};
-    else if (perm == 2) 
-        p = {0,42,43,9,55,22,63,64,65};
+    std::vector<int> p = {0, 56, 4, 40, 29, 54, 36, 2, 50, 8, 20, 71, 59, 63, 53, 1, 26, 69, 39, 11, 44, 28, 30, 3, 61, 13, 27, 57, 41, 32, 17, 6, 68, 55, 43, 58, 34, 38, 12, 60, 9, 46, 15, 64, 14, 65, 23, 45, 42, 18, 16, 70, 19, 31, 37, 25, 62, 52, 33, 67, 51, 49, 66, 5, 24, 47, 21, 48, 10, 7, 35, 23};
 
     for(size_t i = 0; i < p.size(); i++)
     {
@@ -181,6 +178,10 @@ void Sack::permut(int perm)
         sack[i] = sack[j];
         sack[j] = pie;
     }
+
+    Piece *pie = sack[46];
+    sack[46] = sack[35];
+    sack[35] = pie;
 }
 
 /** Check if the sack is empty */

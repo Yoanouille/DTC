@@ -54,7 +54,7 @@ public:
     int getHeight() const;
     int getWidth() const;
 
-    void initGame(int gamemode, int perm);
+    void initGame(int gamemode, int size, int perm);
     Game *getGame();
     int getGamemode() const;
 

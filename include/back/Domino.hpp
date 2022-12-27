@@ -6,7 +6,7 @@
 class Domino : public Game
 {
     public:
-        Domino();
+        Domino(int size);
         ~Domino();
 
         void place(int, int, Piece &p);

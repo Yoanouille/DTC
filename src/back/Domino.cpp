@@ -3,10 +3,8 @@
 
 using namespace std;
 
-Domino::Domino() 
-{
-    s.fill(20, 0, 0);
-}
+/** Constructor */
+Domino::Domino(int size = 5) { s.fill(size, 0, 0); }
 
 /** Destructor */
 Domino::~Domino() {}

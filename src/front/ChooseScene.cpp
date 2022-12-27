@@ -91,13 +91,71 @@ void ChooseScene::init()
     });
 }
 
-/**
- * Situation 1 
- * Example of an end of a Carcassonne Game.
+/** 
+ * Situation 1
+ * Test Trax Win conditions and forced moves
  */
 void ChooseScene::sit1()
 {
-    app.initGame(CARCASSONNE, 1);
+    app.initGame(TRAX, 0, 0);
+    app.getGame()->addPlayer("One");
+    app.getGame()->addPlayer("Two");
+
+    TraxPiece * piece;
+
+    //Vertical Straight line
+    for(int i = 0; i < 6; i++)
+    {
+        piece = (TraxPiece *)(&app.getGame()->draw());
+        app.getGame()->place(i, 0, *piece);
+    }
+
+    // Line with corners
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    piece->rotate(true);
+    app.getGame()->place(0, 1, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(1, 2, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(-1, 1, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    piece->rotate(true);
+    app.getGame()->place(-1, 0, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    app.getGame()->place(-1, 2, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(0, 2, *piece);
+
+    for(int i = 3; i < 7; i++){
+        piece = (TraxPiece *)(&app.getGame()->draw());
+        app.getGame()->place(-1, i, *piece);
+    }
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    app.getGame()->place(1, 1, *piece);
+}
+
+/**
+ * Situation 2
+ * Example of an end of a Carcassonne Game.
+ */
+void ChooseScene::sit2()
+{
+    app.initGame(CARCASSONNE, 36 , 1);
     app.getGame()->addPlayer("One");
     app.getGame()->addPlayer("Two");
     app.getGame()->addPlayer("Three");
@@ -283,101 +341,15 @@ void ChooseScene::sit1()
 }
 
 /**
- * Situation 2
- * How an Abbaye works.
- * 
- * Structure (with ids):
- * 10 - 24 - 22
- * 21 - 0  - 20
- * 21 - 21 - 16
+ * Situation 3
+ * ? What to test ?
  */
-void ChooseScene::sit2()
+void ChooseScene::sit3()
 {
-    app.initGame(CARCASSONNE, 2);
+    app.initGame(CARCASSONNE, 72,2);
     app.getGame()->addPlayer("One");
     app.getGame()->addPlayer("Two");
     app.getGame()->addPlayer("Three");
-
-    // Place the Abbaye with a pawn in its center
-    CarcPiece *piece = (CarcPiece *)(&app.getGame()->draw());
-    piece->placePawn(4, 3, 0);
-    ((PlayerCarc *)(app.getGame()->getPlayers()[0]))->addPawn(-1);
-    app.getGame()->place(1, 0, *piece);
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    app.getGame()->place(0, 1, *piece);
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    app.getGame()->place(0, -1, *piece);
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    app.getGame()->place(1, 1, *piece); 
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    piece->rotate(true);
-    app.getGame()->place(2, 1, *piece);
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    piece->rotate(false);
-    app.getGame()->place(2, 0, *piece);
-
-    piece = (CarcPiece *)(&app.getGame()->draw());
-    app.getGame()->place(2, -1, *piece);    
-
-}
-
-void ChooseScene::sit3()
-{
-    app.initGame(TRAX, 0);
-    app.getGame()->addPlayer("One");
-    app.getGame()->addPlayer("Two");
-
-    TraxPiece * piece;
-
-    //Vertical Straight line
-    for(int i = 0; i < 6; i++)
-    {
-        piece = (TraxPiece *)(&app.getGame()->draw());
-        app.getGame()->place(i, 0, *piece);
-    }
-
-    // Line with corners
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    piece->rotate(true);
-    piece->rotate(true);
-    app.getGame()->place(0, 1, *piece);
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    app.getGame()->place(1, 2, *piece);
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    app.getGame()->place(-1, 1, *piece);
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    piece->rotate(true);
-    piece->rotate(true);
-    app.getGame()->place(-1, 0, *piece);
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    app.getGame()->place(-1, 2, *piece);
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    app.getGame()->place(0, 2, *piece);
-
-    for(int i = 3; i < 7; i++){
-        piece = (TraxPiece *)(&app.getGame()->draw());
-        app.getGame()->place(-1, i, *piece);
-    }
-
-    piece = (TraxPiece *)(&app.getGame()->draw());
-    piece->flip();
-    piece->rotate(true);
-    app.getGame()->place(1, 1, *piece);
 }
 
 // Manage event
