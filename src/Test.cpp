@@ -7,6 +7,8 @@
 #include "back/Carcassonne.hpp"
 
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 #include <string>
 using namespace std;
 
@@ -240,31 +242,6 @@ void testTrax_2()
     delete g;
 }
 
-void testCarcassonne()
-{
-    Game *g = new Carcassonne(0);  
-    Carcassonne *t = (Carcassonne *)g;
-
-    g->addPlayer("Yoan");
-    g->addPlayer("Nicolas");
-
-    cout << "==== First Piece drawn ====" << endl;
-    Piece &p = g->draw();
-    cout << p << endl;
-
-    cout << "==== Can place at (0,1) ? ====" << endl;
-    cout << boolalpha << t->canPlace(0,1,p) << endl;
-    cout << "==== Place the Piece at (0,1) ====" << endl;
-    // TODO : the Score hasn't changed
-    cout << "==== Place a pawn ====" << endl;
-
-    cout << "==== Can place at (0,0) ? ====" << endl;
-    // TODO : Can't place here bcs there is the first piece.
-    cout << boolalpha << t->canPlace(0,0,p) << endl;
-
-    delete g;
-}
-
 /**
  * Main function for tests.
  */
@@ -275,7 +252,11 @@ int main()
     {
         cout << "Enter a test" << endl;
         cin >> request;
+        
+        // Turn the request into lower case
+        transform(request.begin(), request.end(), request.begin(), [](unsigned char c){ return tolower(c); });
 
+        // Request handling
         if (request == "dom")
             testDomPiece();
         else if (request == "trax")
@@ -288,11 +269,8 @@ int main()
             testTrax_1();
         else if (request == "trax2")
             testTrax_2();
-        else if (request == "carc")
-            testCarcassonne();
         else if (request != "quit")
             cout << "Unknown Test. Please try again" << endl;
-
         cout << endl;
     }
 

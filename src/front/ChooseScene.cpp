@@ -76,7 +76,6 @@ void ChooseScene::init()
 
     options[0].setActionOnClick([this](){
         this->dispose();
-        //TODO : situation 1  -> Fin de Partie d'un Carcassonne
         this->sit1();
     });
 
@@ -93,6 +92,10 @@ void ChooseScene::init()
     });
 }
 
+/**
+ * Situation 1 
+ * Example of an end of a Carcassonne Game.
+ */
 void ChooseScene::sit1()
 {
     app.initGame(CARCASSONNE, 1);
@@ -278,15 +281,50 @@ void ChooseScene::sit1()
     piece->placePawn(4, 3, 0);
     ((PlayerCarc *)(app.getGame()->getPlayers()[0]))->addPawn(-1);
     app.getGame()->place(3, 4, *piece);
-
 }
 
+/**
+ * Situation 2
+ * How an Abbaye works.
+ * 
+ * Structure (with ids):
+ * 10 - 24 - 22
+ * 21 - 0  - 20
+ * 21 - 21 - 16
+ */
 void ChooseScene::sit2()
 {
-    app.initGame(CARCASSONNE, 1);
+    app.initGame(CARCASSONNE, 2);
     app.getGame()->addPlayer("One");
     app.getGame()->addPlayer("Two");
     app.getGame()->addPlayer("Three");
+
+    // Place the Abbaye with a pawn in its center
+    CarcPiece *piece = (CarcPiece *)(&app.getGame()->draw());
+    piece->placePawn(4, 4, 0);
+    ((PlayerCarc *)(app.getGame()->getPlayers()[0]))->addPawn(-1);
+    app.getGame()->place(1, 0, *piece);
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    app.getGame()->place(0, 1, *piece);
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    app.getGame()->place(0, -1, *piece);
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    app.getGame()->place(1, 1, *piece); 
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    piece->rotate(true);
+    app.getGame()->place(2, 1, *piece);
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    piece->rotate(false);
+    app.getGame()->place(2, 0, *piece);
+
+    piece = (CarcPiece *)(&app.getGame()->draw());
+    app.getGame()->place(2, -1, *piece);    
+
 }
 
 void ChooseScene::sit3()
@@ -295,6 +333,8 @@ void ChooseScene::sit3()
     app.getGame()->addPlayer("One");
     app.getGame()->addPlayer("Two");
     app.getGame()->addPlayer("Three");
+
+    
 }
 
 // Manage event
