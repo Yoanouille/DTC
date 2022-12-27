@@ -11,7 +11,7 @@ ChooseScene::ChooseScene(App &app) :
     Scene{}, 
     app{app}, 
     options{3,Button{app,nullptr,"", Assets::getInstance()->MainMenuFont,70,{app.getWidth()/4.0f, app.getHeight()/5.0f},{0,0}}}, 
-    disp{false}, appear{true}, mousepos{}, names{nullptr}
+    disp{false}, appear{true}, mousepos{}, names{nullptr}, gamemode{CARCASSONNE}
 { 
     names = new vector<string>{};
     init(); 
@@ -81,14 +81,13 @@ void ChooseScene::init()
 
     options[1].setActionOnClick([this](){ 
         this->dispose();
-        //TODO : situation 2  -> Abbaye
         this->sit2();
     });
 
     options[2].setActionOnClick([this](){
+        this->gamemode = TRAX;
         this->dispose();
         this->sit3();
-        //TODO : On verra
     });
 }
 
@@ -329,12 +328,56 @@ void ChooseScene::sit2()
 
 void ChooseScene::sit3()
 {
-    app.initGame(CARCASSONNE, 1);
+    app.initGame(TRAX, 0);
     app.getGame()->addPlayer("One");
     app.getGame()->addPlayer("Two");
-    app.getGame()->addPlayer("Three");
 
-    
+    TraxPiece * piece;
+
+    //Vertical Straight line
+    for(int i = 0; i < 6; i++)
+    {
+        piece = (TraxPiece *)(&app.getGame()->draw());
+        app.getGame()->place(i, 0, *piece);
+    }
+
+    // Line with corners
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    piece->rotate(true);
+    app.getGame()->place(0, 1, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(1, 2, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(-1, 1, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    piece->rotate(true);
+    app.getGame()->place(-1, 0, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    app.getGame()->place(-1, 2, *piece);
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    app.getGame()->place(0, 2, *piece);
+
+    for(int i = 3; i < 7; i++){
+        piece = (TraxPiece *)(&app.getGame()->draw());
+        app.getGame()->place(-1, i, *piece);
+    }
+
+    piece = (TraxPiece *)(&app.getGame()->draw());
+    piece->flip();
+    piece->rotate(true);
+    app.getGame()->place(1, 1, *piece);
 }
 
 // Manage event
@@ -368,10 +411,12 @@ void ChooseScene::render()
 
     if(disp)
     {
-        //TODO CHANGER lA BONNE SCENE EN FONCTION DE LA SITUATION !
         dispose();
         if(!disp){
-            app.setScene(3, CARCASSONNE, names);
+            if(gamemode == CARCASSONNE)
+                app.setScene(3, CARCASSONNE, names);
+            else if (gamemode == TRAX)
+                app.setScene(3,TRAX,names);
         }
     }
 

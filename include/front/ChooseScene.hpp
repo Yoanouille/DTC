@@ -25,6 +25,8 @@ private:
 
     vector<std::string> *names;
 
+    int gamemode;
+
 
 
     void init();

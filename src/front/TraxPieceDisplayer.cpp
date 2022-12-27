@@ -5,7 +5,17 @@ using namespace std;
 /** Constructor */
 TraxPieceDisplayer::TraxPieceDisplayer(App& app, int x, int y, TraxPiece& p) : PieceDisplayer(app, x, y), piece{p}, dx{0}, dy{0}
 {
-    setShownSide(true);
+    setShownSide(p.isRecto());
+
+    int dir = p.getDirection();
+
+    for(int i = 0; i < dir; i++)
+    {
+        if((!dx && !dy) || (dx && dy)) dx = !dx;
+        else if((dx && !dy) || (!dx && dy)) dy = !dy;
+
+        this->rotate(90.0);
+    }
 }
 
 /**
