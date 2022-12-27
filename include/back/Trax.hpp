@@ -32,6 +32,8 @@ class Trax : public Game
 
         int last_player;
 
+        int winner;
+
         bool explore(int i, int j, int col, Piece *pre);
 
         //MANQUE COUP FORCE

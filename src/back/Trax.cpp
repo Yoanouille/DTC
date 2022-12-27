@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}, last_player{0}
+Trax::Trax() : index_min_i{0}, index_max_i{0}, index_min_j{0}, index_max_j{0}, last_i{0}, last_j{0}, mini{0}, maxi{0}, minj{0}, maxj{0}, moveForced{}, last_player{0}, winner{-1}
 {
     s.fill(8*8, 1, 0);
 }
@@ -174,13 +174,24 @@ bool Trax::DFS(int color)
 
 Player *Trax::getWinner() const
 {
-    return players[last_player];
+    return players[winner];
 }
 
 bool Trax::gameOver()
 {
     if(s.isEmpty()) cout << "TRAX VIDE" << endl;
-    bool rep = DFS(0) || DFS(1);
+    bool rep = false;
+
+    if (DFS(0)) {
+         winner = 0;
+         rep = true;
+    }
+
+    if (DFS(1)) {
+        winner = 1;
+        rep = true;
+    }
+
     cleanColor();
     if(rep) cout << "FIN TRAX" << endl;
     return rep;
