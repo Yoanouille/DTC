@@ -5,7 +5,7 @@
 using namespace std;
 
 FinalScene::FinalScene(App &a) : app{a},
-        backToTitle{app, nullptr, "Back To Title", Assets::getInstance()->MainMenuFont, 58, {app.getWidth() / 4, app.getWidth() / 25}, {}},
+        backToTitle{app, nullptr, "Back To Title", Assets::getInstance()->MainMenuFont, 58, {app.getWidth() / 4.0f, app.getWidth() / 25.0f}, {}},
         texts{}, mouse_coord{}, r{}, appear{true}, disp{false}, disp2{false}
 {
     init();

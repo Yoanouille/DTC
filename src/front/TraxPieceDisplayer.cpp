@@ -55,9 +55,9 @@ void TraxPieceDisplayer::flip(){
 void TraxPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl, sf::Vector2f &mouse)
 {
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
-    this->setPosition(v + board.getPosition() + off);
+    this->setPosition(board.getPosition().x + off.x + v.x, board.getPosition().y + off.y + v.y);
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
-    this->setPosition(this->getPosition() + Vector2f{scl * dx, scl * dy});
+    this->setPosition(this->getPosition().x + static_cast<float>(scl * dx), this->getPosition().y + static_cast<float>(scl * dy));
 
     if (this->getGlobalBounds().intersects(board.getGlobalBounds()))
         app.draw(*this);

@@ -242,7 +242,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
 
         // End of the actual Piece's exploration : we increment number
         nb++;
-        if(c->getBonus()) nb++;
+        if(type == Town && c->getBonus()) nb++;
     }
     
     // We get here only if the stack is empty i.e we've finished the exploration
@@ -250,11 +250,9 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     // If we are looking for placing the Piece, we stop here
     if(placing) return nb;
 
-    int score = 0;
-
     if(final && type == Field) 
     {
-        for(size_t ii = 0; ii < nb_player; ii++)
+        for(int ii = 0; ii < nb_player; ii++)
             pawn_player[ii]+= nb_pawn[ii];
 
         return 0;
