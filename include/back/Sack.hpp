@@ -9,9 +9,6 @@
 #include <chrono>
 
 #include "Piece.hpp"
-#include "DomPiece.hpp"
-#include "TraxPiece.hpp"
-#include "CarcPiece.hpp"
 #include "UnknownGamemodeException.hpp"
 
 class Sack
@@ -21,14 +18,13 @@ private:
     int size;
     std::vector<Piece *> sack;
 
-    // Used in Carcassonne that uses specific piece.
-    void shuffle();
-
     // Initializes the Sacks depending on the gamemode.
     void initDom(int s);
     void initTrax();
     void initCarcassonne(int size, int perm);
 
+    // Used in Carcassonne that uses specific piece.
+    void shuffle();
     void permut(int perm);
 
 public:

@@ -2,14 +2,13 @@
 #define FINALSCENE_HPP
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+
 #include "front/AssetsLoader.hpp"
 #include "front/Button.hpp"
 #include "front/Scene.hpp"
 #include "front/App.hpp"
 #include "front/MainScene.hpp"
-
-#include <iostream>
-#include <vector>
 
 class FinalScene : public Scene
 {

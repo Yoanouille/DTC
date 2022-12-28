@@ -23,17 +23,17 @@ void VecZ<T>::insert(int i, T elt)
         }
 
         vec_pos[i] = elt;
-    } else {
+    } 
+    else 
+    {
         if(i < index_min) index_min = i;
         
         while(i <= min)
         {
             min = 2 * min - 1;
-            //std::cout << -min << std::endl;
             vec_neg.resize(size_t(-min));
         }
         vec_neg[-i] = elt;
-        //std::cout << i << " " << vec_neg[-i] << std::endl;
     }
 }
 
@@ -78,14 +78,11 @@ int VecZ<T>::get_max() const
 template<typename T>
 void VecZ<T>::print()
 {
-    //std::cout << min << " -> " << max << " | " << index_min << " -> " << index_max << std::endl;
     for(int i = index_min; i < 0; i++)
-    {
         std::cout << vec_neg[-i] << " ";
-    }
+
     for(int i = 0; i <= index_max; i++)
-    {
         std::cout << vec_pos[i] << " ";
-    }
+        
     std::cout << std::endl;
 }

@@ -2,7 +2,7 @@
 #define TRAX_HPP
 
 #include "back/Game.hpp"
-#include <iostream>
+#include "TraxPiece.hpp"
 #include <vector>
 
 typedef struct Pair
@@ -35,13 +35,6 @@ class Trax : public Game
         int winner;
 
         bool explore(int i, int j, int col, Piece *pre);
-
-        //MANQUE COUP FORCE
-        //FAIRE UNE LISTE DE POSITION
-        //AJOUTER QUAND QUELQUN POSE LES POSITION P VIDE PARMI CELLE AUTOUR DE LA PIECE POSE TQ:
-        // AUTOUR DE P : AU MOINS 2 PIECE POSE ET 2 FOIS MEME COULEUR
-        //QUESTION COMMENT DANS LA ROUTINE DE JEU FORCE CES COUPS !
-        //LE JOUEUR DOIT LES POSE LUI MEME OU LE JEU LE FAIT A SA PLACE (perso prefere le joueur)
         
         std::vector<TraxPiece *> getNeighboors(int i, int j);
         void getForcedMove(int i, int j);
@@ -57,9 +50,6 @@ class Trax : public Game
 
         Player *getWinner() const;
         virtual bool gameOver();
-
-
-
 };
 
 #endif

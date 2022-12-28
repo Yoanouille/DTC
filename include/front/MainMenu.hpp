@@ -7,8 +7,6 @@
 #include "Button.hpp"
 #include "Scene.hpp"
 
-#include <iostream>
-
 class MainMenu : public Scene
 {
 private:

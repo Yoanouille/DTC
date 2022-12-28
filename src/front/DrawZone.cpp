@@ -60,7 +60,6 @@ DrawZone::DrawZone(App &app, bool isTraxGame):
     } else {
         passButton.setPosition(rotateRight.getPosition().x - passButton.getGlobalBounds().width*1.05f, container.getPosition().y + rotateLeft.getGlobalBounds().height * 0.2f);
         passButton.setActionOnClick([this]{
-            cout << "coucou" << endl;
             if(this->getPieceViewer() != nullptr)
             {
                 this->app.getGame()->pass();

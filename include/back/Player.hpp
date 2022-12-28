@@ -1,7 +1,6 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include <iostream>
 #include <string>
 
 class Player
@@ -17,7 +16,6 @@ class Player
         std::string getName() const;
         int getScore() const;
         void addScore(int);
-
 };
 
 #endif

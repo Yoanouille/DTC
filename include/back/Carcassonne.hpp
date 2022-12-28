@@ -1,14 +1,14 @@
 #ifndef CARCASSONNE_HPP
 #define CARCASSONNE_HPP
 
-#include "back/Game.hpp"
-#include <iostream>
+#include "Game.hpp"
+#include "CarcPiece.hpp"
 #include <vector>
 
 class Carcassonne : public Game
 {
     private:
-        //vector d'entier pour le nombre de pions de chaque joueur seulement pour le comptage final des Fields
+        // Vector that stores each player's nb of pawns for the end of the game (point counting for fields)
         std::vector<int> pawn_player;
 
     public:

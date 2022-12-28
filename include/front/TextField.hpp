@@ -5,7 +5,7 @@
 #include "App.hpp"
 
 /**
- * I am not going to code this without any help.
+ * Inspired by this topic
  * cf. https://stackoverflow.com/questions/53734084/write-text-input-on-the-screen-in-sfml
  */
 class TextField : public sf::Transformable{

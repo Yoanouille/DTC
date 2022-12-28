@@ -27,8 +27,6 @@ private:
 
     int gamemode;
 
-
-
     void init();
 
     void sit1();

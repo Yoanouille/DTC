@@ -239,7 +239,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
             cout << "piece->placePawn(" << Direction::UP << ", " << i - 1 << ", " << player << ");" << endl;
             cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::UP, i - 1, player);
-            //piece.printColor();
             pl->addPawn(-1);
             return;
         }
@@ -251,7 +250,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
             cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::DOWN, 3 - i, player);
             pl->addPawn(-1);
-            //piece.printColor();
 
             return;
         }
@@ -262,7 +260,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
             cout << "piece->placePawn(" << Direction::LEFT << ", " << 3 - i << ", " << player << ");" << endl;
             cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::LEFT, 3 - i, player);
-            //piece.printColor();
             pl->addPawn(-1);
 
             return;
@@ -274,7 +271,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
             cout << "piece->placePawn(" << Direction::RIGHT << ", " << i - 1 << ", " << player << ");" << endl;
             cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::RIGHT, i - 1, player);
-            //piece.printColor();
             pl->addPawn(-1);
 
             return;
@@ -289,7 +285,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         cout << "piece->placePawn(" << 4 << ", " << 3 << ", " << player << ");" << endl;
         cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
         piece.placePawn(4,3, player);
-        //piece.printColor();
         pl->addPawn(-1);
 
         return;

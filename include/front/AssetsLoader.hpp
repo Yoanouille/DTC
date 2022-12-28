@@ -34,11 +34,13 @@ class Assets {
         Assets();
 
     public :
+        // Block all the copies
         Assets(const Assets &) = delete;
         void operator=(const Assets &) = delete;
         
         static Assets* getInstance();
 
+    // Make all the graphic classes friend to make it more easy
     friend class App;
     friend class Button;
     friend class MainMenu;

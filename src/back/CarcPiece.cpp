@@ -496,10 +496,9 @@ int CarcPiece::getNbPawn() const{
 
 /** Check if the pawn is Marked. */
 bool CarcPiece::isPawnMarked() const {
-    //if(pawn_coordinates[0] != 4) cout << "MARKED " << border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] << " " << (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]]) << endl; 
-    //else cout << "MARKED " << center << " " << color_center << endl; 
-    if(pawn_coordinates[0] == 4) return color_center == 1;
-    else return (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] == 1);
+    if(pawn_coordinates[0] == 4) 
+        return color_center == 1;
+    return (color_border[(pawn_coordinates[0] + direction) % 4][pawn_coordinates[1]] == 1);
 }
 
 /** Getter : pawn_coordinates */
@@ -562,7 +561,7 @@ string CarcPiece::toString() const
     //return to_string(id) + " ";
 }
 
-string CarcPiece::printColor() const
+void CarcPiece::printColor() const
 {
     string s{"  "};
     for (size_t j = 0; j < 3; j++)
@@ -585,7 +584,7 @@ string CarcPiece::printColor() const
     for (size_t j = 0; j < 3; j++)
         s += to_string(color_border[(direction + 2) % 4][2 - j]) + " ";
     
-    return s;
+    cout << s << endl;
 }
 
 /**
@@ -748,22 +747,6 @@ void CarcPiece::cleanColor()
     }
     color_center = -1;
 }
-
-// /** Printing Method for colors */
-// void CarcPiece::printColor()
-// {
-//     string s{" "};
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(color_border[direction][j]) + " ";
-//     s += "\n";
-
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(color_border[(direction + 1) % 4][2 - j]) + "  " + (j == 1 ? to_string(pawn_center) : " ") + "  " + to_string(pawn[(direction + 3) % 4][j]) + "\n";
-//     s += " ";
-//     for (size_t j = 0; j < 3; j++)
-//         s += to_string(color_border[(direction + 2) % 4][2 - j]) + " ";   
-//     cout << s << endl; 
-// }
 
 vector<Pos> CarcPiece::getNextDir()
 {

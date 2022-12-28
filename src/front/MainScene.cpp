@@ -179,7 +179,6 @@ void MainScene::drawRectAndPlay()
             y0 = current_piece->getCoord().y;
             if(!app.getGame()->canPlace(y0, x0, current_piece->getPiece())) 
             {
-                //cout << "remove handle" << endl;
                 current_piece->removeHandle(app.getGame()->getPlayers()[app.getGame()->getCurrentPlayer()], app.getGame()->getCurrentPlayer());
                 return;
             }

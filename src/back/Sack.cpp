@@ -1,10 +1,12 @@
 #include "back/Sack.hpp"
+#include "back/DomPiece.hpp"
+#include "back/TraxPiece.hpp"
+#include "back/CarcPiece.hpp"
 
 /**
  * Constructor
  * The sack will assume the role of Garbage Collector :
  * It will allocates the Pieces and delete them at the end of a Game
- *
  */
 Sack::Sack() : index{0}, size{0}, sack{}{}
 
@@ -24,6 +26,7 @@ Sack::~Sack()
  * 
  * @param size The size of the Sack
  * @param gamemode The gamemode : 0 = Dom, 1 = Trax, 2 = Carcassonne
+ * @param perm An integer that represent a certain permutation to execute, 0 = random shuffling
  * @throws UnknownGamemodeException - When gamemode is not between 0 and 2
 */
 void Sack::fill(int s, int gamemode, int perm)
@@ -150,27 +153,17 @@ void Sack::initCarcassonne(int size,int perm)
     else permut(perm);
 }
 
+/**
+ * Executes a permutation on the sack 
+ */
 void Sack::permut(int perm)
 {
-    //int p[72];
-    // for(int i = 0; i < 72; i++)
-    // {
-    //     p[i] = i+1;
-    // }
-    // for(int i = 0; i < 72; i++)
-    // {
-    //     int j = (rand() % (72 - i)) + i;
-    //     int tmp = p[i];
-    //     p[i] = p[j];
-    //     p[j] = tmp;
-    // }
-    // for(int i = 0; i < 72; i++)
-    // {
-    //     std::cout << p[i] << " ";
-    // }
-    // std::cout << std::endl;
-    std::vector<int> p = {0, 56, 4, 40, 29, 54, 36, 2, 50, 8, 20, 71, 59, 63, 53, 1, 26, 69, 39, 11, 44, 28, 30, 3, 61, 13, 27, 57, 41, 32, 17, 6, 68, 55, 43, 58, 34, 38, 12, 60, 9, 46, 15, 64, 14, 65, 23, 45, 42, 18, 16, 70, 19, 31, 37, 25, 62, 52, 33, 67, 51, 49, 66, 5, 24, 47, 21, 48, 10, 7, 35, 23};
+    // Randomly generated permutation
+    std::vector<int> p;
+    if (perm == 1) p = {0, 56, 4, 40, 29, 54, 36, 2, 50, 8, 20, 71, 59, 63, 53, 1, 26, 69, 39, 11, 44, 28, 30, 3, 61, 13, 27, 57, 41, 32, 17, 6, 68, 55, 43, 58, 34, 38, 12, 60, 9, 46, 15, 64, 14, 65, 23, 45, 42, 18, 16, 70, 19, 31, 37, 25, 62, 52, 33, 67, 51, 49, 66, 5, 24, 47, 21, 48, 10, 7, 35, 23};
 
+    // ? Do we need other permutations ?
+    
     for(size_t i = 0; i < p.size(); i++)
     {
         int j = p[i];

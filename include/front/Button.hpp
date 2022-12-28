@@ -22,6 +22,7 @@ private:
     sf::Text text;
     sf::Font &font;
 
+    // Click and Hover Handling members
     bool clicked;
     std::function<void()> clickAction;
     std::function<void()> mouseEnteredAction;

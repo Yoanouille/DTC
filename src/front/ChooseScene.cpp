@@ -1,5 +1,7 @@
 #include "front/ChooseScene.hpp"
 #include "back/PlayerCarc.hpp"
+#include "back/TraxPiece.hpp"
+#include "back/CarcPiece.hpp"
 
 using namespace sf;
 using namespace std;
@@ -75,6 +77,7 @@ void ChooseScene::init()
     // Trax will only authorize two players.
 
     options[0].setActionOnClick([this](){
+        this->gamemode = TRAX;
         this->dispose();
         this->sit1();
     });
@@ -85,7 +88,6 @@ void ChooseScene::init()
     });
 
     options[2].setActionOnClick([this](){
-        this->gamemode = TRAX;
         this->dispose();
         this->sit3();
     });

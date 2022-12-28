@@ -61,7 +61,6 @@ class CarcPiece : public Piece
         bool connectable(Piece &p, int pDir) override;
         void getConnectColor(int *t) const override;
         std::string toString() const override;
-        std::string printColor() const;
 
         bool hasPawn();
         void placePawn(int i, int j, int player);
@@ -70,7 +69,7 @@ class CarcPiece : public Piece
 
         void cleanColor() override;
         void cleanColorField();
-        //void printColor();
+        void printColor() const;
 
         void beginExplore(int i, int j, bool cent, CarcType t);
         std::vector<Pos> getNextDir();

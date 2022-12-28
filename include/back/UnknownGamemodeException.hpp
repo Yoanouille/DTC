@@ -2,6 +2,10 @@
 #define UGE_H
 
 #include <exception>
+
+/**
+ * Exception thrown when a gamemode is not recognized 
+ */
 class UnknownGamemodeException : public std::exception
 {
     const char *what() const throw(){

@@ -2,6 +2,8 @@
 #define MAINSCENE_H
 
 #include <SFML/Graphics.hpp>
+#include <string>
+#include <vector>
 
 #include "App.hpp"
 #include "ScoreBoard.hpp"
@@ -10,10 +12,6 @@
 #include "TextField.hpp"
 #include "PieceDisplayer.hpp"
 #include "back/Game.hpp"
-
-#include <iostream>
-#include <string>
-#include <vector>
 
 class MainScene : public Scene
 {
