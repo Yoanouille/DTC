@@ -6,8 +6,8 @@ class Scene
 {
 
 public:
-    Scene();
-    virtual ~Scene();
+    Scene() {};
+    virtual ~Scene() {};
 
     // Manage event
     virtual void loop_event() = 0;

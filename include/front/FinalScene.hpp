@@ -3,11 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 
-#include "front/AssetsLoader.hpp"
-#include "front/Button.hpp"
-#include "front/Scene.hpp"
 #include "front/App.hpp"
+#include "front/Scene.hpp"
+#include "front/Button.hpp"
 #include "front/MainScene.hpp"
 
 class FinalScene : public Scene

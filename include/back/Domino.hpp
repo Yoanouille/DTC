@@ -2,6 +2,7 @@
 #define DOMINO_HPP
 
 #include "Game.hpp"
+#include <iostream>
 
 class Domino : public Game
 {

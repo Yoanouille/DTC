@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "App.hpp"
-#include "Button.hpp"
 #include "Scene.hpp"
+#include "Button.hpp"
 #include "TextField.hpp"
 
 class PlayerSettingsScene : public Scene {

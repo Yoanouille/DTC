@@ -1,5 +1,4 @@
 #include "front/CarcPieceDisplayer.hpp"
-#include "back/PlayerCarc.hpp"
 
 using namespace sf;
 

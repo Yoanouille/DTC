@@ -3,7 +3,8 @@
 #include "front/CarcPieceDisplayer.hpp"
 #include "front/DomPieceDisplayer.hpp"
 #include "back/Domino.hpp"
-#include "front/AssetsLoader.hpp"
+#include "back/Trax.hpp"
+#include "back/Carcassonne.hpp"
 
 using namespace sf;
 using namespace std;

@@ -1,7 +1,4 @@
 #include "back/Trax.hpp"
-#include "back/TraxPiece.hpp"
-#include <stack>
-#include <iostream>
 
 using namespace std;
 

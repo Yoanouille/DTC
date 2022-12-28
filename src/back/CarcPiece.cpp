@@ -1,8 +1,5 @@
 #include "back/CarcPiece.hpp"
 
-#include <iostream>
-#include <vector>
-
 using namespace std;
 
 /**

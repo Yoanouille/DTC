@@ -9,8 +9,6 @@
 #include "back/Trax.hpp"
 #include "back/Carcassonne.hpp"
 
-#include <iostream>
-
 using namespace sf;
 using namespace std;
 
@@ -93,8 +91,6 @@ void App::runApp(int i)
         float currentTime = clock.restart().asSeconds();
         lastTime += currentTime;
         if(lastTime >= 1.0 / 60) {
-            //float fps = 1.f / (lastTime);
-            //std::cout << fps << std::endl;
             lastTime = currentTime;
             loop_event();
             render();

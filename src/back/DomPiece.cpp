@@ -1,5 +1,4 @@
 #include "back/DomPiece.hpp"
-#include <iostream>
 using namespace std;
 
 /**

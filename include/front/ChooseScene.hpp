@@ -4,8 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "App.hpp"
-#include "Button.hpp"
 #include "Scene.hpp"
+#include "Button.hpp"
 
 #include <iostream>
 

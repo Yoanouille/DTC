@@ -1,15 +1,13 @@
 #include "front/FinalScene.hpp"
-#include <iostream>
-#include <string>
 
 using namespace std;
 
+// TODO : comment
 FinalScene::FinalScene(App &a) : app{a},
         backToTitle{app, nullptr, "Back To Title", Assets::getInstance()->MainMenuFont, 58, {app.getWidth() / 4.0f, app.getWidth() / 25.0f}, {}},
         texts{}, mouse_coord{}, r{}, appear{true}, disp{false}, disp2{false}
 {
     init();
-
 }
 
 FinalScene::~FinalScene() {}

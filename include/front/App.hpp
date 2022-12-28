@@ -1,17 +1,17 @@
 #ifndef APP_H
 #define APP_H
 
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
+#include "AssetsLoader.hpp"
+#include "Scene.hpp"
 
 #include "back/Game.hpp"
 #include "back/UnknownGamemodeException.hpp"
 
-#include "AssetsLoader.hpp"
-#include "Scene.hpp"
 
 enum Gamemode {
     DOMINO = 0,

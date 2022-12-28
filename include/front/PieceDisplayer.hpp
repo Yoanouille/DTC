@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "back/Piece.hpp"
 #include "App.hpp"
+#include "back/Piece.hpp"
 
 class PieceDisplayer : public sf::RectangleShape
 {

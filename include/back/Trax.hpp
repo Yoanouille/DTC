@@ -4,6 +4,8 @@
 #include "back/Game.hpp"
 #include "TraxPiece.hpp"
 #include <vector>
+#include <stack>
+#include <iostream>
 
 typedef struct Pair
 {

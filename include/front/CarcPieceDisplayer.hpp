@@ -5,6 +5,7 @@
 
 #include "PieceDisplayer.hpp"
 #include "back/CarcPiece.hpp"
+#include "back/PlayerCarc.hpp"
 
 class CarcPieceDisplayer : public PieceDisplayer
 {

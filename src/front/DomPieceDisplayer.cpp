@@ -1,5 +1,4 @@
 #include "front/DomPieceDisplayer.hpp"
-#include "front/AssetsLoader.hpp"
 
 using namespace sf;
 

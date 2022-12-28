@@ -1,5 +1,6 @@
 #include "back/Game.hpp"
 
+// TODO : Comment 
 using namespace std;
 
 Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}

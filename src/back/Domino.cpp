@@ -1,5 +1,4 @@
 #include "back/Domino.hpp"
-#include <iostream>
 
 using namespace std;
 

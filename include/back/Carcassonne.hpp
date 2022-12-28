@@ -3,7 +3,9 @@
 
 #include "Game.hpp"
 #include "CarcPiece.hpp"
+#include "back/PlayerCarc.hpp"
 #include <vector>
+#include <stack>
 
 class Carcassonne : public Game
 {

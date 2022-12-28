@@ -1,9 +1,9 @@
 #ifndef TRAXPIECEDISPLAYER_H
 #define TRAXPIECEDISPLAYER_H
 
-#include "back/TraxPiece.hpp"
-#include "AssetsLoader.hpp"
 #include "PieceDisplayer.hpp"
+#include "AssetsLoader.hpp"
+#include "back/TraxPiece.hpp"
 
 class TraxPieceDisplayer : public PieceDisplayer
 {

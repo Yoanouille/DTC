@@ -4,6 +4,7 @@
 // For rand() method
 #include <cstdlib>
 #include <string>
+#include <iostream>
 
 #include "Piece.hpp"
 

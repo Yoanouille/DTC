@@ -6,11 +6,12 @@
 #include <vector>
 
 #include "App.hpp"
+#include "Scene.hpp"
 #include "ScoreBoard.hpp"
 #include "DrawZone.hpp"
-#include "Scene.hpp"
 #include "TextField.hpp"
 #include "PieceDisplayer.hpp"
+
 #include "back/Game.hpp"
 
 class MainScene : public Scene

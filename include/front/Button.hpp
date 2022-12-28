@@ -3,10 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <functional>
 
 #include "App.hpp"
-#include "AssetsLoader.hpp"
-#include <functional>
 
 class Button :  public sf::Transformable {
 private:

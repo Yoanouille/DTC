@@ -1,7 +1,4 @@
 #include "back/Carcassonne.hpp"
-#include "back/CarcPiece.hpp"
-#include "back/PlayerCarc.hpp"
-#include <stack>
 
 using namespace std;
 
