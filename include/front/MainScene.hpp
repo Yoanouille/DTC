@@ -11,6 +11,7 @@
 #include "DrawZone.hpp"
 #include "TextField.hpp"
 #include "PieceDisplayer.hpp"
+#include "Pos.hpp"
 
 #include "back/Game.hpp"
 
@@ -74,6 +75,7 @@ private:
     void redrawBG();
     void drawRectAndPlay();
     void place();
+    void drawMoveForced(std::vector<Pos> &v);
     void moveBoard();
 
     void initBoard();

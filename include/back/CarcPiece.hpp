@@ -2,6 +2,7 @@
 #define CARCPIECE_HPP
 
 #include "Piece.hpp"
+#include "Pos.hpp"
 #include <iostream>
 #include <vector>
 
@@ -13,12 +14,6 @@ enum CarcType
     Abbaye = 3,
     Crossroad = 4,
 };
-
-typedef struct Pos
-{
-    int i;
-    int j;
-} Pos;
 
 class CarcPiece : public Piece
 {

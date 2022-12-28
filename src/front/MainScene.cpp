@@ -274,6 +274,12 @@ void MainScene::render()
     app.draw(board);
     app.draw(rect);
 
+    if(app.getGamemode() == TRAX)
+    {
+        vector<Pos> move_forced = ((Trax *)(app.getGame()))->getMoveForced();
+        if(move_forced.size() != 0) drawMoveForced(move_forced);
+    }
+
     // Draw all the Pieces
     for (PieceDisplayer *p : pos)
     {
@@ -283,6 +289,19 @@ void MainScene::render()
     scoreBoard.update();
     scoreBoard.render();
     drawZone.render();
+}
+
+void MainScene::drawMoveForced(vector<Pos> &v)
+{
+    rect.setFillColor({255,255,0,100});
+    rect.setSize({scl * 1.f,scl * 1.f});
+    float x = board.getPosition().x;
+    float y = board.getPosition().y;
+    for(Pos &p : v)
+    {
+        rect.setPosition(p.j * scl + off.x + x, p.i * scl + off.y + y);
+        app.draw(rect);
+    }
 }
 
 /**

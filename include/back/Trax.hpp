@@ -5,13 +5,8 @@
 #include "TraxPiece.hpp"
 #include <vector>
 #include <stack>
+#include "Pos.hpp"
 #include <iostream>
-
-typedef struct Pair
-{
-    int i;
-    int j;
-} Pair;
 
 class Trax : public Game
 {
@@ -30,7 +25,7 @@ class Trax : public Game
         int minj;
         int maxj;
 
-        std::vector<Pair> moveForced;
+        std::vector<Pos> moveForced;
 
         int last_player;
 
@@ -49,6 +44,8 @@ class Trax : public Game
 
         bool canPlace(int i, int j, Piece &p) override;
         void place(int i, int j, Piece &p) override;
+
+        std::vector<Pos> getMoveForced();
 
         Player *getWinner() const;
         virtual bool gameOver();

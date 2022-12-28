@@ -84,7 +84,7 @@ obj/MainMenu.o: src/front/MainMenu.cpp include/front/MainMenu.hpp include/front/
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/ScoreBoard.hpp include/front/DrawZone.hpp include/front/App.hpp include/front/Scene.hpp include/front/ScoreBoard.hpp include/front/TextField.hpp include/front/PieceDisplayer.hpp include/back/Game.hpp include/front/TraxPieceDisplayer.hpp include/front/CarcPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp include/back/Domino.hpp include/back/Trax.hpp include/back/Carcassonne.hpp
+obj/MainScene.o: src/front/MainScene.cpp include/front/MainScene.hpp include/front/ScoreBoard.hpp include/front/DrawZone.hpp include/front/App.hpp include/front/Scene.hpp include/front/ScoreBoard.hpp include/front/TextField.hpp include/front/PieceDisplayer.hpp include/back/Game.hpp include/front/TraxPieceDisplayer.hpp include/front/CarcPieceDisplayer.hpp include/front/DomPieceDisplayer.hpp include/back/Domino.hpp include/back/Trax.hpp include/back/Carcassonne.hpp include/Pos.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -113,7 +113,7 @@ obj/Carcassonne.o: src/back/Carcassonne.cpp include/back/Carcassonne.hpp include
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/CarcPiece.o: src/back/CarcPiece.cpp include/back/CarcPiece.hpp include/back/Piece.hpp
+obj/CarcPiece.o: src/back/CarcPiece.cpp include/back/CarcPiece.hpp include/back/Piece.hpp include/Pos.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
@@ -145,7 +145,7 @@ obj/Sack.o: src/back/Sack.cpp include/back/Sack.hpp include/back/Piece.hpp inclu
 	$(OBJ_DIR)
 	$(CCO)
 
-obj/Trax.o: src/back/Trax.cpp include/back/Trax.hpp include/back/Game.hpp include/back/TraxPiece.hpp include/back/Piece.hpp include/back/VecZ.hpp include/back/VecZ.tpp include/back/Piece.hpp include/back/Player.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/UnknownGamemodeException.hpp include/back/TraxPiece.hpp
+obj/Trax.o: src/back/Trax.cpp include/back/Trax.hpp include/back/Game.hpp include/back/TraxPiece.hpp include/back/Piece.hpp include/back/VecZ.hpp include/back/VecZ.tpp include/back/Piece.hpp include/back/Player.hpp include/back/Sack.hpp include/back/Piece.hpp include/back/UnknownGamemodeException.hpp include/back/TraxPiece.hpp include/Pos.hpp
 	$(OBJ_DIR)
 	$(CCO)
 

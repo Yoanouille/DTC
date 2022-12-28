@@ -20,7 +20,7 @@ bool Trax::canPlace(int i, int j, Piece &p)
 
     if(moveForced.size() != 0)
     {
-        for(Pair p : moveForced)
+        for(Pos p : moveForced)
         {
             if(p.i == i && p.j == j) return true;
         }
@@ -51,7 +51,7 @@ void Trax::place(int i, int j, Piece &p)
             int index = -1;
             for(size_t k = 0; k < moveForced.size(); k++)
             {
-                Pair pai = moveForced[k];
+                Pos pai = moveForced[k];
                 if(pai.i == i && pai.j == j) index = k;
             }
             if(index != -1) moveForced.erase(moveForced.begin() + index);
@@ -192,4 +192,9 @@ bool Trax::gameOver()
     cleanColor();
     if(rep) cout << "FIN TRAX" << endl;
     return rep;
+}
+
+std::vector<Pos> Trax::getMoveForced()
+{
+    return moveForced;
 }
