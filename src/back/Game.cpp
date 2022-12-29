@@ -3,21 +3,36 @@
 // TODO : Comment 
 using namespace std;
 
+/**
+ * Constructor
+*/
 Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}
 {}
 
+/**
+ * Destructor
+*/
 Game::~Game()
 {
     for(Player *p : players)
         delete(p);
 }
 
+
+/**
+ * add the player with name = name
+ * @param name name of the player
+*/
 void Game::addPlayer(std::string name)
 {
     players.push_back(new Player{name});
     nb_player++;
 }
 
+
+/**
+ * pass to the next player
+*/
 void Game::pass()
 {
     current_player ++;
@@ -26,21 +41,35 @@ void Game::pass()
 }
 
 
+/**
+ * draw the piece in the sack
+ * @return the next piece
+*/
 Piece &Game::draw()
 {
     return *(s.draw());
 }
 
+/**
+ * 
+ * @return the index of the current player
+*/
 int Game::getCurrentPlayer() const
 {
     return current_player;   
 }
 
+/**
+ * @return players
+*/
 const std::vector<Player *> Game::getPlayers() const{
     return players;
 }
 
 
+/**
+ * clear color for searching
+*/
 void Game::cleanColor()
 {
     for(int i = board.get_min(); i <= board.get_max(); i++)
@@ -53,6 +82,14 @@ void Game::cleanColor()
     }
 }
 
+
+/**
+ * 
+ * @param i line of the piece
+ * @param j line of the piece
+ * @param p piece
+ * @return test if the piece p, can be place at (i,j) in the board
+*/
 bool Game::canPlace(int i, int j, Piece &p)
 {
     if(board[i][j] != nullptr) return false;
@@ -92,6 +129,12 @@ bool Game::canPlace(int i, int j, Piece &p)
 
 }
 
+/**
+ * @param i line of the piece
+ * @param j line of the piece
+ * @param p piece
+ * @return place the piece at (i,j) in the board
+*/
 void Game::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
@@ -131,6 +174,9 @@ void Game::place(int i, int j, Piece &p)
 
 }
 
+/**
+ * @return a copy of the board
+*/
 vector<PiecePos> Game::getAllPiece()
 {
     vector<PiecePos> v{};
@@ -145,6 +191,9 @@ vector<PiecePos> Game::getAllPiece()
     return v;
 }
 
+/**
+ * @return the winner
+*/
 Player *Game::getWinner() const
 {
     int max = -1;
