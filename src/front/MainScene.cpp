@@ -263,10 +263,6 @@ void MainScene::render()
     if (disp)
     {
         dispose();
-        if (!disp)
-        {
-            // CHANGEMENT DE SCENE
-        }
     }
     // draw scoreboard, board, the current rect of the mouse
     app.draw(board);
@@ -343,11 +339,7 @@ void MainScene::redrawBG()
     Vector2f vB = board.getPosition();
     Vector2f bB {board.getGlobalBounds().width, board.getGlobalBounds().height};
 
-    // rectBG.setFillColor(Color::Red);
     rectBG.setPosition(0, 0);
-    //rectBG.setOutlineColor(Color::Red);
-    //rectBG.setOutlineThickness(3);
-   // rectBG.setScale(1, app.getHeight() / vB.y);
     rectBG.setTextureRect({0, 0, static_cast<int>(app.getWidth() / rectBG.getScale().x) , static_cast<int>(vB.y / rectBG.getScale().y)});
     rectBG.setSize({app.getWidth() / rectBG.getScale().x, vB.y / rectBG.getScale().y});
     app.draw(rectBG);

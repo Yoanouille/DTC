@@ -16,10 +16,7 @@ MainMenu::MainMenu(App &app) :
 }
 
 /** Destructor */
-MainMenu::~MainMenu() 
-{
-    //! VIRER CE QU'IL Y AURA DANS LE VECTEUR !
-}
+MainMenu::~MainMenu() {}
 
 /** Initialize the Scene */
 void MainMenu::init()

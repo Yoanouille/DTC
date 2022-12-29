@@ -2,7 +2,8 @@
 
 using namespace sf;
 
-// hue: 0-360°; sat: 0.f-1.f; val: 0.f-1.f
+// TODO : Comment pls
+
 sf::Color hsv(int hue, float sat, float val)
 {
     hue %= 360;
@@ -45,11 +46,6 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
         
     this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
 
-    // for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
-    // {
-    //     color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
-    // }
-
     int dir = p.getDirection();
 
     for(int i = 0; i < dir; i++)
@@ -61,10 +57,7 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
     }
 }
 
-CarcPieceDisplayer::~CarcPieceDisplayer()
-{
-    //delete color;
-}
+CarcPieceDisplayer::~CarcPieceDisplayer() {}
 
 void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
@@ -270,7 +263,7 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
     rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
     if(rect.getGlobalBounds().contains(mouse))
     {
-        //Can't Pos on Crossroad
+        // Can't Pos on Crossroad
         if(piece.getType(0,0,false, true) == Crossroad) return;
         piece.placePawn(4,3, player);
         pl->addPawn(-1);
