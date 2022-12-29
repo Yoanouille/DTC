@@ -26,9 +26,6 @@ clean:
 	rm -rf obj/ $(TARGET) test
 
 #==== Main ====#
-memory: $(TARGET) $(OBJECTS)
-	valgrind ./$(TARGET)
-
 main: $(OBJECTS)
 	$(CC) -o main $(OBJECTS) $(SFML)
 
@@ -36,10 +33,7 @@ obj/Main.o: src/Main.cpp include/front/App.hpp
 	$(OBJ_DIR)
 	$(CCO)
 
-#==== Test ====# 
-memtest: $(TTARGET) $(TEST_OBJ)
-	valgrind ./$(TTARGET)
-
+#==== Test ====#
 test: $(TEST_OBJ)
 	$(CC) -o $(TTARGET) $(TEST_OBJ)
 
