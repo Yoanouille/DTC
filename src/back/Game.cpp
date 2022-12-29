@@ -1,75 +1,61 @@
 #include "back/Game.hpp"
 
-// TODO : Comment 
 using namespace std;
 
-/**
- * Constructor
-*/
-Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0}
-{}
+/** Constructor */
+Game::Game() : board{}, players{}, s{}, nb_player{0}, current_player{0}, nb_piece{0} {}
 
-/**
- * Destructor
-*/
+/** Destructor */
 Game::~Game()
 {
     for(Player *p : players)
         delete(p);
 }
 
-
 /**
- * add the player with name = name
- * @param name name of the player
-*/
+ * Add the player with the given name.
+ * @param name The name of the player
+ */
 void Game::addPlayer(std::string name)
 {
     players.push_back(new Player{name});
     nb_player++;
 }
 
-
 /**
- * pass to the next player
-*/
+ * Pass to the next player
+ */
 void Game::pass()
 {
     current_player ++;
     current_player = current_player % nb_player;
-
 }
 
-
 /**
- * draw the piece in the sack
- * @return the next piece
+ * Draw a piece in the sack.
+ * @return The next piece
 */
 Piece &Game::draw()
 {
     return *(s.draw());
 }
 
-/**
- * 
- * @return the index of the current player
-*/
+/** Getter : The current player */
 int Game::getCurrentPlayer() const
 {
     return current_player;   
 }
 
-/**
- * @return players
-*/
-const std::vector<Player *> Game::getPlayers() const{
+/** Getter : The vector containing all players */
+const std::vector<Player *> Game::getPlayers() const 
+{
     return players;
 }
 
 
 /**
- * clear color for searching
-*/
+ * Clean color for searching
+ */
 void Game::cleanColor()
 {
     for(int i = board.get_min(); i <= board.get_max(); i++)
@@ -84,12 +70,12 @@ void Game::cleanColor()
 
 
 /**
+ * Test if the piece p can be place at (i,j) in the board
  * 
  * @param i line of the piece
  * @param j line of the piece
  * @param p piece
- * @return test if the piece p, can be place at (i,j) in the board
-*/
+ */
 bool Game::canPlace(int i, int j, Piece &p)
 {
     if(board[i][j] != nullptr) return false;
@@ -130,11 +116,12 @@ bool Game::canPlace(int i, int j, Piece &p)
 }
 
 /**
+ * Place the piece at (i,j) in the board
+ * 
  * @param i line of the piece
  * @param j line of the piece
  * @param p piece
- * @return place the piece at (i,j) in the board
-*/
+ */
 void Game::place(int i, int j, Piece &p)
 {
     if(!canPlace(i, j, p)) return;
@@ -170,12 +157,10 @@ void Game::place(int i, int j, Piece &p)
     }
 
     players[current_player]->addScore(score);
-    //current_player = (current_player + 1) % nb_player;
-
 }
 
 /**
- * @return a copy of the board
+ * @return A copy of the board
 */
 vector<PiecePos> Game::getAllPiece()
 {
@@ -191,9 +176,7 @@ vector<PiecePos> Game::getAllPiece()
     return v;
 }
 
-/**
- * @return the winner
-*/
+/** @return The winner */
 Player *Game::getWinner() const
 {
     int max = -1;

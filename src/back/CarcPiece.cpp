@@ -10,7 +10,8 @@ using namespace std;
  * 
  * Notice that between 2 and 12 included, pieces with even id have a shields (bonus points).
  * 
- * TODO : Maybe we can factorize the harcoding a little bit but it's not a top priority task.
+ * NB : The code could have been factorized a bit but it works that way so we won't do it for now.
+ * 
  * @param id The id
  */
 CarcPiece::CarcPiece(int d) : 
