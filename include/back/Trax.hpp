@@ -33,7 +33,7 @@ class Trax : public Game
 
         bool explore(int i, int j, int col, Piece *pre);
         
-        std::vector<TraxPiece *> getNeighboors(int i, int j);
+        std::vector<TraxPiece *> getNeighbours(int i, int j);
         void getForcedMove(int i, int j);
 
     public:

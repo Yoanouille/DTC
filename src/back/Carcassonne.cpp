@@ -152,12 +152,9 @@ typedef struct Elem
  * @param dj The index of the element in the di-th subarray
  * @param type The type we are checking
  * @param placing A boolean that is true if we currently want to place the Piece
- * @param cent A boolean that is true if we are handling the central subcase.
- * 
- * TODO : Comment it pls
- * @param final 
- * @param finalField
- * @param remove 
+ * @param final A boolean that is true if we currently finish the game
+ * @param finalField A boolean for the final search of the complete town, for searching the final field
+ * @param remove if we remove the pawn
  * 
  * @return The points gained at the end of the exploration
  */
@@ -307,6 +304,9 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     return nb;
 }
 
+/**
+ * Count last points for Town, Road and Abbaye
+*/
 void Carcassonne::searchFinalTownAndRoadAndAbbaye()
 {
     for(int i = board.get_min(); i <= board.get_max(); i++)
@@ -330,6 +330,9 @@ void Carcassonne::searchFinalTownAndRoadAndAbbaye()
     }
 }
 
+/**
+ * Count last point of Abbaye
+*/
 void Carcassonne::finalSearchAbbaye(int i, int j)
 {
     int player = ((CarcPiece *)(board[i][j]))->getPawn();
@@ -349,9 +352,8 @@ void Carcassonne::finalSearchAbbaye(int i, int j)
 void Carcassonne::finalSearchField()
 {
     /**
-     * On cherche les villes ferme 
-     * dans ses villes ferme, on explore les paines tout autour
-     * puis on stocke les pion dans pawn_player
+     * We search the complete town
+     * and search with finalField, is going to search in the field auround the last pawn to calculates the last points
      * 
     */
 
@@ -412,6 +414,9 @@ bool Carcassonne::gameOver()
     return true;
 }
 
+/**
+ * Clean color only on Field
+*/
 void Carcassonne::cleanField()
 {
     for(int i = board.get_min(); i <= board.get_max(); i++)
