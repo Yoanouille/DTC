@@ -18,6 +18,5 @@ void Domino::place(int i, int j, Piece &p)
 /** Overriden function */
 bool Domino::gameOver()
 {
-    if(s.isEmpty()) cout << "END OF THE GAME!" << endl;
     return s.isEmpty();
 }

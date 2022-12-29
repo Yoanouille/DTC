@@ -211,13 +211,11 @@ void MainScene::place()
 {
     if(current_piece->isFinalState())
     {
-        cout << "app.getGame()->place(" << current_piece->getCoord().y << ", " << current_piece->getCoord().x << ", " << "*piece)" << ";" << endl;
         app.getGame()->place(current_piece->getCoord().y, current_piece->getCoord().x, current_piece->getPiece());
         scoreBoard.update();
         if(app.getGame()->gameOver()) 
         {
             app.setScene(4, 0, nullptr);
-            //app.close();
         }
         current_piece = nullptr;
     }

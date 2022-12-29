@@ -176,7 +176,6 @@ Player *Trax::getWinner() const
 
 bool Trax::gameOver()
 {
-    if(s.isEmpty()) cout << "TRAX VIDE" << endl;
     bool rep = false;
 
     if (DFS(0)) {
@@ -190,7 +189,6 @@ bool Trax::gameOver()
     }
 
     cleanColor();
-    if(rep) cout << "FIN TRAX" << endl;
     return rep;
 }
 
