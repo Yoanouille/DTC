@@ -2,39 +2,7 @@
 
 using namespace sf;
 
-// TODO : Comment pls
-
-sf::Color hsv(int hue, float sat, float val)
-{
-    hue %= 360;
-    while(hue<0) hue += 360;
-
-    if(sat<0.f) sat = 0.f;
-    if(sat>1.f) sat = 1.f;
-
-    if(val<0.f) val = 0.f;
-    if(val>1.f) val = 1.f;
-
-    int h = hue/60;
-    float f = float(hue)/60-h;
-    float p = val*(1.f-sat);
-    float q = val*(1.f-sat*f);
-    float t = val*(1.f-sat*(1-f));
-
-    switch(h)
-    {
-        default:
-        case 0:
-        case 6: return sf::Color(val*255, t*255, p*255);
-        case 1: return sf::Color(q*255, val*255, p*255);
-        case 2: return sf::Color(p*255, val*255, t*255);
-        case 3: return sf::Color(p*255, q*255, val*255);
-        case 4: return sf::Color(t*255, p*255, val*255);
-        case 5: return sf::Color(val*255, p*255, q*255);
-    }
-}
-
-
+/** Constructor */
 CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) : 
     PieceDisplayer(app,x,y), piece{p},
     dx{0}, dy{0}, rect{}, color{Color::Red, Color::Green, Color::Yellow, Color::Blue}
@@ -57,8 +25,14 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
     }
 }
 
+/** Destructor */
 CarcPieceDisplayer::~CarcPieceDisplayer() {}
 
+/**
+ * Rotates the Piece
+ * 
+ * @param clockwise A boolean representing the way we rotate
+ */
 void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
     
@@ -75,6 +49,7 @@ void CarcPieceDisplayer::rotates(bool clockwise) {
     }
 }
 
+/** Rendering function */
 void CarcPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, int scl, sf::Vector2f &mouse){
     Vector2f v{static_cast<float>(coordinates.x * scl), static_cast<float>(coordinates.y * scl)};
     this->setPosition(v + board.getPosition() + off);
@@ -87,10 +62,9 @@ void CarcPieceDisplayer::render(sf::Vector2f &off, sf::RectangleShape &board, in
         if(state == 1) drawRect(mouse, scl);
         else if(state == 2) drawPawn(scl);
     }
-
-
 }
 
+/** Draw the pawn  */
 void CarcPieceDisplayer::drawPawn(int s)
 {
     float scl = s / 5.0f;
@@ -132,6 +106,7 @@ void CarcPieceDisplayer::drawPawn(int s)
     }
 }
 
+/** Draw the small rectangles to place pawns on the Piece after it was placed */
 void CarcPieceDisplayer::drawRect(Vector2f &mouse, int s)
 {
     Vector2f dp{1,1};
@@ -180,28 +155,23 @@ void CarcPieceDisplayer::drawRect(Vector2f &mouse, int s)
 
 }
 
-
+/** Rendering function */
 void CarcPieceDisplayer::render(float x, float y, int scl){
     this->setSize({static_cast<float>(scl), static_cast<float>(scl)});
     this->setPosition(x + dx * scl, y + dy * scl);
     app.draw(*this);
 }
 
-Piece &CarcPieceDisplayer::getPiece() 
-{
-    return piece;
-}
+/** Getter : piece */
+Piece &CarcPieceDisplayer::getPiece() { return piece; }
 
-void CarcPieceDisplayer::nextState()
-{
-    if(state < 2) state++;
-}
+/** Increment the state */
+void CarcPieceDisplayer::nextState() { if(state < 2) state++; }
 
-bool CarcPieceDisplayer::isFinalState()
-{
-    return (state == 2);
-}
+/** Test if the state is the final state */
+bool CarcPieceDisplayer::isFinalState() { return (state == 2); }
 
+/** Handles the click on the rectangles */
 void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player, int s) 
 {
     if(!this->getGlobalBounds().contains(mouse)) return;
@@ -277,5 +247,4 @@ void CarcPieceDisplayer::removeHandle(Player *p, int player)
 {
     if(piece.hasPawn()) ((PlayerCarc *)p)->addPawn(1);
     piece.removeAllPawn();
-
 }
