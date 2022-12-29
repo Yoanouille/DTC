@@ -1,6 +1,7 @@
 #include "front/PieceDisplayer.hpp"
 using namespace sf;
 
+// TODO : Comment pls
 PieceDisplayer::PieceDisplayer(App &app, int x, int y) : app{app}, state{0}, coordinates{x, y} {}
 
 PieceDisplayer::~PieceDisplayer() {}
@@ -31,12 +32,6 @@ sf::Vector2i PieceDisplayer::getCoord() const
     return coordinates;
 }
 
-void PieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player, int scl)
-{
-    //nothing
-}
+void PieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player, int scl) {}
 
-void PieceDisplayer::removeHandle(Player *p, int player)
-{
-    //nothing
-}
+void PieceDisplayer::removeHandle(Player *p, int player) {}

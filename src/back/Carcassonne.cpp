@@ -297,7 +297,7 @@ int Carcassonne::search(int i, int j, int di, int dj, CarcType type, bool placin
     // max = 0 mean that no pawn has been placed and so we do nothing
     if(max == 0) return nb;
 
-    //Special Score for Town !
+    // Special Score for Town !
     if(!final && type == Town && nb != 2) nb *= 2;
 
     for(int i = 0; i < nb_player; i++)
@@ -404,7 +404,7 @@ bool Carcassonne::gameOver()
     // The Sack must be empty before proceeding to final counting
     if(!s.isEmpty()) return false;
 
-    //Proceed to Town, Road and Abbayes then end with the fields
+    // Proceed to Town, Road and Abbayes then end with the fields
     searchFinalTownAndRoadAndAbbaye();
     cleanColor();
     finalSearchField();

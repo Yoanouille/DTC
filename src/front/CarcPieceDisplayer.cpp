@@ -2,7 +2,8 @@
 
 using namespace sf;
 
-// hue: 0-360°; sat: 0.f-1.f; val: 0.f-1.f
+// TODO : Comment pls
+
 sf::Color hsv(int hue, float sat, float val)
 {
     hue %= 360;
@@ -45,11 +46,6 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
         
     this->setTextureRect({startx,starty,Assets::getInstance()->CarcPieceSize, Assets::getInstance()->CarcPieceSize});
 
-    // for(int i = 0; i < app.getGame()->getPlayers().size(); i++)
-    // {
-    //     color[i] = hsv(360 * i / app.getGame()->getPlayers().size(), 1.f, 1.f);
-    // }
-
     int dir = p.getDirection();
 
     for(int i = 0; i < dir; i++)
@@ -61,14 +57,10 @@ CarcPieceDisplayer::CarcPieceDisplayer(App& app, int x, int y, CarcPiece &p) :
     }
 }
 
-CarcPieceDisplayer::~CarcPieceDisplayer()
-{
-    //delete color;
-}
+CarcPieceDisplayer::~CarcPieceDisplayer() {}
 
 void CarcPieceDisplayer::rotates(bool clockwise) {
     piece.rotate(clockwise);
-    cout << "piece->rotate(" << (clockwise ? "true" : "false") << ");" << endl;
     
     if(clockwise){
         if((!dx && !dy) || (dx && dy)) dx = !dx;
@@ -235,8 +227,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + dp.y});
         if(rect.getGlobalBounds().contains(mouse)) 
         {
-            cout << "piece->placePawn(" << Direction::UP << ", " << i - 1 << ", " << player << ");" << endl;
-            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::UP, i - 1, player);
             pl->addPawn(-1);
             return;
@@ -245,8 +235,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + i * scl + dp.x, y + 4 * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            cout << "piece->placePawn(" << Direction::DOWN << ", " << 3 - i << ", " << player << ");" << endl;
-            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::DOWN, 3 - i, player);
             pl->addPawn(-1);
 
@@ -256,8 +244,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            cout << "piece->placePawn(" << Direction::LEFT << ", " << 3 - i << ", " << player << ");" << endl;
-            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::LEFT, 3 - i, player);
             pl->addPawn(-1);
 
@@ -267,8 +253,6 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
         rect.setPosition({x + 4 * scl + dp.x, y + i * scl + dp.y});
         if(rect.getGlobalBounds().contains(mouse))
         {
-            cout << "piece->placePawn(" << Direction::RIGHT << ", " << i - 1 << ", " << player << ");" << endl;
-            cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
             piece.placePawn(Direction::RIGHT, i - 1, player);
             pl->addPawn(-1);
 
@@ -279,10 +263,8 @@ void CarcPieceDisplayer::handleClick(sf::Vector2f &mouse, Player *p, int player,
     rect.setPosition({x + 2 * scl + dp.x, y + 2 * scl + dp.y});
     if(rect.getGlobalBounds().contains(mouse))
     {
-        //Can't Pos on Crossroad
+        // Can't Pos on Crossroad
         if(piece.getType(0,0,false, true) == Crossroad) return;
-        cout << "piece->placePawn(" << 4 << ", " << 3 << ", " << player << ");" << endl;
-        cout << "((PlayerCarc *)(app.getGame()->getPlayers()[" << player << "]))->addPawn(-1);" << endl;
         piece.placePawn(4,3, player);
         pl->addPawn(-1);
 

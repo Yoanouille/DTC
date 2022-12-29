@@ -18,7 +18,6 @@ void FinalScene::init()
     r.setSize({app.getWidth() * 1.f, app.getHeight() * 1.f});
     r.setFillColor({50,50,50,0});
     
-    //backToTitle.setFillColor(Color::White);
     backToTitle.setPosition(app.getWidth() * 11 / 28, app.getHeight() * 6.f / 8.f);
     backToTitle.setActionOnClick([this]()
     {

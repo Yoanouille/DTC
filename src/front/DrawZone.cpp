@@ -108,7 +108,6 @@ PieceDisplayer *DrawZone::getPieceViewer(){
 void DrawZone::draw(){
     if(pieceViewer != nullptr) return;
     Piece &p = app.getGame()->draw();
-    cout << "piece = (CarcPiece *)(&app.getGame()->draw());" << endl;
     switch(app.getGamemode()){
         case 0 :
             pieceViewer = new DomPieceDisplayer(app, 0, 0, (DomPiece&)(p));

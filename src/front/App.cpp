@@ -48,7 +48,6 @@ void App::init()
     bg.setScale(0.33, 0.33);
 
     sc = new MainMenu(*this);
-    //sc = new FinalScene(*this);
 }
 
 /**
@@ -87,7 +86,7 @@ void App::runApp(int i)
    
     while (this->isOpen())
     {
-        //Settings for the 30FPS
+        // Settings for 60FPS
         float currentTime = clock.restart().asSeconds();
         lastTime += currentTime;
         if(lastTime >= 1.0 / 60) {

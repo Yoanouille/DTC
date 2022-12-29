@@ -555,7 +555,6 @@ string CarcPiece::toString() const
 
 
   return s;
-    //return to_string(id) + " ";
 }
 
 void CarcPiece::printColor() const

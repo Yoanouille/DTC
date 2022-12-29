@@ -62,9 +62,7 @@ void DomPieceDisplayer::drawRect(int s)
     text.setCharacterSize(scl);
     text.setString("0");
     FloatRect r = text.getGlobalBounds();
-    // text.setOrigin(0.5 * r.width, 0.5 * r.height);
     
-
     float x = this->getPosition().x;
     float y = this->getPosition().y;
     for(int i = 0; i < 5; i++)
