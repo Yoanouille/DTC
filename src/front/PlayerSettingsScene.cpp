@@ -12,7 +12,7 @@ PlayerSettingsScene::PlayerSettingsScene(App& app, int nbPlayers, int gamemode) 
       plusButton{app, nullptr, "+", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f} , {app.getWidth()/20.0f * 17, app.getHeight()/3.8f}}, 
       minusButton{app, nullptr, "-", Assets::getInstance()->MainMenuFont, 100, {app.getWidth()/12.0f, app.getWidth()/12.0f}, {app.getWidth()/20.0f * 17, app.getHeight()/3.8f + app.getWidth()/12.0f + 50}},
       submitButton{app, nullptr, "Submit", Assets::getInstance()->MainMenuFont, 50, {app.getWidth()/6.0f, app.getHeight()/7.0f}, {app.getWidth()/2.5f, app.getHeight()/(12.0f) * 9}},
-      vSpace{50.0f}, fieldLabels{}, nameFields{},
+      vSpace{app.getHeight() / 7.0f}, fieldLabels{}, nameFields{},
       mousepos{}, appear{true}, disp{false}, dispF{-1}, nextScene{-1}
 { 
 
@@ -31,14 +31,14 @@ void PlayerSettingsScene::initFields(){
       Text t{};
       t.setFont(Assets::getInstance()->MainMenuFont);
       t.setString("Player " + to_string(i));
-      t.setPosition({app.getWidth()/3.5f, vSpace});
+      t.setPosition({app.getWidth()/3.f, vSpace});
       t.setFillColor({255,255,255,0});
       fieldLabels.push_back(t);
 
-      TextField tf{app, 15, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+      TextField tf{app, 15, Assets::getInstance()->DefaultFont,{app.getWidth() * 8 / 400.f,40},{app.getWidth()/3.f, t.getPosition().y + t.getGlobalBounds().height + 20}};
       nameFields.push_back(tf);
       nameFields[i - 1].setOutlineColor(Color::Cyan);
-      vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;
+      vSpace += tf.getPosition().y + tf.getGlobalBounds().height + app.getHeight() / 15.0f;
     }
 }
 
@@ -103,13 +103,13 @@ void PlayerSettingsScene::addPlayer(){
   Text t{};
   t.setFont(Assets::getInstance()->MainMenuFont);
   t.setString("Player " + to_string(nbPlayers));
-  t.setPosition({app.getWidth()/3.5f, vSpace});
+  t.setPosition({app.getWidth()/3.f, vSpace});
   fieldLabels.push_back(t);
 
-  TextField tf{app, 15, Assets::getInstance()->DefaultFont,{30,40},{app.getWidth()/3.5f, t.getPosition().y + t.getGlobalBounds().height + 20}};
+  TextField tf{app, 15, Assets::getInstance()->DefaultFont,{app.getWidth() * 8 / 400.f,40},{app.getWidth()/3.f, t.getPosition().y + t.getGlobalBounds().height + 20}};
   nameFields.push_back(tf);
 
-  vSpace += tf.getPosition().y + tf.getGlobalBounds().height + 50;
+  vSpace += tf.getPosition().y + tf.getGlobalBounds().height + app.getHeight() / 15.0f;
 }
 
 void PlayerSettingsScene::removePlayer(){
@@ -186,7 +186,7 @@ void PlayerSettingsScene::render(){
 
       switch(gamemode){
         case DOMINO:
-          app.initGame(gamemode, 5, 0);
+          app.initGame(gamemode, 10, 0);
           break;
 
         case TRAX: 

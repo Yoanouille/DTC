@@ -36,7 +36,7 @@ void FinalScene::init()
     Player *p = app.getGame()->getWinner();
 
     texts.push_back({});
-    texts[0].setString("Le Gagnant est :" + p->getName() + " !!!!");
+    texts[0].setString("Le Gagnant est : " + p->getName() + " !!!!");
     texts[0].setCharacterSize(58);
     Color c = Color::Magenta;
     c.a = 0;
@@ -47,17 +47,14 @@ void FinalScene::init()
     int x = 1;
     for(size_t i = 0; i < app.getGame()->getPlayers().size(); i++)
     {
-        if(app.getGame()->getPlayers()[i] != p)
-        {
-            texts.push_back({});
-            texts[x].setString(app.getGame()->getPlayers()[i]->getName() + " : " + to_string(app.getGame()->getPlayers()[i]->getScore()));
-            texts[x].setCharacterSize(48);
-            texts[x].setFillColor({255,255,255,0});      
-            texts[x].setFont(Assets::getInstance()->MainMenuFont);
-            texts[x].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
-            texts[x].setPosition(app.getWidth() / 2, (x + 1) * app.getHeight() / 8);
-            x++;
-        }
+        texts.push_back({});
+        texts[x].setString(app.getGame()->getPlayers()[i]->getName() + " : " + to_string(app.getGame()->getPlayers()[i]->getScore()));
+        texts[x].setCharacterSize(48);
+        texts[x].setFillColor({255,255,255,0});      
+        texts[x].setFont(Assets::getInstance()->MainMenuFont);
+        texts[x].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
+        texts[x].setPosition(app.getWidth() / 2, (x + 1) * app.getHeight() / 8);
+        x++;
     }
 }
 

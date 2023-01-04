@@ -67,6 +67,8 @@ private:
 
     int speed2;
 
+    int frame;
+
     PieceDisplayer *current_piece;
 
     void init();

@@ -18,7 +18,7 @@ MainScene::MainScene(App &app, int gamemode, vector<string> &names) :
     board{}, scl{150}, off{180, 180}, 
     rect{}, rectBG{}, pos_mouse{0, 0}, mouse_coord{0, 0}, 
     pos{}, right_pressed{false}, left_pressed{false}, old_pos{0, 0}, 
-    disp{false}, appear{true}, speed1{40}, speed2{3},
+    disp{false}, appear{true}, speed1{40}, speed2{3}, frame{0},
     current_piece{nullptr}
 {
     for (string s : names)
@@ -51,7 +51,7 @@ void MainScene::init()
     board.setFillColor(c);
 
     rectBG.setTexture(&Assets::getInstance()->MainMenuBackground);
-    rectBG.setScale(0.33, 0.33);
+    rectBG.setScale(app.getWidth() / 1280.0 * 0.33 , app.getHeight() / 720.0 * 0.33);
 
     initBoard();
 }
@@ -268,6 +268,8 @@ void MainScene::render()
     app.draw(board);
     app.draw(rect);
 
+    frame = (frame + 2) % 360;
+
     if(app.getGamemode() == TRAX)
     {
         vector<Pos> move_forced = ((Trax *)(app.getGame()))->getMoveForced();
@@ -285,9 +287,39 @@ void MainScene::render()
     drawZone.render();
 }
 
+sf::Color hsv(int hue, float sat, float val)
+{
+    hue %= 360;
+    while(hue<0) hue += 360;
+
+    if(sat<0.f) sat = 0.f;
+    if(sat>1.f) sat = 1.f;
+
+    if(val<0.f) val = 0.f;
+    if(val>1.f) val = 1.f;
+
+    int h = hue/60;
+    float f = float(hue)/60-h;
+    float p = val*(1.f-sat);
+    float q = val*(1.f-sat*f);
+    float t = val*(1.f-sat*(1-f));
+
+    switch(h)
+    {
+        default:
+        case 0:
+        case 6: return sf::Color(val*255, t*255, p*255, 100);
+        case 1: return sf::Color(q*255, val*255, p*255, 100);
+        case 2: return sf::Color(p*255, val*255, t*255, 100);
+        case 3: return sf::Color(p*255, q*255, val*255, 100);
+        case 4: return sf::Color(t*255, p*255, val*255, 100);
+        case 5: return sf::Color(val*255, p*255, q*255, 100);
+    }
+}
+
 void MainScene::drawMoveForced(vector<Pos> &v)
 {
-    rect.setFillColor({255,255,0,100});
+    rect.setFillColor(hsv(frame, 1.0, 1.0));
     rect.setSize({scl * 1.f,scl * 1.f});
     float x = board.getPosition().x;
     float y = board.getPosition().y;

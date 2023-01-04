@@ -16,11 +16,11 @@ using namespace std;
  * Constructor
  * Initialize different variables.
  */
-App::App() : width{1280}, height{720}, 
+App::App(int mode) : width{1280}, height{720}, 
     sc{nullptr}, old_sc{nullptr}, 
     game{nullptr}, gamemode{-1}, bg{}
 {  
-    init();
+    init(mode);
 }
 
 /** Destructor */
@@ -39,13 +39,22 @@ App::~App()
 /**
  * initialize the Scene
  */
-void App::init()
+void App::init(int mode)
 {
-    this->create(sf::VideoMode(width, height), "DTC", sf::Style::Titlebar | sf::Style::Close);
-    this->setPosition(sf::Vector2i(0, 0));
+    if(mode == 1)
+    {
+        width = sf::VideoMode::getDesktopMode().width;
+        height = sf::VideoMode::getDesktopMode().height;
+        this->create(sf::VideoMode(width, height), "DTC", sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
+    } else 
+    {
+        this->create(sf::VideoMode(width, height), "DTC", sf::Style::Titlebar | sf::Style::Close);
+        this->setPosition(sf::Vector2i(0, 0));
+    }
+    
 
     bg.setTexture(Assets::getInstance()->MainMenuBackground);
-    bg.setScale(0.33, 0.33);
+    bg.setScale(width / 1280.0 * 0.33 , height / 720.0 * 0.33);
 
     sc = new MainMenu(*this);
 }

@@ -3,7 +3,7 @@
 using namespace std;
 
 /** Constructor */
-Domino::Domino(int size = 5) { s.fill(size, 0, 0); }
+Domino::Domino(int size = 10) { s.fill(size, 0, 0); }
 
 /** Destructor */
 Domino::~Domino() {}

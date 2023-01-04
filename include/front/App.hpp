@@ -40,12 +40,12 @@ private:
     // Sprite of the background, need image
     sf::Sprite bg;
 
-    void init();
+    void init(int mode);
     void loop_event();
     void render();
 
 public:
-    App();
+    App(int mode);
     virtual ~App();
 
     // launch the event loop and the render loop
