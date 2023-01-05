@@ -45,16 +45,19 @@ void FinalScene::init()
     texts[0].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
     texts[0].setPosition(app.getWidth() / 2, app.getHeight() / 8);
     int x = 1;
-    for(size_t i = 0; i < app.getGame()->getPlayers().size(); i++)
-    {
-        texts.push_back({});
-        texts[x].setString(app.getGame()->getPlayers()[i]->getName() + " : " + to_string(app.getGame()->getPlayers()[i]->getScore()));
-        texts[x].setCharacterSize(48);
-        texts[x].setFillColor({255,255,255,0});      
-        texts[x].setFont(Assets::getInstance()->MainMenuFont);
-        texts[x].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
-        texts[x].setPosition(app.getWidth() / 2, (x + 1) * app.getHeight() / 8);
-        x++;
+
+    if(app.getGamemode() != TRAX){
+        for(size_t i = 0; i < app.getGame()->getPlayers().size(); i++)
+        {
+            texts.push_back({});
+            texts[x].setString(app.getGame()->getPlayers()[i]->getName() + " : " + to_string(app.getGame()->getPlayers()[i]->getScore()));
+            texts[x].setCharacterSize(48);
+            texts[x].setFillColor({255,255,255,0});      
+            texts[x].setFont(Assets::getInstance()->MainMenuFont);
+            texts[x].setOrigin(texts[0].getGlobalBounds().width / 2, texts[0].getGlobalBounds().height / 2);
+            texts[x].setPosition(app.getWidth() / 2, (x + 1) * app.getHeight() / 8);
+            x++;
+        }
     }
 }
 
