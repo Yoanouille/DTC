@@ -10,6 +10,8 @@
 
 class ScoreBoard {
     private:
+        static const Color color[4];
+
         App &app;
         Game *game;
         

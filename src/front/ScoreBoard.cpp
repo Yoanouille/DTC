@@ -1,9 +1,13 @@
 #include "front/ScoreBoard.hpp"
 
+const Color ScoreBoard::color[4] = {Color::Red, Color::Green, Color::Yellow, Color::Blue};
 /**
  * Constructor 
  */
-ScoreBoard::ScoreBoard(App &app) : app{app}, game{nullptr}, container{}, appear{true}
+ScoreBoard::ScoreBoard(App &app) : 
+    app{app}, game{nullptr}, container{},
+    names{}, scores{},nbPawns{}, 
+    appear{true} 
 {
     // Setup the container
     container.setSize(Vector2f(app.getWidth() / 6.0f, (app.getHeight() / 3.0f)));
@@ -66,7 +70,7 @@ void ScoreBoard::setGame(Game *game){
 
             nbPawns.push_back({});
             nbPawns[i].setString(to_string(((PlayerCarc *)(game->getPlayers()[i]))->getNbPawn()));
-            nbPawns[i].setFillColor(Color::Black);
+            nbPawns[i].setFillColor(color[i]);
             nbPawns[i].setFont(Assets::getInstance()->DefaultFont);
             nbPawns[i].setCharacterSize(20);
             nbPawns[i].setPosition({container.getPosition().x + container.getSize().x * 0.80f, vspace });
@@ -101,7 +105,9 @@ void ScoreBoard::render(){
     // Draw the text
     for(size_t i = 0; i < names.size() ; i++){
         app.draw(names[i]);
-        app.draw(scores[i]);
+
+        if(app.getGamemode() != TRAX)
+            app.draw(scores[i]);
 
         if(app.getGamemode() == CARCASSONNE)
             app.draw(nbPawns[i]);
