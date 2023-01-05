@@ -36,7 +36,7 @@ void FinalScene::init()
     Player *p = app.getGame()->getWinner();
 
     texts.push_back({});
-    texts[0].setString("Le Gagnant est : " + p->getName() + " !!!!");
+    texts[0].setString("Player " + p->getName() + " wins !!!!");
     texts[0].setCharacterSize(58);
     Color c = Color::Magenta;
     c.a = 0;
