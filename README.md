@@ -18,4 +18,5 @@ On compile en exécutant `make`.
 A partir d'ici, on a le choix entre différents programmes à exécuter :
 - Le programme principal destiné à l'utilisateur : `./main`
 - Les situations particulières : `./main 0`
+- Le programme en plein écran : `./main 1`
 - Le programme test : `./test`
