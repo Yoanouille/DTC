@@ -5,5 +5,5 @@
 - [SFML](https://www.sfml-dev.org/)
 
 ## How to use
-run `make` at the root of the project
-run `./main`
+- run `make` at the root of the project
+- run `./main`
